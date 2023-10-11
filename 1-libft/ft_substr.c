@@ -1,0 +1,45 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   ft_substr.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/10/11 15:56:23 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/11 17:37:24 by wsonepou      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdio.h>
+#include "libft.h"
+#include <stdint.h>
+
+char *ft_substr(char const *s, unsigned int start, size_t len){
+	char	*pSub;
+	size_t	i;
+
+	i = 0;
+	pSub = malloc((len + 1) * sizeof(char));
+	while(len > 0)
+		{
+			pSub[i] = s[start];
+			i++;
+			start++;
+			len--;
+		}
+	pSub[i] = '\0';
+
+	return pSub;
+}
+
+int main(){
+    char s[] = "Hallo";
+    size_t i = 1;
+    size_t o = 3;
+    
+    char *q = ft_substr(s, i, o);
+    printf("%p\n", q);
+    printf("%s", q);
+
+    return 0;
+}
