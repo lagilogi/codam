@@ -1,40 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strchr.c                                        :+:    :+:            */
+/*   ft_strjoin.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/08 12:58:14 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/12 14:03:58 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/12 10:21:57 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/12 11:23:30 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <string.h>
-#include <stdio.h>
+#include <stdlib.h>
 
-char *ft_strchr(const char *s, int c)
-{
-	while(*s != '\0')
+char *ft_strjoin(char const *s1, char const *s2){
+	int		i;
+	int		o;
+	char *	p;
+
+	i = 0;
+	o = ft_strlen(s1) + strlen(s2);
+	p = malloc((o + 1) * sizeof(char));
+
+	while(*s1)
 	{
-		if (*s == c)
-			return (char *)s;
-		s++;
+		p[i] = *s1;
+		i++;
+		s1++;
 	}
-	if (*s == '\0')
-		return (char *)s;
-
-	return (0);
+	while(*s2)
+	{
+		p[i] = *s2;
+		i++;
+		s2++;
+	}
+	p[i] = '\0';
+	
+	return p;
 }
 
 int main(){
-	char hay[] = "Haystack";
-	char ndl = 's';
-	printf("%p\n", ft_strchr(hay, ndl));
-	printf("%p\n\n", strchr(hay, ndl));
-	printf("%s\n", ft_strchr(hay, ndl));
-	printf("%s", strchr(hay, ndl));
+	char s1[] = "Hello ";
+	char s2[] = "World!";
+	char *q = ft_strjoin(s1, s2);
+
+	printf("%s\n", q);
+	printf("%p", q);
 
 	return 0;
 }
