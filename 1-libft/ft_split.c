@@ -1,41 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strrchr.c                                       :+:    :+:            */
+/*   ft_split.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/08 13:55:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/08 14:19:20 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/13 13:26:24 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/13 13:33:46 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
-#include <string.h>
-
-char *ft_strrchr(const char *s, int c)
+char **ft_split(char const *s, char c)
 {
-	int 	i;
-	char	*p;
 
-	p = s;
-	i = ft_strlen(s);
-	while (i >= 0)
-	{
-		if (s[i] == c)
-			return s + i;
-		i--;
-	}
-
-	return (0);
 }
 
-int main(){
-	char hay[] = "haystacks";
-	char ndl = 'h';
-	printf("%p\n", ft_strrchr(hay, ndl));
-	printf("%p\n\n", strrchr(hay, ndl));
-	
-	return 0;
+int main (){
+	char str[] = "De spin loopt over de boom";
+	char del = ' ';
 }

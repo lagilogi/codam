@@ -1,41 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strrchr.c                                       :+:    :+:            */
+/*   ft_putstr_fd.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/08 13:55:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/08 14:19:20 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/13 12:30:51 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/13 12:51:57 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <unistd.h>
+#include <fcntl.h>
 #include <stdio.h>
-#include <string.h>
 
-char *ft_strrchr(const char *s, int c)
+void ft_putstr_fd(char *s, int fd)
 {
-	int 	i;
-	char	*p;
-
-	p = s;
-	i = ft_strlen(s);
-	while (i >= 0)
+	while(*s)
 	{
-		if (s[i] == c)
-			return s + i;
-		i--;
+		write(fd, s, sizeof(char));
+		s++;
 	}
-
-	return (0);
 }
 
-int main(){
-	char hay[] = "haystacks";
-	char ndl = 'h';
-	printf("%p\n", ft_strrchr(hay, ndl));
-	printf("%p\n\n", strrchr(hay, ndl));
-	
-	return 0;
-}
+// int main(){
+// 	char str[] = "bbhbhbhgv hg";
+// 	int fd = open("easy.txt", O_RDWR);
+// 	if (fd == -1)
+// 		printf("Error opening file");
+// 	ft_putstr_fd(str, fd);
+// 	close(fd);
+
+// 	return 0;
+// }

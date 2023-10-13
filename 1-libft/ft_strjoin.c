@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/12 10:21:57 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/12 11:23:30 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/13 10:40:47 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char *ft_strjoin(char const *s1, char const *s2){
 	i = 0;
 	o = ft_strlen(s1) + strlen(s2);
 	p = malloc((o + 1) * sizeof(char));
+	if (p == 0)
+		return (0);
 
 	while(*s1)
 	{

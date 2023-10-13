@@ -1,41 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strrchr.c                                       :+:    :+:            */
+/*   ft_putendl_fd.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/08 13:55:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/08 14:19:20 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/13 12:52:55 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/13 13:25:46 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <unistd.h>
+#include <fcntl.h>
 #include <stdio.h>
-#include <string.h>
 
-char *ft_strrchr(const char *s, int c)
+void ft_putendl_fd(char *s, int fd)
 {
-	int 	i;
-	char	*p;
-
-	p = s;
-	i = ft_strlen(s);
-	while (i >= 0)
-	{
-		if (s[i] == c)
-			return s + i;
-		i--;
-	}
-
-	return (0);
-}
-
-int main(){
-	char hay[] = "haystacks";
-	char ndl = 'h';
-	printf("%p\n", ft_strrchr(hay, ndl));
-	printf("%p\n\n", strrchr(hay, ndl));
+	char n; 
 	
-	return 0;
+	n = '\n';	
+	while (*s)
+	{
+		write(fd, s, 1);
+		s++;
+	}
+	write(fd, &n, 1);
 }
+
+// int main(){
+// 	char x[] = "Ssdfsdfsdf";
+// 	int fd = open("easie.txt", O_RDWR);
+// 	ft_putendl_fd(x, fd);
+// 	close(fd);
+
+// 	return 0;
+// }

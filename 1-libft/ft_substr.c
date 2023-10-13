@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/11 15:56:23 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/11 17:37:24 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/13 10:39:14 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,23 @@
 #include <stdint.h>
 
 char *ft_substr(char const *s, unsigned int start, size_t len){
-	char	*pSub;
+	char	*sub;
 	size_t	i;
 
 	i = 0;
-	pSub = malloc((len + 1) * sizeof(char));
+	sub = malloc((len + 1) * sizeof(char));
+	if (sub == 0)
+		return (0);
 	while(len > 0)
 		{
-			pSub[i] = s[start];
+			sub[i] = s[start];
 			i++;
 			start++;
 			len--;
 		}
-	pSub[i] = '\0';
+	sub[i] = '\0';
 
-	return pSub;
+	return sub;
 }
 
 int main(){

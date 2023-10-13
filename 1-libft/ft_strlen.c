@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 typedef unsigned long size_t;
 
 size_t ft_strlen(const char* s){
