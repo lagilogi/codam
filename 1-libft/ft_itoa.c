@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_atoi.c                                          :+:    :+:            */
+/*   ft_itoa.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/10 13:32:29 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/16 18:27:10 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/16 16:10:24 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/16 18:29:59 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,61 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int ft_atoi(const char *nptr){
-	int	i;
-	int min;
-	int	o;
-	const char *s = nptr;
+int ft_lencheck(int n)
+{
+	int	len;
 
-	i = 0;
-	min = 0;
-	o = 0;
-	while (s[i] == ' ')
-		i++;
-	if (s[i] == '-' || s[i] == '+')
+	len = 0;
+	if (n < 0)
 	{
-		if(s[i] == '-')
-			min = 1;
-		i++;
+		len++;
+		n = n * -1;
 	}
-	while (s[i] >= 48 && s[i] <= 57)
+	while (n > 0)
 	{
-		o = o * 10 + (s[i] - 48);
-		i++;
+		n /= 10;
+		len++;
 	}
-	if (min == 1)
-		return o * -1;
-	return o;
+	return len;
+}
+
+char *ft_itoa(int n)
+{
+	int	i;
+	char *p;
+
+	i = ft_lencheck(n);
+	p = malloc((i + 1) * sizeof(char));
+	if (p == NULL)
+		return (NULL);
+	p[i] = '\0';
+	if (n < 0)
+	{
+		p[0] = '-';
+		n = n * -1;
+	}
+	while (n > 0)
+	{
+		i--;
+		p[i] = n % 10 + '0';
+		n = n / 10;
+	}
+	
+	return (p);
 }
 
 int main(){
-	char str[] = "-21474832423";
-	printf("%d\n", ft_atoi(str));
-	printf("%d", atoi(str));
-	
+	int i = -12345678910;
+
+	printf("%s", ft_itoa(i));
 	return 0;
 }
+
+c = 5;
+int *p = c
+
+*p = 'x';
+p++;
+*p = '';
+
+printf(p)

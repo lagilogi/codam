@@ -1,50 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_atoi.c                                          :+:    :+:            */
+/*   ft_strmapi.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/10 13:32:29 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/16 18:27:10 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/16 17:43:03 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/16 18:40:00 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-int ft_atoi(const char *nptr){
-	int	i;
-	int min;
-	int	o;
-	const char *s = nptr;
+char functie(unsigned int i, char c)
+{
+	if (i % 2 == 0)
+		return (c - 1);
+	else
+		return (c + 1);
+}
+
+char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	int		i;
+	char	*p;
 
 	i = 0;
-	min = 0;
-	o = 0;
-	while (s[i] == ' ')
-		i++;
-	if (s[i] == '-' || s[i] == '+')
+	p = malloc((ft_strlen(s) + 1) * sizeof(char));
+	while(p[i] != '\0')
 	{
-		if(s[i] == '-')
-			min = 1;
+		p[i] = f(i, p[i]);
 		i++;
 	}
-	while (s[i] >= 48 && s[i] <= 57)
-	{
-		o = o * 10 + (s[i] - 48);
-		i++;
-	}
-	if (min == 1)
-		return o * -1;
-	return o;
+	p[i] = '\0';
+	return (p);
 }
 
 int main(){
-	char str[] = "-21474832423";
-	printf("%d\n", ft_atoi(str));
-	printf("%d", atoi(str));
-	
+	char *result = ft_strmapi("Hello", functie);
+	printf("%s", result);
+
 	return 0;
 }
