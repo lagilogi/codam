@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/08 15:36:42 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/11 14:06:00 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:15:46 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@ void ft_bzero(void *s, size_t n)
 	}
 }
 
-int main(){
-	char str[] = "testcase";
-	printf("%s\n", str);
-	printf("%d", ft_bzero(str, 3));
+// int main(){
+// 	char str[] = "testcase";
+// 	printf("%s\n", str);
 
-	return 0;
-}
+// 	return 0;
+// }

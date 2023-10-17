@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 13:32:29 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/16 18:27:10 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:15:52 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int ft_atoi(const char *nptr){
+int	ft_atoi(const char *nptr)
+{
 	int	i;
 	int min;
 	int	o;
@@ -41,10 +42,10 @@ int ft_atoi(const char *nptr){
 	return o;
 }
 
-int main(){
-	char str[] = "-21474832423";
-	printf("%d\n", ft_atoi(str));
-	printf("%d", atoi(str));
+// int main(){
+// 	char str[] = "0";
+// 	printf("%d\n", ft_atoi(str));
+// 	printf("%d", atoi(str));
 	
-	return 0;
-}
+// 	return 0;
+// }

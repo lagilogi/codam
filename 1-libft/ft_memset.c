@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/04 12:19:06 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/10 14:37:52 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:14:31 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void *ft_memset(void *s, int c, size_t n)
 	return (char *)s;
 }
 
-int main(){
-	char str[] = "testcase";
-	char c = 'Q';
-	printf("%s\n\n", str);
-	printf("%s\n", (char *)ft_memset(str, c, 3));
-	printf("%s", (char *)memset(str, c, 3));
-}
+// int main(){
+// 	char str[] = "testcase";
+// 	char c = 'Q';
+// 	printf("%s\n\n", str);
+// 	printf("%s\n", (char *)ft_memset(str, c, 3));
+// 	printf("%s", (char *)memset(str, c, 3));
+// }

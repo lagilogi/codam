@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 13:27:05 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/09 18:00:03 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:14:39 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (char *) dest;		
 }
 
-int main(void){
-	char dest[] = "1234!";
-	char src[] = "There";
-	char dest2[] = "1234!";
-	char src2[] = "There";
-	ft_memmove(dest, src, 7);
-	memmove(dest2, src2, 7);
-	printf("%s\n", dest);
-	printf("%s", dest2);
+// int main(void){
+// 	char dest[] = "1234!";
+// 	char src[] = "There";
+// 	char dest2[] = "1234!";
+// 	char src2[] = "There";
+// 	ft_memmove(dest, src, 7);
+// 	memmove(dest2, src2, 7);
+// 	printf("%s\n", dest);
+// 	printf("%s", dest2);
 
-	return 0;
-}
+// 	return 0;
+// }

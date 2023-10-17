@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/11 14:29:03 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/11 16:39:15 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:14:07 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-size_t ft_strlen(const char* s);
-
-char *ft_strdup(const char *s){
+char *ft_strdup(const char *s)
+{
 	size_t	c;
 	size_t	i;
 	char	*pS;
@@ -35,14 +34,14 @@ char *ft_strdup(const char *s){
 	return (pS - c);
 }
 
-int main(){
-	int i = 0;
-	char s[] = "Hey";
-	printf("%p\n", s);
+// int main(){
+// 	int i = 0;
+// 	char s[] = "Hey";
+// 	printf("%p\n", s);
 
-	char *q = ft_strdup(s);
-	printf("%p\n", q);
-	printf("%s", q);
+// 	char *q = ft_strdup(s);
+// 	printf("%p\n", q);
+// 	printf("%s", q);
 
-	return 0;
-}
+// 	return 0;
+// }

@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/11 15:56:23 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/13 10:39:14 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:12:35 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "libft.h"
 #include <stdint.h>
 
-char *ft_substr(char const *s, unsigned int start, size_t len){
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
 	char	*sub;
 	size_t	i;
 
@@ -34,14 +35,14 @@ char *ft_substr(char const *s, unsigned int start, size_t len){
 	return sub;
 }
 
-int main(){
-    char s[] = "Hallo";
-    size_t i = 1;
-    size_t o = 3;
+// int main(){
+//     char s[] = "Hallo";
+//     size_t i = 1;
+//     size_t o = 3;
     
-    char *q = ft_substr(s, i, o);
-    printf("%p\n", q);
-    printf("%s", q);
+//     char *q = ft_substr(s, i, o);
+//     printf("%p\n", q);
+//     printf("%s", q);
 
-    return 0;
-}
+//     return 0;
+// }

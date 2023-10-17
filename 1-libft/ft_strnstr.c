@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 11:19:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/16 16:02:33 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:13:28 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <bsd/string.h>
 
-char * ft_strnstr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	int i;
 	int o;
@@ -44,14 +44,14 @@ char * ft_strnstr(const char *big, const char *little, size_t len)
 	return 0;
 }
 
-int main(){
-	char hay[] = "Needle in ah the aaah Haystack";
-	char ndl[] = "aah";
-	int len = 21;
-	printf("%s\n", ft_strnstr(hay, ndl, len));
-	printf("%p\n\n", ft_strnstr(hay, ndl, len));
-	printf("%s\n", strnstr(hay, ndl, len));
-	printf("%p", strnstr(hay, ndl, len));
+// int main(){
+// 	char hay[] = "Needle in ah the aaah Haystack";
+// 	char ndl[] = "aah";
+// 	int len = 21;
+// 	printf("%s\n", ft_strnstr(hay, ndl, len));
+// 	printf("%p\n\n", ft_strnstr(hay, ndl, len));
+// 	printf("%s\n", strnstr(hay, ndl, len));
+// 	printf("%p", strnstr(hay, ndl, len));
 
-	return 0;
-}
+// 	return 0;
+// }

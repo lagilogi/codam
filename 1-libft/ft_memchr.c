@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 10:27:52 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/10 13:27:15 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:14:52 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void *ft_memchr(const void *s, int c, size_t n){
 	return (0);
 }
 
-int main(){
-	char s[50] = "This is a string";
-	char c = '.';
-	printf("%p\n", ft_memchr(s, c, 20));
-	printf("%p", memchr(s, c, 20));
+// int main(){
+// 	char s[50] = "This is a string";
+// 	char c = '.';
+// 	printf("%p\n", ft_memchr(s, c, 20));
+// 	printf("%p", memchr(s, c, 20));
 
-	return 0;
-}
+// 	return 0;
+// }

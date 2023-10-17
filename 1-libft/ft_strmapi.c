@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 17:43:03 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/16 18:40:00 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:13:38 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,27 @@ char *ft_strmapi(char const *s, char (*f)(unsigned int, char))
 
 	i = 0;
 	p = malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (p == 0)
+		return NULL;
+	while (s[i])
+	{
+		p[i] = s[i];
+		i++;
+	}
+	i = 0;
 	while(p[i] != '\0')
 	{
-		p[i] = f(i, p[i]);
+		p[i] = f(0, p[i]);
 		i++;
 	}
 	p[i] = '\0';
 	return (p);
 }
 
-int main(){
-	char *result = ft_strmapi("Hello", functie);
-	printf("%s", result);
+// int	main(void)
+// {
+// 	char *result = ft_strmapi("Hello", functie);
+// 	printf("%s", result);
 
-	return 0;
-}
+// 	return (0);
+// }

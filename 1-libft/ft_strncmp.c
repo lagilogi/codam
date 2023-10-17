@@ -6,14 +6,15 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 18:10:06 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/08 12:16:49 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:13:33 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <string.h>
 
-int ft_strncmp(const char *s1, const char *s2, size_t n){
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
 	int i;
 
 	i = 0;
@@ -26,11 +27,11 @@ int ft_strncmp(const char *s1, const char *s2, size_t n){
 	return 0;
 }
 
-int main(){
-	char s1[] = "abcdeesdasdasd";
-	char s2[] = "abcdees";
-	printf("%d\n", ft_strncmp(s1, s2, 10));
-	printf("%d", strncmp(s1, s2, 10));
+// int main(){
+// 	char s1[] = "abcdeesdasdasd";
+// 	char s2[] = "abcdees";
+// 	printf("%d\n", ft_strncmp(s1, s2, 10));
+// 	printf("%d", strncmp(s1, s2, 10));
 
-	return 0;
-}
+// 	return 0;
+// }

@@ -6,11 +6,12 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/02 14:47:35 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/03 16:55:15 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 14:46:20 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_isdigit(int c){
+int ft_isdigit(int c)
+{
 	if (c >= 48 && c <= 57)
 		return 1;
 

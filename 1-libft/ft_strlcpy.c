@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/04 12:28:01 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/11 14:41:38 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 14:59:22 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 typedef unsigned long size_t;
 
-size_t ft_strlcpy(char *dest, const char *src, size_t size){
+size_t ft_strlcpy(char *dst, const char *src, size_t size)
+{
 	int	i;
 
 	i = 0;

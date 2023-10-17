@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 16:10:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/16 18:29:59 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:15:00 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ int ft_lencheck(int n)
 	int	len;
 
 	len = 0;
+	if (n == 0)
+	{
+		len++;
+		return len;
+	}
 	if (n < 0)
 	{
 		len++;
@@ -37,6 +42,8 @@ char *ft_itoa(int n)
 	int	i;
 	char *p;
 
+	if (n == -2147483648)
+		return ("-2147483648\0");
 	i = ft_lencheck(n);
 	p = malloc((i + 1) * sizeof(char));
 	if (p == NULL)
@@ -47,28 +54,21 @@ char *ft_itoa(int n)
 		p[0] = '-';
 		n = n * -1;
 	}
-	while (n > 0)
-	{
-		i--;
-		p[i] = n % 10 + '0';
-		n = n / 10;
-	}
-	
+	if (n == 0)
+		p[0] = n + '0';
+	else
+		while (n > 0)
+		{
+			i--;
+			p[i] = n % 10 + '0';
+			n = n / 10;
+		}
 	return (p);
 }
 
-int main(){
-	int i = -12345678910;
-
-	printf("%s", ft_itoa(i));
-	return 0;
-}
-
-c = 5;
-int *p = c
-
-*p = 'x';
-p++;
-*p = '';
-
-printf(p)
+// int main(){
+// 	int i = -2147483648;
+// 	printf("%s\n", ft_itoa(i));
+	
+// 	return 0;
+// }

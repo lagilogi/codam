@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strtrim2.c                                      :+:    :+:            */
+/*   ft_strtrim.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/12 11:23:49 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/12 15:56:19 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:12:35 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ char	*ft_strtrim(char const *s1, char const *set)
 	return (p);
 }
 
-int main(){
-	char s1[] = "osooHelloso";
-	char set[] = "os";
+// int main(){
+// 	char s1[] = "osooHelloso";
+// 	char set[] = "os";
 
-	char* q = ft_strtrim(s1, set);
-	printf("%s\n", q);
-	printf("%p", q);
+// 	char* q = ft_strtrim(s1, set);
+// 	printf("%s\n", q);
+// 	printf("%p", q);
 
-	return 0;
-}
+// 	return 0;
+// }

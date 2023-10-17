@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/13 13:26:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/16 18:13:04 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 12:30:09 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	ft_free(int i, char **p)
+static void	ft_free(int i, char **p)
 {
 	while (i >= 0)
 	{
@@ -24,7 +24,7 @@ void	ft_free(int i, char **p)
 	}
 }
 
-int	ft_wordcount(const char *s, char c)
+static int	ft_wordcount(const char *s, char c)
 {
 	int	i;
 	int	o;
@@ -44,7 +44,7 @@ int	ft_wordcount(const char *s, char c)
 	return (o);
 }
 
-int	ft_wordlength(const char *s, char c)
+static int	ft_wordlength(const char *s, char c)
 {
 	int	o;
 

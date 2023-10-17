@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 13:56:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/10 16:12:42 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 15:13:48 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 typedef unsigned long size_t;
 
-size_t ft_strlcat(char *dst, const char *src, size_t size){
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
+{
 	size_t i;
 	size_t o;
 	size_t dstsize;
@@ -41,15 +42,15 @@ size_t ft_strlcat(char *dst, const char *src, size_t size){
 	return (dstsize + o);
 }
 
-int main() {
-	char dst[] = "asdasd";
-	char src[] = "bbb";
-	char dst1[] = "asdasd";
-	char src1[] = "bbb";
-	printf("%lu\n", ft_strlcat(dst, src, 13));
-	printf("%lu\n\n", strlcat(dst1, src1, 13));
-	printf("%s\n", dst);
-	printf("%s", dst1);
+// int main() {
+// 	char dst[] = "asdasd";
+// 	char src[] = "bbb";
+// 	char dst1[] = "asdasd";
+// 	char src1[] = "bbb";
+// 	printf("%lu\n", ft_strlcat(dst, src, 13));
+// 	printf("%lu\n\n", strlcat(dst1, src1, 13));
+// 	printf("%s\n", dst);
+// 	printf("%s", dst1);
 
-	return 0;
-}
+// 	return 0;
+// }

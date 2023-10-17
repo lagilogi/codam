@@ -6,11 +6,12 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/03 12:29:40 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/03 16:53:08 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 14:46:44 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_isprint(int c){
+int ft_isprint(int c)
+{
 	if (c >= 32 && c <= 126)
 		return 1;
 
