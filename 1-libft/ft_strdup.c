@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/11 14:29:03 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 15:14:07 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 16:52:08 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+size_t ft_strlen(const char *s);
+
 char *ft_strdup(const char *s)
 {
 	size_t	c;
 	size_t	i;
 	char	*pS;
 
-	c = strlen(s);
+	c = ft_strlen(s);
 	i = c + 1;
 	pS = malloc(i);
 	while(i > 0)

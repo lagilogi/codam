@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/04 12:28:01 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 14:59:22 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 16:52:52 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 #include <bsd/string.h>
 #include <stdio.h>
 
-typedef unsigned long size_t;
-
 size_t ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (size == 0)
 		return (ft_strlen(src));
 	while (src[i] && i < size - 1)
 	{
-		dest[i] = src[i];
+		dst[i] = src[i];
 		i++;
 	}
-	dest[i] = '\0';
+	dst[i] = '\0';
 
 	return (ft_strlen(src));
 }

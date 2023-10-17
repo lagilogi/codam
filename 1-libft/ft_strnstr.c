@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 11:19:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 15:13:28 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 16:54:50 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	int i;
-	int o;
+	size_t i;
+	size_t o;
 
 	i = 0;
 	o = 0;

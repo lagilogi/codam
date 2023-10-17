@@ -6,12 +6,12 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/03 12:34:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 15:00:08 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 16:51:51 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stdio.h>
-typedef unsigned long size_t;
 
 size_t ft_strlen(const char *s)
 {

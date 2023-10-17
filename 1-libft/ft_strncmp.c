@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 18:10:06 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 15:13:33 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/17 16:54:19 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int i;
+	size_t i;
 
 	i = 0;
 	while(i != n)
