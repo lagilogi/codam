@@ -6,13 +6,15 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/03 12:10:18 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/03 16:55:14 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/18 16:20:57 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_isascii(int c){
-	if (c >= 0 && c <= 127)
-		return 1;
+#include "libft.h"
 
-	return 0;
+int	ft_isascii(int c)
+{
+	if (c >= 0 && c <= 127)
+		return (1);
+	return (0);
 }

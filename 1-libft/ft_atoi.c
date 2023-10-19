@@ -6,46 +6,40 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 13:32:29 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 15:15:52 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/18 17:44:30 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int min;
-	int	o;
-	const char *s = nptr;
+	int			i;
+	int			min;
+	int			o;
 
 	i = 0;
-	min = 0;
+	min = 1;
 	o = 0;
-	while (s[i] == ' ')
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;
-	if (s[i] == '-' || s[i] == '+')
+	if (nptr[i] == '-' || nptr[i] == '+')
 	{
-		if(s[i] == '-')
-			min = 1;
+		if (nptr[i] == '-')
+			min = -1;
 		i++;
 	}
-	while (s[i] >= 48 && s[i] <= 57)
+	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
-		o = o * 10 + (s[i] - 48);
+		o = o * 10 + (nptr[i] - '0');
 		i++;
 	}
-	if (min == 1)
-		return o * -1;
-	return o;
+	return (o * min);
 }
 
 // int main(){
-// 	char str[] = "0";
+// 	char str[] = "5";
 // 	printf("%d\n", ft_atoi(str));
 // 	printf("%d", atoi(str));
-	
 // 	return 0;
 // }

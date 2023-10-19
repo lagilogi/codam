@@ -6,13 +6,11 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/11 15:56:23 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 15:12:35 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/19 18:52:16 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
-#include <stdint.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -20,29 +18,28 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 
 	i = 0;
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
 	sub = malloc((len + 1) * sizeof(char));
-	if (sub == 0)
-		return (0);
-	while(len > 0)
-		{
-			sub[i] = s[start];
-			i++;
-			start++;
-			len--;
-		}
+	if (sub == NULL)
+		return (NULL);
+	while (i < len)
+	{
+		sub[i] = s[start + i];
+		i++;
+	}
 	sub[i] = '\0';
-
-	return sub;
+	return (sub);
 }
 
 // int main(){
-//     char s[] = "Hallo";
-//     size_t i = 1;
-//     size_t o = 3;
-    
+//     char s[] = "tripouille";
+//     size_t i = 0;
+//     size_t o = 42000;
 //     char *q = ft_substr(s, i, o);
 //     printf("%p\n", q);
 //     printf("%s", q);
-
 //     return 0;
 // }

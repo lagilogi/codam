@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/10/18 17:58:47 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/18 17:59:20 by wsonepou      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
-#include <stdio.h>
 
-int main(){
-	printf("%d\n", ft_isalpha('a'));
-
-	return 0;
+int	main(void)
+{
+	printf("%d\n", ft_atoi("12345"));
+	return (0);
 }

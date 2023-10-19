@@ -6,18 +6,15 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/13 12:30:51 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 14:54:14 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/18 11:21:32 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdio.h>
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	while(*s)
+	while (*s)
 	{
 		write(fd, s, sizeof(char));
 		s++;

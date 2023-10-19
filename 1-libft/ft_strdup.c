@@ -6,34 +6,32 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/11 14:29:03 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 16:52:08 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/19 10:32:47 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
-#include <stdio.h>
 
-size_t ft_strlen(const char *s);
-
-char *ft_strdup(const char *s)
+char	*ft_strdup(const char *s)
 {
 	size_t	c;
 	size_t	i;
-	char	*pS;
+	char	*p;
 
 	c = ft_strlen(s);
 	i = c + 1;
-	pS = malloc(i);
-	while(i > 0)
+	p = malloc(i);
+	if (p == NULL)
+		return (NULL);
+	while (i > 0)
 	{
-		*pS = *s;
+		*p = *s;
 		s++;
 		i--;
 		if (i > 0)
-			pS++;
+			p++;
 	}
-	return (pS - c);
+	return (p - c);
 }
 
 // int main(){

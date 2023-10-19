@@ -6,14 +6,15 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/03 16:33:17 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 12:30:09 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/19 18:51:45 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_toupper(int c)
+#include "libft.h"
+
+int	ft_toupper(int c)
 {
 	if (c >= 97 && c <= 122)
 		c -= 32;
-
-	return c;
+	return (c);
 }

@@ -6,42 +6,39 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 13:27:05 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 15:14:39 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/19 18:54:00 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <string.h>
-#include <stdio.h>
-
-typedef unsigned long size_t;
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char	*s = (unsigned char *) src;
-	unsigned char	*d = dest;
-	size_t	i;
+	unsigned char	*s;
+	unsigned char	*d;
+	size_t			i;
 
+	s = (unsigned char *)src;
+	d = (unsigned char *)dest;
 	i = 0;
-	if(dest < src)
+	if (dest < src)
 	{
-		while(i < n)
+		while (i < n)
 		{
-		d[i] = s[i];
-		i++;
+			d[i] = s[i];
+			i++;
 		}
+		return (dest);
 	}
-	else
+	if (dest > src)
 	{
-		n -= 1;
 		while (n > 0)
 		{
-			d[n] = s[n];
 			n--;
+			d[n] = s[n];
 		}
-		d[0] = s[0];
 	}
-	return (char *) dest;		
+	return (dest);
 }
 
 // int main(void){
@@ -49,8 +46,9 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 // 	char src[] = "There";
 // 	char dest2[] = "1234!";
 // 	char src2[] = "There";
-// 	ft_memmove(dest, src, 7);
-// 	memmove(dest2, src2, 7);
+// 	int x = 7;
+// 	ft_memmove(dest, src, x);
+// 	memmove(dest2, src2, x);
 // 	printf("%s\n", dest);
 // 	printf("%s", dest2);
 

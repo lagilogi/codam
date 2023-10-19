@@ -6,19 +6,17 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 10:54:06 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 16:50:09 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/19 18:54:11 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <string.h>
 
-int ft_memcmp(const void *s1, const void *s2, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	unsigned char *string1;
-	unsigned char *string2;
-	size_t i;
+	unsigned char	*string1;
+	unsigned char	*string2;
+	size_t			i;
 
 	string1 = (unsigned char *)s1;
 	string2 = (unsigned char *)s2;
@@ -31,7 +29,7 @@ int ft_memcmp(const void *s1, const void *s2, size_t n)
 		string2++;
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
 // int main () {

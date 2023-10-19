@@ -6,13 +6,11 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/13 13:26:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 12:30:09 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/19 15:21:11 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 static void	ft_free(int i, char **p)
 {
@@ -31,7 +29,7 @@ static int	ft_wordcount(const char *s, char c)
 
 	i = 0;
 	o = 0;
-	while (s[i] != '\0')
+	while (s[i])
 	{
 		if (s[i] != c)
 		{
@@ -39,7 +37,8 @@ static int	ft_wordcount(const char *s, char c)
 			while (s[i] != c && s[i] != '\0')
 				i++;
 		}
-		i++;
+		else
+			i++;
 	}
 	return (o);
 }
@@ -60,7 +59,6 @@ static int	ft_wordlength(const char *s, char c)
 char	**ft_split(char const *s, char c)
 {
 	int		i;
-	int		l;
 	char	**p;
 
 	i = 0;
@@ -69,17 +67,19 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	while (*s)
 	{
-		while (*s == c)
+		if (*s == c)
 			s++;
-		l = ft_wordlength(s, c);
-		p[i] = malloc((l + 1) * sizeof(char));
-		if (p[i] == NULL)
+		else
 		{
-			ft_free(i, p);
-			return (NULL);
+			p[i] = malloc((ft_wordlength(s, c) + 1) * sizeof(char));
+			if (p[i] == NULL)
+			{
+				ft_free(i, p);
+				return (NULL);
+			}
+			ft_strlcpy(p[i++], s, ft_wordlength(s, c) + 1);
+			s += ft_wordlength(s, c);
 		}
-		ft_strlcpy(p[i++], s, l + 1);
-		s += l;
 	}
 	p[i] = NULL;
 	return (p);
@@ -87,7 +87,7 @@ char	**ft_split(char const *s, char c)
 
 // int main (){
 // 	int i = 0;
-// 	char str[] = "De spin loopt over de boom naar een andere tak";
+// 	char str[] = " Hello World ";
 // 	char del = ' ';
 
 // 	int o = ft_wordcount(str, del);

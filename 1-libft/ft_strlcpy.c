@@ -6,15 +6,13 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/04 12:28:01 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 16:52:52 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/18 11:37:57 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <bsd/string.h>
-#include <stdio.h>
 
-size_t ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
 
@@ -27,7 +25,6 @@ size_t ft_strlcpy(char *dst, const char *src, size_t size)
 		i++;
 	}
 	dst[i] = '\0';
-
 	return (ft_strlen(src));
 }
 

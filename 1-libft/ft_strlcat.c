@@ -6,21 +6,17 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 13:56:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 15:13:48 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/18 11:25:18 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <bsd/string.h>
-#include <stdio.h>
 #include "libft.h"
-
-typedef unsigned long size_t;
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t i;
-	size_t o;
-	size_t dstsize;
+	size_t	i;
+	size_t	o;
+	size_t	dstsize;
 
 	i = 0;
 	o = 0;
@@ -51,6 +47,5 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 // 	printf("%lu\n\n", strlcat(dst1, src1, 13));
 // 	printf("%s\n", dst);
 // 	printf("%s", dst1);
-
 // 	return 0;
 // }

@@ -6,15 +6,13 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 16:10:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/17 15:15:00 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/10/19 18:54:23 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-int ft_lencheck(int n)
+static int	ft_lencheck(int n)
 {
 	int	len;
 
@@ -22,53 +20,49 @@ int ft_lencheck(int n)
 	if (n == 0)
 	{
 		len++;
-		return len;
+		return (len);
 	}
 	if (n < 0)
 	{
-		len++;
-		n = n * -1;
+		len += 2;
+		n = n / 10 * -1;
 	}
 	while (n > 0)
 	{
 		n /= 10;
 		len++;
 	}
-	return len;
+	return (len);
 }
 
-char *ft_itoa(int n)
+char	*ft_itoa(int n)
 {
-	int	i;
-	char *p;
+	int		i;
+	char	*p;
 
-	if (n == -2147483648)
-		return ("-2147483648\0");
 	i = ft_lencheck(n);
+	if (n == 0)
+		return (ft_strdup("0"));
 	p = malloc((i + 1) * sizeof(char));
 	if (p == NULL)
 		return (NULL);
 	p[i] = '\0';
 	if (n < 0)
 	{
+		p[--i] = n % 10 * -1 + '0';
 		p[0] = '-';
-		n = n * -1;
+		n = n / 10 * -1;
 	}
-	if (n == 0)
-		p[0] = n + '0';
-	else
-		while (n > 0)
-		{
-			i--;
-			p[i] = n % 10 + '0';
-			n = n / 10;
-		}
+	while (n > 0)
+	{
+		p[--i] = n % 10 + '0';
+		n = n / 10;
+	}
 	return (p);
 }
 
 // int main(){
-// 	int i = -2147483648;
+// 	int i = 10;
 // 	printf("%s\n", ft_itoa(i));
-	
 // 	return 0;
 // }
