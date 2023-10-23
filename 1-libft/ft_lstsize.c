@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strrchr.c                                       :+:    :+:            */
+/*   ft_lstsize.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/08 13:55:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/23 14:45:26 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/23 15:05:51 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/23 17:18:03 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+// typedef struct s_list
+// {
+// 	void			*content;
+// 	struct s_list	*next;
+// }	t_list;
+
+int	ft_lstsize(t_list *lst)
 {
-	int				i;
-	unsigned char	x;
+	int		i;
+	t_list	*tmp;
 
-	x = (unsigned char) c;
-	if (x < 0 || x > 127)
-		return ((char *)s);
-	i = ft_strlen(s);
-	while (i >= 0)
+	i = 0;
+	tmp = lst;
+	while (tmp != NULL)
 	{
-		if (s[i] == x)
-			return ((char *)s + i);
-		i--;
+		i++;
+		tmp = tmp->next;
 	}
-	return (0);
+	return (i);
 }
-
-// int main(){
-// 	char hay[] = "haystacks";
-// 	char ndl = 'h';
-// 	printf("%p\n", strrchr(hay, ndl));
-// 	printf("%p\n", ft_strrchr(hay, ndl));
-// 	return 0;
-// }

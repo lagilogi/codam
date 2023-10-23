@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strrchr.c                                       :+:    :+:            */
+/*   ft_lstnew.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/08 13:55:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/23 14:45:26 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/20 10:52:41 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/23 17:17:56 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+t_list	*ft_lstnew(void *content)
 {
-	int				i;
-	unsigned char	x;
+	t_list	*new;
 
-	x = (unsigned char) c;
-	if (x < 0 || x > 127)
-		return ((char *)s);
-	i = ft_strlen(s);
-	while (i >= 0)
-	{
-		if (s[i] == x)
-			return ((char *)s + i);
-		i--;
-	}
-	return (0);
+	new = malloc(sizeof(t_list));
+	if (new == NULL)
+		return (NULL);
+	(*new).content = content;
+	(*new).next = NULL;
+	return (new);
 }
 
-// int main(){
-// 	char hay[] = "haystacks";
-// 	char ndl = 'h';
-// 	printf("%p\n", strrchr(hay, ndl));
-// 	printf("%p\n", ft_strrchr(hay, ndl));
+// int	main(void)
+// {
+// 	char x = 'c';
+// 	printf("%s\n", (char *)ft_lstnew(&x)->content);
+// printf("%p", (char *)ft_lstnew(&x));
 // 	return 0;
 // }
