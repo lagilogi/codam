@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstnew.c                                        :+:    :+:            */
+/*   ft_lstdelone.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/20 10:52:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/24 14:26:57 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/24 11:13:20 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/24 11:42:03 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+// typedef struct s_list
+// {
+// 	void			*content;
+// 	struct s_list	*next;
+// }	t_list;
+
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	t_list	*new;
-
-	new = malloc(sizeof(t_list));
-	if (new == NULL)
-		return (NULL);
-	(*new).content = content;
-	(*new).next = NULL;
-	return (new);
+	if (!del || !lst)
+		return ;
+	del(lst->content);
+	free(lst);
 }
-
-// int	main(void)
-// {
-// 	char x = 'c';
-// 	printf("%s\n", (char *)ft_lstnew(&x)->content);
-// printf("%p", (char *)ft_lstnew(&x));
-// 	return 0;
-// }

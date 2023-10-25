@@ -1,19 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_lstiter.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/18 17:58:47 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/10/18 17:59:20 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/24 13:11:48 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/24 13:30:19 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	main(void)
+// typedef struct s_list
+// {
+// 	void			*content;
+// 	struct s_list	*next;
+// }	t_list;
+
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	printf("%d\n", ft_atoi("12345"));
-	return (0);
+	if (!lst || !f)
+		return ;
+	while (lst)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
 }
