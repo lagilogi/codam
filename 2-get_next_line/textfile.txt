@@ -1,0 +1,19 @@
+Parameter
+fd: file descriptor of the file from which data is to be read.
+buf: buffer to read data from
+count: length of the buffer
+
+Return Value
+
+return Number of bytes read on success
+return 0 on reaching the end of file
+return -1 on error
+return -1 on signal interrupt
+
+Important Points
+
+buf: needs to point to a valid memory location with a length not smaller than the specified size because of overflow.
+fd: should be a valid file descriptor returned from open() to perform the read operation because if fd is NULL then the read should generate an error.
+count is the requested number of bytes read, while the return value is the actual number of bytes read. Also, some times read system call should read fewer bytes than count
+	
+Example of read() in C
