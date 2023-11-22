@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.c                                    :+:    :+:            */
+/*   get_next_line_bonus.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 10:45:04 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/11/22 17:33:33 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/11/22 15:57:21 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-char	*ft_rem(char *rem, char **line_address)
+char	*ft_rem(char *rem, char **line)
 {
 	char	*new;
 	int		i;
@@ -30,7 +30,7 @@ char	*ft_rem(char *rem, char **line_address)
 	if (!new)
 	{
 		ft_free(&rem);
-		return (ft_free(line_address));
+		return (ft_free(line));
 	}
 	while (rem[i])
 		new[i2++] = rem[i++];
@@ -91,18 +91,18 @@ char	*ft_read(int fd, char *rem)
 
 char	*get_next_line(int fd)
 {
-	static char	*rem = 0;
+	static char	*rem[OPEN_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
-	rem = ft_read(fd, rem);
-	if (rem == NULL)
+	rem[fd] = ft_read(fd, rem[fd]);
+	if (rem[fd] == NULL)
 		return (NULL);
-	line = ft_line(rem);
+	line = ft_line(rem[fd]);
 	if (!line)
-		return (ft_free(&rem));
-	rem = ft_rem(rem, &line);
+		return (ft_free(&rem[fd]));
+	rem[fd] = ft_rem(rem[fd], &line);
 	return (line);
 }
 
@@ -110,9 +110,9 @@ char	*get_next_line(int fd)
 // {
 // 	int		fd;
 // 	char	*line;
-// 	int		i;
+// 	int 	i;
 
-// 	i = 1;
+// 	i = i;
 // 	fd = open("textfile.txt", O_RDONLY);
 // 	if (fd == -1)
 // 		printf("Opening file failed");
