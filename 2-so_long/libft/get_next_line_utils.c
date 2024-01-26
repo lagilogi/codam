@@ -6,11 +6,18 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 10:44:25 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/01/12 15:57:06 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/01/16 14:03:13 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
+
+char	*ft_free2(char **str)
+{
+	free(*str);
+	*str = NULL;
+	return (NULL);
+}
 
 int	ft_nlcheck(char	*str)
 {
@@ -28,21 +35,11 @@ int	ft_nlcheck(char	*str)
 	return (-1);
 }
 
-int	ft_strlen(char *str)
+char	*ft_strjoin2(char *rem, char *buffer)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin(char *rem, char *buffer)
-{
-	char	*new;
-	int		i;
-	int		o;
+	char			*new;
+	unsigned long	i;
+	unsigned long	o;
 
 	o = 0;
 	if (rem == NULL)
@@ -51,7 +48,7 @@ char	*ft_strjoin(char *rem, char *buffer)
 		i = ft_strlen(rem) + ft_strlen(buffer);
 	new = malloc(i + 1);
 	if (!new)
-		return (ft_free(&rem));
+		return (ft_free2(&rem));
 	i = 0;
 	while (rem != NULL && rem[i])
 	{
@@ -61,13 +58,6 @@ char	*ft_strjoin(char *rem, char *buffer)
 	while (buffer[o])
 		new[i++] = buffer[o++];
 	new[i] = '\0';
-	ft_free (&rem);
+	ft_free2 (&rem);
 	return (new);
-}
-
-char	*ft_free(char **str)
-{
-	free(*str);
-	*str = NULL;
-	return (NULL);
 }

@@ -6,11 +6,11 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/25 13:44:11 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/01/15 15:29:16 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/01/15 17:09:01 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static int	ft_converter(char c, va_list args)
 {

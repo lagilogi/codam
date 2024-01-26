@@ -6,11 +6,11 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/15 10:44:25 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/11/22 15:49:37 by wsonepou      ########   odam.nl         */
+/*   Updated: 2023/11/27 14:52:04 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_nlcheck(char	*str)
 {
