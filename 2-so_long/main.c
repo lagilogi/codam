@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/09 13:36:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/01/26 19:41:12 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/01/29 19:02:19 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	game_initilization(t_game *game)
 	game->image.floor = NULL;
 	game->image.wall = NULL;
 	game->image.player = NULL;
-	game->image.oil = NULL;
+	game->image.coin = NULL;
 	game->image.exit = NULL;
 	game->map.grid = NULL;
 	game->map.columns = 0;
@@ -36,6 +36,9 @@ static void	game_initilization(t_game *game)
 	game->map.player = 0;
 	game->map.collectibles = 0;
 	game->map.exit = 0;
+	game->player.x = 0;
+	game->player.y = 0;
+	game->coin = NULL;
 	game->moves = 0;
 }
 

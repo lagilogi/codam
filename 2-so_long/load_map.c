@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/18 13:51:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/01/24 15:47:20 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/01/29 19:07:21 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ static void	rows_columns_check(t_game *game, char *argv)
 		kill_game(game, EMPTYMAP);
 	game->map.rows = 1;
 	game->map.columns = ft_rowlen(row);
+	free (row);
 	while (1)
 	{
 		row = get_next_line(fd);

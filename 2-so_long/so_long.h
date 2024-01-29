@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:21:26 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/01/26 13:05:17 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/01/29 19:02:01 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,24 @@ typedef struct s_image {
 	mlx_image_t	*floor;
 	mlx_image_t *wall;
 	mlx_image_t *player;
-	mlx_image_t *oil;
+	mlx_image_t *coin;
 	mlx_image_t *exit;
 }	t_image;
 
-// Struct for the player --- PROBABLY DONT NEED
+// Struct for the player
 typedef struct s_player {
 	int	x;
 	int	y;
 }	t_player;
+
+// Struct for Coins
+typedef struct s_coin {
+	int				x;
+	int				y;
+	int				z;
+	int				instance;
+	struct s_coin	*next;
+}	t_coin;
 
 // Struct for map data
 typedef struct s_map {
@@ -70,6 +79,7 @@ typedef struct s_game {
 	t_image		image;
 	t_map		map;
 	t_player	player;
+	t_coin		*coin;
 	int			moves;
 }	t_game;
 
@@ -80,5 +90,7 @@ void	run_game(t_game *game);
 void	load_map(t_game *game, char *argv);
 void	kill_game(t_game *game, char *error);
 void	build_game(t_game *game);
+void	draw_coins(t_game *game);
+void	add_coin_to_list(t_game *game, int y, int x, int i);
 
 #endif

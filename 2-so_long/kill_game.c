@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/23 12:54:01 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/01/24 14:48:52 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/01/29 19:17:31 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ static void	free_map(t_game *game)
 {
 	int	i;
 
-	i = 0;
-	while (game->map.grid != NULL && game->map.grid[i] != NULL)
+	i = game->map.rows - 1;
+	// while (game->map.grid != NULL && game->map.grid[i] != NULL)
+	while (i >= 0 && game->map.grid != NULL)
 	{
 		free(game->map.grid[i]);
-		i++;
+		i--;
 	}
 	if (game->map.grid != NULL)
 		free(game->map.grid);
