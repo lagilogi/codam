@@ -6,13 +6,13 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/18 13:51:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/01/29 19:07:21 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/02 15:03:15 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	ft_rowlen(char *line)
+static int	ft_linelen(char *line)
 {
 	int	i;
 
@@ -23,28 +23,27 @@ static int	ft_rowlen(char *line)
 }
 
 
-static void	element_checker(t_game *game, char c)
+static void	element_checker(t_game *game, char *line, int y, int x)
 {
-	if (c == 'P')
+	if (line[x] == 'P')
 	{
 		game->map.player++;
+		game->player.x = x;
+		game->player.y = y;
 		if (game->map.player != 1)
-			kill_game(game, PLAYERERR);
+			kill_game(game, CHAR_ERROR, 1);
 	}
-	else if (c == 'E')
+	else if (line[x] == 'E')
 	{
 		game->map.exit++;
 		if (game->map.exit != 1)
-			kill_game(game, EXITERR);
+			kill_game(game, CHAR_ERROR, 1);
 	}
-	else if (c == 'C')
-		game->map.collectibles++;
-	else if (c == '1')
-		return ;
-	else if (c == '0')
-		return ;
-	else
-		kill_game(game, ELEMERROR);
+	else if (line[x] == 'C')
+		game->map.coins++;
+	else if (line[x] != '1' && line[x] != '0')
+		kill_game(game, CHAR_ERROR, 1);
+	game->map.grid[y][x] = line[x];
 }
 
 
@@ -53,64 +52,57 @@ static void	loading_map_data(t_game *game, char *argv)
 	int		fd;
 	int		y;
 	int 	x;
-	char	*row;
+	char	*line;
 
-	y = 0;
-	x = 0;
+	y = -1;
+	x = -1;
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
-		kill_game(game, FILE_ERROR);
-	while (y < game->map.rows)
+		kill_game(game, FILE_ERROR, 1);
+	while (++y < game->map.rows)
 	{
-		row = get_next_line(fd);
-		if (row == NULL)
+		line = get_next_line(fd);
+		if (line == NULL)
 			break ;
 		game->map.grid[y] = malloc(game->map.columns * sizeof(char));
 		if (!game->map.grid[y])
-			kill_game(game, MALLOCERR);
-		while (x < game->map.columns)
-		{
-			element_checker(game, row[x]);
-			game->map.grid[y][x] = row[x];
-			x++;
-		}
-		x = 0;
-		y++;
-		free (row);
+			kill_game(game, MALLOC_ERROR, 1);
+		while (++x < game->map.columns)
+			element_checker(game, line, y, x);
+		x = -1;
+		free (line);
 	}
 	close(fd);
-	// printf("grid 1-1: [%c]\n", game->map.grid[1][1]);
 }
 
 
 static void	rows_columns_check(t_game *game, char *argv)
 {
-	char	*row;
+	char	*line;
 	int		fd;
 
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
-		kill_game(game, FILE_ERROR);
-	row = get_next_line(fd);
-	if (!row)
-		kill_game(game, EMPTYMAP);
-	game->map.rows = 1;
-	game->map.columns = ft_rowlen(row);
-	free (row);
-	while (1)
+		kill_game(game, FILE_ERROR, 1);
+	line = get_next_line(fd);
+	if (!line)
+		kill_game(game, EMPTY_MAP, 1);
+	game->map.rows = 0;
+	game->map.columns = ft_linelen(line);
+	free (line);
+	while (++game->map.rows)
 	{
-		row = get_next_line(fd);
-		if (row == NULL)
+		line = get_next_line(fd);
+		if (line == NULL)
 			break ;
-		game->map.rows++;
-		if (ft_rowlen(row) != game->map.columns)
-			kill_game(game, COLUMNERR);
-		free (row);
+		if (ft_linelen(line) != game->map.columns)
+			kill_game(game, COLUMN_ERROR, 1);
+		free (line);
 	}
 	close(fd);
 	game->map.grid = malloc(game->map.rows * sizeof(char *));
 	if (!game->map.grid)
-		kill_game(game, MALLOCERR);
+		kill_game(game, MALLOC_ERROR, 1);
 }
 
 

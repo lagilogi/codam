@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/23 16:43:01 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/01/29 18:59:55 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/02 17:48:56 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	images_loader(t_game *game)
 	mlx_texture_t *txtr_exit = mlx_load_png("./assets/exit.png");
 	if (txtr_floor == NULL || txtr_wall == NULL || txtr_player == NULL
 		|| txtr_coin == NULL || txtr_exit == NULL)
-		kill_game(game, "ERROR: Couldn't load png!");	
+		kill_game(game, "ERROR: Couldn't load png!", 1);	
 	game->image.floor = mlx_texture_to_image(game->mlx, txtr_floor);
 	game->image.wall = mlx_texture_to_image(game->mlx, txtr_wall);
 	game->image.player = mlx_texture_to_image(game->mlx, txtr_player);
@@ -30,16 +30,23 @@ static void	images_loader(t_game *game)
 	if (game->image.floor == NULL || game->image.wall == NULL
 		|| game->image.player == NULL || game->image.coin == NULL
 		|| game->image.exit == NULL)
-		kill_game(game, "ERROR: Couldn't set png to image!");
+		kill_game(game, "ERROR: Couldn't set png to image!", 1);
+	mlx_delete_texture(txtr_floor);
+	mlx_delete_texture(txtr_wall);
+	mlx_delete_texture(txtr_player);
+	mlx_delete_texture(txtr_coin);
+	mlx_delete_texture(txtr_exit);
 }
 
 static void	draw_player(t_game *game)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	bool	drawn;
 
 	x = 0;
 	y = 0;
+	drawn = false;
 	while (y < game->map.rows)
 	{
 		while (x < game->map.columns)
@@ -47,24 +54,23 @@ static void	draw_player(t_game *game)
 			if (game->map.grid[y][x] == 'P')
 			{
 				mlx_image_to_window(game->mlx, game->image.player, x*IMG_W, y*IMG_H);
-				game->player.x = x;
-				game->player.y = y;
+				drawn = true;
 				break ;
 			}
 			x++;
 		}
+		if (drawn)
+			break;
 		y++;
 		x = 0;
 	}
 }
 
-void	draw_coins(t_game *game)
+static void	draw_coins(t_game *game)
 {
 	int	x;
 	int	y;
 	int	i;
-	int	j;
-	t_coin	*temp;
 
 	x = 0;
 	y = 0;
@@ -83,16 +89,6 @@ void	draw_coins(t_game *game)
 		}
 		y++;
 		x = 0;
-	}
-	j = 0;
-	temp = game->coin;
-	while (temp)
-	{
-		printf("Instance %i: %d\n", j, temp->instance);
-		printf("y: %d\n", temp->y);
-		printf("x: %d\n", temp->x);
-		j++;
-		temp = temp->next;
 	}
 }
 

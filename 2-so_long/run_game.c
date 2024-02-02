@@ -6,15 +6,14 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/18 13:55:11 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/01/29 18:21:56 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/02 17:41:15 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	collectible_remover(t_game *game, int y, int x)
+static void	coin_remover(t_game *game, int y, int x)
 {
-	printf("iterate\n");
 	int		y_axis;
 	int		x_axis;
 	int		i;
@@ -25,12 +24,8 @@ static void	collectible_remover(t_game *game, int y, int x)
 	tmp = game->coin;
 	while (tmp != NULL)
 	{
-		printf("iterate\n");
-		printf(">%d<\n", tmp->y);
-
 		if (tmp->y == y_axis && tmp->x == x_axis && tmp->z != -1000)
 		{
-			printf("%d\n", tmp->instance);
 			i = tmp->instance;
 			game->image.coin->instances[i].z = -1000;
 			tmp->z = -1000;
@@ -39,9 +34,9 @@ static void	collectible_remover(t_game *game, int y, int x)
 		else
 			tmp = tmp->next;		
 	}
-	game->map.collectibles--;
+	game->map.coins--;
 	game->map.grid[y][x] = '0';
-	ft_printf("You got a collectible! You have %d collectibles left!\n", game->map.collectibles);
+	ft_printf("You got a coin! You have %d coins left!\n", game->map.coins);
 }
 
 int	tile_check(t_game *game, int y_axis, int x_axis)
@@ -54,13 +49,13 @@ int	tile_check(t_game *game, int y_axis, int x_axis)
 	if (game->map.grid[y][x] != '1')
 	{
 		if (game->map.grid[y][x] == 'C')
-			collectible_remover(game, y, x);
+			coin_remover(game, y, x);
 		else if (game->map.grid[y][x] == 'E')
 		{
-			if (game->map.collectibles == 0)
+			if (game->map.coins == 0)
 			{
-				ft_printf("Congrats! You Escaped!\nClosing game now..\n");
-				exit (EXIT_SUCCESS);
+				ft_printf("Moves: %d\n", ++game->moves);
+				kill_game(game, SUCCESS, 0);
 			}
 		}
 		game->player.y = y;
@@ -68,10 +63,7 @@ int	tile_check(t_game *game, int y_axis, int x_axis)
 		return (1);
 	}
 	else
-	{
-		ft_printf("Nice try! You can't move into the wall, dummy!\n");
-		return (0);
-	}
+		return (ft_printf("You can't move into the wall, dummy!\n") ,0);
 }
 
 void	movement(mlx_key_data_t keydata, void *param)
@@ -100,7 +92,7 @@ void	movement(mlx_key_data_t keydata, void *param)
 		ft_printf("Moves: %d\n", ++game->moves);
 	}
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		kill_game(game, "Closing Game!");
+		kill_game(game, "Closing Game!", 0);
 }
 
 void	run_game(t_game *game)
