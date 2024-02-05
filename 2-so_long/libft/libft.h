@@ -6,12 +6,16 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/18 15:08:38 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/01/16 13:56:11 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/05 14:15:10 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# ifndef GNLBUFFER_SIZE
+#  define GNLBUFFER_SIZE 10
+# endif
 
 # include <bsd/string.h>
 # include <unistd.h>
@@ -56,9 +60,6 @@ char	*ft_substr(char const *s, int start, int len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 
-/*
- * Libft Bonus part
- */
 typedef struct s_list
 {
 	void			*content;
@@ -74,25 +75,11 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-
-/*
- * ft_printf functions
- */
-int	ft_printf(const char *str, ...);
-int	ft_nmbrs(long n, char *base);
-int	ft_ptrs(void *n);
-int	ft_putchar(char c);
-int	ft_putstr(char *s);
-
-/*
- * get_next_line functions
- */
-
-
-
-# ifndef GNLBUFFER_SIZE
-#  define GNLBUFFER_SIZE 10
-# endif
+int		ft_printf(const char *str, ...);
+int		ft_nmbrs(long n, char *base);
+int		ft_ptrs(void *n);
+int		ft_putchar(char c);
+int		ft_putstr(char *s);
 char	*get_next_line(int fd);
 char	*ft_read(int fd, char *rem);
 char	*ft_rem(char *rem, char **line_address);

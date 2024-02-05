@@ -6,33 +6,32 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/23 12:54:01 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/02 17:56:17 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/05 15:21:04 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// static void	free_nodes(t_game *game)
-// {
-// 	t_coin	*tmp;
+static void	free_nodes(t_game *game)
+{
+	t_coin	*tmp;
 
-// 	if (!game->coin)
-// 		return ;
-// 	while (game->coin)
-// 	{
-// 		tmp = game->coin->next;
-// 		free(game->coin);
-// 		game->coin->next = NULL;
-// 		game->coin = tmp;
-// 	}
-// 	game->coin = NULL;
-// }
+	if (!game->coin)
+		return ;
+	while (game->coin)
+	{
+		tmp = game->coin->next;
+		free(game->coin);
+		game->coin = tmp;
+	}
+	game->coin = NULL;
+}
 
 static void	free_map(t_game *game)
 {
 	int	i;
 
-	i = game->map.rows - 1;
+	i = game->map.row - 1;
 	while (i >= 0 && game->map.grid != NULL)
 	{
 		free(game->map.grid[i]);
@@ -50,7 +49,7 @@ void	kill_game(t_game *game, char *message, int i)
 {
 	if (game->mlx)
 		mlx_terminate(game->mlx);
-	// free_nodes(game);
+	free_nodes(game);
 	free_map(game);
 	ft_printf("%s\n", message);
 	if (i == 0)

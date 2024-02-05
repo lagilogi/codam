@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/29 14:39:58 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/02 17:49:59 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/05 13:51:06 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	add_coin_to_list(t_game *game, int y, int x, int i)
 {
 	t_coin	*new;
 	t_coin	*last;
-	
+
 	new = malloc(sizeof(t_coin));
 	if (!new)
 		kill_game(game, "ERROR: Malloc failed creating coin list!", 1);
-	new->x = x * IMG_W;
-	new->y = y * IMG_H;
+	new->x = x * IMGW;
+	new->y = y * IMGH;
 	new->z = 0;
 	new->instance = i;
 	new->next = NULL;

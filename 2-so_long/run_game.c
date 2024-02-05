@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/18 13:55:11 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/02 17:41:15 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/05 18:16:02 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ static void	coin_remover(t_game *game, int y, int x)
 	int		y_axis;
 	int		x_axis;
 	int		i;
-	t_coin 	*tmp;
+	t_coin	*tmp;
 
-	y_axis = y * IMG_H;
-	x_axis = x * IMG_W;
+	y_axis = y * IMGH;
+	x_axis = x * IMGW;
 	tmp = game->coin;
 	while (tmp != NULL)
 	{
 		if (tmp->y == y_axis && tmp->x == x_axis && tmp->z != -1000)
 		{
 			i = tmp->instance;
-			game->image.coin->instances[i].z = -1000;
+			game->img.c->instances[i].z = -1000;
 			tmp->z = -1000;
 			break ;
 		}
 		else
-			tmp = tmp->next;		
+			tmp = tmp->next;
 	}
 	game->map.coins--;
 	game->map.grid[y][x] = '0';
@@ -55,7 +55,7 @@ int	tile_check(t_game *game, int y_axis, int x_axis)
 			if (game->map.coins == 0)
 			{
 				ft_printf("Moves: %d\n", ++game->moves);
-				kill_game(game, SUCCESS, 0);
+				kill_game(game, "Congrats! You Escaped!\nClosing game..", 0);
 			}
 		}
 		game->player.y = y;
@@ -63,36 +63,33 @@ int	tile_check(t_game *game, int y_axis, int x_axis)
 		return (1);
 	}
 	else
-		return (ft_printf("You can't move into the wall, dummy!\n") ,0);
+		return (ft_printf("You can't move into the wall, dummy!\n"), 0);
 }
 
 void	movement(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
+	int		y;
+	int		x;
 
 	game = param;
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS && tile_check(game, -1, 0) == 1)
-	{
-		game->image.player->instances[0].y -= IMG_H;
-		ft_printf("Moves: %d\n", ++game->moves);
-	}
-	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS	&& tile_check(game, 1, 0) == 1)
-	{
-		game->image.player->instances[0].y += IMG_H;
-		ft_printf("Moves: %d\n", ++game->moves);	
-	}
-	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS	&& tile_check(game, 0, -1) == 1)
-	{
-		game->image.player->instances[0].x -= IMG_W;
-		ft_printf("Moves: %d\n", ++game->moves);
-	}
-	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS	&& tile_check(game, 0, 1) == 1)
-	{
-		game->image.player->instances[0].x += IMG_W;
-		ft_printf("Moves: %d\n", ++game->moves);
-	}
+	y = game->player.y;
+	x = game->player.x;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		kill_game(game, "Closing Game!", 0);
+	else if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
+	{
+		if (keydata.key == MLX_KEY_W && tile_check(game, -1, 0) == 1)
+			game->img.p->instances[0].y -= IMGH;
+		else if (keydata.key == MLX_KEY_S && tile_check(game, 1, 0) == 1)
+			game->img.p->instances[0].y += IMGH;
+		else if (keydata.key == MLX_KEY_A && tile_check(game, 0, -1) == 1)
+			game->img.p->instances[0].x -= IMGW;
+		else if (keydata.key == MLX_KEY_D && tile_check(game, 0, 1) == 1)
+			game->img.p->instances[0].x += IMGW;
+		if (x != game->player.x || y != game->player.y)
+			ft_printf("Moves: %d\n", ++game->moves);
+	}
 }
 
 void	run_game(t_game *game)

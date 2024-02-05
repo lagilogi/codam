@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 11:26:48 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/02 15:34:22 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/05 15:01:38 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	free_map_copy(t_game *game, char **mapcpy, int o)
 {
 	int	i;
 
-	i = game->map.rows - 1;
+	i = game->map.row - 1;
 	while (i >= 0 && mapcpy != NULL)
 	{
 		free(mapcpy[i]);
@@ -31,7 +31,7 @@ static void	free_map_copy(t_game *game, char **mapcpy, int o)
 	if (o == 0)
 		return ;
 	else
-		kill_game(game, MALLOC_ERROR, 1);
+		kill_game(game, "ERROR: Failed to malloc map data!", 1);
 }
 
 static void	floodfill(t_game *game, int y, int x, char **mapcpy)
@@ -43,29 +43,29 @@ static void	floodfill(t_game *game, int y, int x, char **mapcpy)
 	else if (mapcpy[y][x] == 'C' || mapcpy[y][x] == 'E')
 		game->map.elements++;
 	mapcpy[y][x] = '1';
-	floodfill(game, y+1, x, mapcpy);
-	floodfill(game, y-1, x, mapcpy);
-	floodfill(game, y, x+1, mapcpy);
-	floodfill(game, y, x-1, mapcpy);
+	floodfill(game, y + 1, x, mapcpy);
+	floodfill(game, y - 1, x, mapcpy);
+	floodfill(game, y, x + 1, mapcpy);
+	floodfill(game, y, x - 1, mapcpy);
 }
 
-static char **map_copier(t_game *game)
+static char	**map_copier(t_game *game)
 {
 	int		y;
 	int		x;
 	char	**mapcpy;
-	
+
 	y = 0;
 	x = 0;
-	mapcpy = malloc(game->map.rows * sizeof(char *));
+	mapcpy = malloc(game->map.row * sizeof(char *));
 	if (!mapcpy)
 		free_map_copy(game, mapcpy, 1);
-	while (y < game->map.rows)
+	while (y < game->map.row)
 	{
-		mapcpy[y] = malloc(game->map.columns * sizeof(char));
+		mapcpy[y] = malloc(game->map.col * sizeof(char));
 		if (!mapcpy[y])
 			free_map_copy(game, mapcpy, 1);
-		while (x < game->map.columns)
+		while (x < game->map.col)
 		{
 			mapcpy[y][x] = game->map.grid[y][x];
 			x++;
@@ -78,18 +78,20 @@ static char **map_copier(t_game *game)
 
 static void	wall_check(t_game *game)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	t_map	map;
 
 	y = 0;
 	x = 0;
-	while (y < game->map.rows)
+	map = game->map;
+	while (y < map.row)
 	{
-		while (x < game->map.columns)
+		while (x < map.col)
 		{
-			if ((y == 0 || y == game->map.rows - 1) && game->map.grid[y][x] != '1')
+			if ((y == 0 || y == map.row - 1) && map.grid[y][x] != '1')
 				kill_game(game, "ERROR: Map not surrounded by walls!", 1);
-			if ((x == 0 || x == game->map.columns - 1) && game->map.grid[y][x] != '1')
+			if ((x == 0 || x == map.col - 1) && map.grid[y][x] != '1')
 				kill_game(game, "ERROR: Map not surrounded by walls!", 1);
 			x++;
 		}
@@ -98,13 +100,12 @@ static void	wall_check(t_game *game)
 	}
 }
 
-
 void	map_checker(t_game *game)
 {
 	char	**mapcpy;
-	
+
 	if (game->map.player != 1 || game->map.exit != 1 || game->map.coins < 1)
-		kill_game(game, ELEM_ERROR, 1);
+		kill_game(game, "ERROR: Incorrect Player, Coin or Exit amount!", 1);
 	wall_check(game);
 	mapcpy = map_copier(game);
 	floodfill(game, game->player.y, game->player.x, mapcpy);
