@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/09 13:36:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/05 15:02:54 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/09 16:47:28 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,20 @@ static void	game_initilization(t_game *game)
 	game->img.p = NULL;
 	game->img.c = NULL;
 	game->img.e = NULL;
+	game->img.t = NULL;
 	game->map.grid = NULL;
 	game->map.col = 0;
 	game->map.row = 0;
 	game->map.player = 0;
 	game->map.coins = 0;
 	game->map.exit = 0;
+	game->map.enemies = 0;
 	game->map.elements = 0;
-	game->player.x = 0;
-	game->player.y = 0;
 	game->coin = NULL;
+	game->win = 0;
+	game->mc = NULL;
 	game->moves = 0;
+	game->enemy = NULL;
 }
 
 static int	arg_check(int argc, const char *map_file)

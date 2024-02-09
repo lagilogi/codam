@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/18 13:51:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/05 14:28:17 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/09 13:50:27 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static void	element_checker(t_game *game, char *line, int y, int x)
 	}
 	else if (line[x] == 'C')
 		game->map.coins++;
+	else if (line[x] == 'T')
+		game->map.enemies++;
 	else if (line[x] != '1' && line[x] != '0')
 		kill_game(game, "ERROR: Invalid character found in map!", 1);
 	game->map.grid[y][x] = line[x];

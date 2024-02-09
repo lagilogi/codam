@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/23 12:54:01 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/05 15:21:04 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/06 17:43:09 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ static void	free_map(t_game *game)
 		free(game->map.grid);
 		game->map.grid = NULL;
 	}
+}
+
+void	kill_game_wrapper(void *param)
+{
+	t_game	*game;
+
+	game = param;
+	kill_game(game, "Closed Game by clicking the X..", 0);
 }
 
 void	kill_game(t_game *game, char *message, int i)
