@@ -6,12 +6,15 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/09 13:36:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/09 16:47:28 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/13 17:43:25 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+// This function is to initialize the window, as well as setting the width and
+// height of it by calculating the rows and columns of the map * the size each
+// sprite has.
 static void	window_initilization(t_game *game)
 {
 	int	width;
@@ -24,15 +27,20 @@ static void	window_initilization(t_game *game)
 		kill_game(game, "ERROR: Couldn't initialize MLX!", 1);
 }
 
+// This function sets all important pointers to NULL before setting them to
+// another value. Besides the pointers, we set all variables that will be
+// incremented to 0.
 static void	game_initilization(t_game *game)
 {
 	game->mlx = NULL;
 	game->img.f = NULL;
 	game->img.w = NULL;
 	game->img.p = NULL;
+	game->img.p2 = NULL;
 	game->img.c = NULL;
 	game->img.e = NULL;
 	game->img.t = NULL;
+	game->img.t2 = NULL;
 	game->map.grid = NULL;
 	game->map.col = 0;
 	game->map.row = 0;
@@ -41,42 +49,59 @@ static void	game_initilization(t_game *game)
 	game->map.exit = 0;
 	game->map.enemies = 0;
 	game->map.elements = 0;
-	game->coin = NULL;
 	game->win = 0;
 	game->mc = NULL;
 	game->moves = 0;
-	game->enemy = NULL;
+	game->time.delta_enemy_move = 0;
+	game->time.delta_animation = 0;
+	game->player.frame = 0;
+	game->enemy_frame = 0;
 }
 
-static int	arg_check(int argc, const char *map_file)
+// The arg_check first checks how many arguments are given in the terminal when
+// starting the game. This can only be 2. The 1st is the game itself, the 2nd
+// is the path towards the map that we want loaded. More or less than 2 gives
+// an error.
+// Then we check if the map has the correct extension, which is .ber.
+// lastly we check the map name length. This can't be shorter or equal to the 
+// length of the extension.
+static void	arg_check(t_game *game, int argc, const char *map_file)
 {
 	int		i;
 	int		len;
 	char	*extension;
 
 	if (argc != 2)
-		return (ft_printf("ERROR: Incorrect amount of arguments given!\n"), 1);
+		kill_game(game, "ERROR\nIncorrect amount of arguments given!", 1);
 	i = 3;
-	len = ft_strlen(map_file);
-	if (len <= 4)
-		return (ft_printf("Map too short\n"), 0);
+	len = strlen(map_file);
 	extension = ".ber";
 	while (i >= 0)
 	{
 		if (map_file[len - 1] != extension[i])
-			return (0);
+			kill_game(game, "ERROR\nWrong map extension!", 1);
 		i--;
 		len--;
 	}
-	return (1);
+	i = 0;
+	len = strlen(map_file);
+	while (len > 0 && map_file[len - 1] != '/')
+	{
+		i++;
+		len--;
+	}
+	if (i <= 4)
+		kill_game(game, "ERROR\nMap name too short!", 1);
 }
 
+// From the main every function for checking, loading, building & running
+// the game are being called in an organized order.
 int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	arg_check(argc, argv[1]);
 	game_initilization(&game);
+	arg_check(&game, argc, argv[1]);
 	load_map(&game, argv[1]);
 	map_checker(&game);
 	window_initilization(&game);

@@ -6,76 +6,55 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/18 13:55:11 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/09 19:08:04 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/13 19:14:29 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	win(t_game *game)
-{
-	mlx_image_t	*win;
-	int			x;
-	int			y;
-
-	x = (game->mlx->width / 2) - (IMGW * 1.85);
-	y = game->mlx->height / 2.5;
-	game->win = 1;
-	game->img.p->instances[0].z = -1000;
-	win = mlx_put_string(game->mlx, "You Escaped!", x, y);
-	ft_printf("Congrats! You escaped!\nPress Esc to exit the game..\n");
-	if (win == NULL)
-		return ;
-	if (!mlx_resize_image(win, win->width * 2.5, win->height * 2.5))
-		return ;
-}
-
-void	lose(t_game *game)
-{
-	mlx_image_t	*lose;
-	int			x;
-	int			y;
-
-	x = (game->mlx->width / 2) - (IMGW * 1.85);
-	y = game->mlx->height / 2.5;
-	game->win = 1;
-	game->img.p->instances[0].z = -1000;
-	lose = mlx_put_string(game->mlx, "Awwh, You Died!", x, y);
-	ft_printf("You died!\nPress Esc to exit the game..\n");
-	if (lose == NULL)
-		return ;
-	if (!mlx_resize_image(lose, lose->width * 2.5, lose->height * 2.5))
-		return ;
-}
-
+// When the player over a coin we need to remove this coin from the game and 
+// also change the value in the grid at that coordinate. Else the player can
+// keep moving over the same tile and keep getting coins. The player only gets a
+// coin when the tile has a 'C' so we change the value to 'c'. To know which
+// instance of the coin it is we go through the grid with a while loop
+// incrementing every time time we find a 'C' or a 'c'.
 static void	coin_remover(t_game *game, int y, int x)
 {
-	int		y_axis;
-	int		x_axis;
-	int		i;
-	t_coin	*tmp;
+	int	i;
+	int	o;
+	int	p;
 
-	y_axis = y * IMGH;
-	x_axis = x * IMGW;
-	tmp = game->coin;
-	while (tmp != NULL)
+	i = 0;
+	o = 0;
+	p = 0;
+	while (o < game->map.row)
 	{
-		if (tmp->y == y_axis && tmp->x == x_axis && tmp->z != -1000)
+		while (p < game->map.col)
 		{
-			i = tmp->instance;
-			game->img.c->instances[i].z = -1000;
-			tmp->z = -1000;
-			break ;
+			if (o == y && p == x)
+			{
+				game->img.c->instances[i].z = 0;
+				game->map.grid[y][x] = 'c';
+			}
+			else if (game->map.grid[o][p] == 'C' || game->map.grid[o][p] == 'c')
+				i++;
+			p++;
 		}
-		else
-			tmp = tmp->next;
+		o++;
+		p = 0;
 	}
 	game->map.coins--;
-	game->map.grid[y][x] = '0';
-	ft_printf("You got a coin! You have %d coins left!\n", game->map.coins);
+	ft_printf("You got a coin! You need %d more coins!\n", game->map.coins);
 }
 
-static int	tile_check(t_game *game, int y_axis, int x_axis)
+// When the player moves we need to know what we're going to move to. If it's
+// a wall then we shouldn't be able to move, if it is a coin we need to pick
+// it up and remove it from the game. If it's an enemy we need to lose or, if 
+// we have all coins and we move toward the exit, we should win. That is what
+// we check here. We get as arguments from the calling function, the changed
+// X or Y value which gets added to the player location and then checked with
+// if statements.
+int	tile_check(t_game *game, int y_axis, int x_axis)
 {
 	int	y;
 	int	x;
@@ -87,7 +66,7 @@ static int	tile_check(t_game *game, int y_axis, int x_axis)
 		if (game->map.grid[y][x] == 'C')
 			coin_remover(game, y, x);
 		else if (game->map.grid[y][x] == 'T')
-			lose(game);		
+			lose (game);
 		else if (game->map.grid[y][x] == 'E')
 		{
 			if (game->map.coins == 0)
@@ -101,50 +80,50 @@ static int	tile_check(t_game *game, int y_axis, int x_axis)
 		return (ft_printf("You can't move into the wall, dummy!\n"), 0);
 }
 
+// This function is for creating animation, enemy movements and the win
+// animation.
+// Mlx->delta_time is the time between every frame, which is around 0.016s.
+// This is very useful as we can use it to increment a variable up to a 
+// certain value, after which something happens like the enemy moving,
+// the animation of our character and enemy or the rocket ship flying up
+// when the win condition is met.
 void	time_passage(void *param)
 {
 	t_game	*game;
-	int		y;
-	int		x;
 
 	game = param;
-	y = game->player.y;
-	x = game->player.x;
-	game->time.passed = mlx_get_time();
-	game->time.frames = game->time.passed / 0.01;
-	if (game->time.frames % 50 == 0 && game->win == 0)
-		enemy_move(game);
-}
-
-static void	movement(mlx_key_data_t keydata, void *param)
-{
-	t_game	*game;
-	int		y;
-	int		x;
-
-	game = param;
-	y = game->player.y;
-	x = game->player.x;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		kill_game(game, "Closing Game!", 0);
-	else if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
+	game->time.delta_enemy_move += game->mlx->delta_time;
+	game->time.delta_animation += game->mlx->delta_time;
+	if (game->time.delta_enemy_move > 1 && game->win == 0)
 	{
-		if (game->win == 0)
-		{
-			if (keydata.key == MLX_KEY_W && tile_check(game, -1, 0) == 1)
-				game->img.p->instances[0].y -= IMGH;
-			else if (keydata.key == MLX_KEY_S && tile_check(game, 1, 0) == 1)
-				game->img.p->instances[0].y += IMGH;
-			else if (keydata.key == MLX_KEY_A && tile_check(game, 0, -1) == 1)
-				game->img.p->instances[0].x -= IMGW;
-			else if (keydata.key == MLX_KEY_D && tile_check(game, 0, 1) == 1)
-				game->img.p->instances[0].x += IMGW;
-			if (x != game->player.x || y != game->player.y)
-				moves_count(game);
-		}
+		enemy_move(game);
+		game->time.delta_enemy_move = 0;
+	}
+	if (game->time.delta_animation > 0.3 && game->win == 0)
+	{
+		player_animation(game);
+		enemy_animation(game);
+		game->time.delta_animation = 0;
+	}
+	if (game->win == 1 && game->img.e2->instances[0].y > -100)
+	{
+		win_animation(game);
 	}
 }
 
+// This is where the interactivity of the game begins. We have a couple of hooks
+// that take care of different things.
+// - Loop_hook - This hook updates everything within the hook every frame of 
+// the screen. We use this hook to update the passage of time and everything
+// that to be updated automatically after a certain amount of time like
+// animations and enemy movements.
+// - Key_hook - This hook is used for the movement of the player. Everytime 
+// certain keys are pressed (or held down) something happens, like moving around
+// or exiting the game when pressing Esc.
+// - Close_hook - This is used simply to close the game in clean way when
+// pressing the cross of the window.
+// - Mlx_loop - This mlx function keeps the window open and lets us use the 
+// other hooks for interactivity.
 void	run_game(t_game *game)
 {
 	mlx_loop_hook(game->mlx, &time_passage, game);
@@ -152,5 +131,3 @@ void	run_game(t_game *game)
 	mlx_close_hook(game->mlx, &kill_game_wrapper, game);
 	mlx_loop(game->mlx);
 }
-
-
