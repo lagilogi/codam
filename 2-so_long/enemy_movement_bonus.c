@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/06 17:53:36 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/13 19:14:42 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/14 15:59:08 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	enemy_move(t_game *game)
 		else
 			y = game->img.t2->instances[i].y / IMGH;
 		x = game->img.t->instances[i].x / IMGW;
-		srand(rand());
+		// srand(rand());
 		random = (rand() % 4) + 1;
 		if (random == 1 && game->map.grid[y + 1][x] == '0')
 			ft_down(game, y, x, i);

@@ -7,7 +7,7 @@ HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 LIBFT	:= ./libft.a
 SRCS	:= main.c run_game.c load_map.c kill_game.c build_game.c \
-			map_checker.c win_lose.c player_movement.c \
+			map_checker.c win_lose.c player_movement.c so_long_utils.c \
 			moves_on_screen_bonus.c enemy_bonus.c enemy_movement_bonus.c animation_bonus.c
 OBJS	:= ${SRCS:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:21:26 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/13 17:48:26 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/14 13:21:10 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_map
 	int		player;
 	int		enemies;
 	int		elements;
+	int		mallocs;
 }	t_map;
 
 typedef struct s_game
@@ -93,6 +94,7 @@ typedef struct s_game
 }	t_game;
 
 void	load_map(t_game *game, char *argv);
+int		ft_linelen(char *line);
 void	map_checker(t_game *game);
 void	build_game(t_game *game);
 void	run_game(t_game *game);

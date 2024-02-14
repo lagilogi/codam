@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/30 11:26:48 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/13 17:47:32 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/14 13:49:15 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,13 @@
 
 // We free the map copy as we no longer need it as well as set all pointers to
 // NULL so we have no dangling pointers.
-static void	free_map_copy(t_game *game, char **mapcpy, int o)
+static void	free_map_copy(t_game *game, char **mapcpy, int y, int o)
 {
-	int	i;
-
-	i = game->map.row - 1;
-	while (i >= 0 && mapcpy != NULL)
+	while (y >= 0 && mapcpy != NULL)
 	{
-		free(mapcpy[i]);
-		mapcpy[i] = NULL;
-		i--;
+		free(mapcpy[y]);
+		mapcpy[y] = NULL;
+		y--;
 	}
 	if (mapcpy != NULL)
 	{
@@ -33,7 +30,7 @@ static void	free_map_copy(t_game *game, char **mapcpy, int o)
 	if (o == 0)
 		return ;
 	else
-		kill_game(game, "ERROR\nFailed to malloc map data!", 1);
+		kill_game(game, "ERROR\nFailed to malloc mapcpy data!", 1);
 }
 
 // To check if we can get to all coins and the exit we use the floodfill
@@ -69,12 +66,12 @@ static char	**map_copier(t_game *game)
 	x = 0;
 	mapcpy = malloc(game->map.row * sizeof(char *));
 	if (!mapcpy)
-		free_map_copy(game, mapcpy, 1);
+		kill_game(game, "ERROR\nFailed to malloc mapcpy data!", 1);
 	while (y < game->map.row)
 	{
 		mapcpy[y] = malloc(game->map.col * sizeof(char));
 		if (!mapcpy[y])
-			free_map_copy(game, mapcpy, 1);
+			free_map_copy(game, mapcpy, y - 1, 1);
 		while (x < game->map.col)
 		{
 			mapcpy[y][x] = game->map.grid[y][x];
@@ -133,5 +130,5 @@ void	map_checker(t_game *game)
 	floodfill(game, game->player.y, game->player.x, mapcpy);
 	if (game->map.elements != game->map.coins + game->map.exit)
 		kill_game(game, "ERROR\nCan't reach every Coin or the Exit!", 1);
-	free_map_copy(game, mapcpy, 0);
+	free_map_copy(game, mapcpy, game->map.row - 1, 0);
 }

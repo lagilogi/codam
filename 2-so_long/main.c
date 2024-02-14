@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/09 13:36:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/13 17:43:25 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/14 12:54:19 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	game_initilization(t_game *game)
 	game->map.exit = 0;
 	game->map.enemies = 0;
 	game->map.elements = 0;
+	game->map.mallocs = -1;
 	game->win = 0;
 	game->mc = NULL;
 	game->moves = 0;

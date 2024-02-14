@@ -6,23 +6,11 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/18 13:51:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/13 17:44:23 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/14 15:17:22 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-// I created a different strlen to end on '\n' as well '\0' as all lines, except
-// for the last one contain a '\n'.
-static int	ft_linelen(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] && line[i] != '\n')
-		i++;
-	return (i);
-}
 
 // As our map can only have specific elements, we don't want any other elements
 // that don't do anything for us. Therefor we check every element and if needed
@@ -64,12 +52,10 @@ static void	element_checker(t_game *game, char *line, int y, int x)
 	game->map.grid[y][x] = line[x];
 }
 
-// Now that we know the size of the map we can start creating the 2D array
-// that will contain our map elements. We now go through the map file again
-// with Get_Next_Line to read and place every map element in our 2D array.
-// We do this by mallocing a char array for char * that we malloc'd before.
-// We then go through each line, checking every element with element_checker.
-static void	loading_map_data(t_game *game, char *argv)
+// We now go through the map file again with Get_Next_Line to read and place 
+// every map element in our 2D array. We go through each line, checking 
+// every element with element_checker.
+static void	placing_elements(t_game *game, char *argv)
 {
 	int		fd;
 	int		y;
@@ -86,23 +72,41 @@ static void	loading_map_data(t_game *game, char *argv)
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		game->map.grid[y] = malloc(game->map.col * sizeof(char));
-		if (!game->map.grid[y])
-			kill_game(game, "ERROR\nFailed to malloc map data!", 1);
 		while (++x < game->map.col)
 			element_checker(game, line, y, x);
 		x = -1;
 		free (line);
 	}
+	line = NULL;
 	close(fd);
+}
+
+// Now that we know the size of the map we can start creating the 2D array
+// by mallocing enough space for every element in every line. We keep track
+// of how many times we malloc'd in case a malloc fails and we need to free
+// all mallocs before the failure. We then call the placing_elements 
+// function to start placing all elements in the 2D array.
+static void	loading_map_data(t_game *game, char *argv)
+{
+	int	y;
+
+	y = 0;
+	while (y < game->map.row)
+	{
+		game->map.grid[y] = malloc(game->map.col * sizeof(char));
+		if (!game->map.grid)
+			kill_game(game, "ERROR\nFailed to malloc map data!", 1);
+		game->map.mallocs++;
+		y++;
+	}
+	placing_elements(game, argv);
 }
 
 // Here we check how many rows and columns are in the map that we chose to
 // load in. We do this by using Get_Next_Line. Every line that gets
 // returned counts as a row. In every line we check the length until "\n"
 // or EOF. If any line has more or less characters in it, it means the 
-// map is not rectangular and will quit and give an error. We also malloc
-// the amount of rows * sizeof(char *) to save lines in the next function.
+// map is not rectangular and will quit and give an error.
 static void	rows_columns_check(t_game *game, char *argv)
 {
 	char	*line;
@@ -113,7 +117,7 @@ static void	rows_columns_check(t_game *game, char *argv)
 		kill_game(game, "ERROR\nCouldn't open file!", 1);
 	line = get_next_line(fd);
 	if (!line)
-		kill_game(game, "ERROR\nEmpty map!", 1);
+		kill_game(game, "ERROR\nEmpty map file!", 1);
 	game->map.row = 0;
 	game->map.col = ft_linelen(line);
 	free (line);
@@ -123,19 +127,26 @@ static void	rows_columns_check(t_game *game, char *argv)
 		if (line == NULL)
 			break ;
 		if (ft_linelen(line) != game->map.col)
-			kill_game(game, "ERROR\nUneven map!", 1);
+			kill_game(game, "ERROR\nMap not rectangular!", 1);
 		free (line);
 	}
 	close(fd);
-	game->map.grid = malloc(game->map.row * sizeof(char *));
-	if (!game->map.grid)
-		kill_game(game, "ERROR\nFailed to malloc map data!", 1);
 }
 
 // The load_map function contains only 2 functions to keep the functions clear
-// and organized.
+// and organized. After the first function we check whether the map is big
+// enough to to be even played before we start mallocing our 2D array for the
+// map. We also malloc the amount of rows * sizeof(char *) to save lines in the 
+// next function.
 void	load_map(t_game *game, char *argv)
 {
 	rows_columns_check(game, argv);
+	if (game->map.row < 3 || game->map.col < 3)
+		kill_game(game, "ERROR\nMap is too small!", 1);
+	else if (game->map.row * game->map.col < 12)
+		kill_game(game, "ERROR\nMap is too small!", 1);
+	game->map.grid = malloc(game->map.row * sizeof(char *));
+	if (!game->map.grid)
+		kill_game(game, "ERROR\nFailed to malloc map data!", 1);
 	loading_map_data(game, argv);
 }

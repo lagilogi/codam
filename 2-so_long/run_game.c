@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/18 13:55:11 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/13 19:14:29 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/14 16:09:19 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,20 @@
 // When the player over a coin we need to remove this coin from the game and 
 // also change the value in the grid at that coordinate. Else the player can
 // keep moving over the same tile and keep getting coins. The player only gets a
-// coin when the tile has a 'C' so we change the value to 'c'. To know which
-// instance of the coin it is we go through the grid with a while loop
-// incrementing every time time we find a 'C' or a 'c'.
+// coin when the tile has a 'C' so we change the value to '0'. To know which
+// instance of the coin it is we go through every instance and compare the 
+// coordinates of the coin with that of the player's next move.
 static void	coin_remover(t_game *game, int y, int x)
 {
 	int	i;
-	int	o;
-	int	p;
 
 	i = 0;
-	o = 0;
-	p = 0;
-	while (o < game->map.row)
-	{
-		while (p < game->map.col)
-		{
-			if (o == y && p == x)
-			{
-				game->img.c->instances[i].z = 0;
-				game->map.grid[y][x] = 'c';
-			}
-			else if (game->map.grid[o][p] == 'C' || game->map.grid[o][p] == 'c')
-				i++;
-			p++;
-		}
-		o++;
-		p = 0;
-	}
+	while (game->img.c->instances[i].x != x * IMGW
+		|| game->img.c->instances[i].y != y * IMGH)
+		i++;
+	game->img.c->instances[i].z = -1;
 	game->map.coins--;
+	game->map.grid[y][x] = '0';
 	ft_printf("You got a coin! You need %d more coins!\n", game->map.coins);
 }
 
@@ -94,12 +79,12 @@ void	time_passage(void *param)
 	game = param;
 	game->time.delta_enemy_move += game->mlx->delta_time;
 	game->time.delta_animation += game->mlx->delta_time;
-	if (game->time.delta_enemy_move > 1 && game->win == 0)
+	if (game->time.delta_enemy_move > 0.2 && game->win == 0)
 	{
 		enemy_move(game);
 		game->time.delta_enemy_move = 0;
 	}
-	if (game->time.delta_animation > 0.3 && game->win == 0)
+	if (game->time.delta_animation > 0.1 && game->win == 0)
 	{
 		player_animation(game);
 		enemy_animation(game);
