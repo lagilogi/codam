@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/18 13:55:11 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/14 16:09:19 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/15 12:54:57 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int	tile_check(t_game *game, int y_axis, int x_axis)
 		return (1);
 	}
 	else
-		return (ft_printf("You can't move into the wall, dummy!\n"), 0);
+	{
+		ft_printf("You can't move into the wall, dummy!\n");
+		return (0);
+	}
 }
 
 // This function is for creating animation, enemy movements and the win
@@ -72,19 +75,19 @@ int	tile_check(t_game *game, int y_axis, int x_axis)
 // certain value, after which something happens like the enemy moving,
 // the animation of our character and enemy or the rocket ship flying up
 // when the win condition is met.
-void	time_passage(void *param)
+static void	time_passage(void *param)
 {
 	t_game	*game;
 
 	game = param;
 	game->time.delta_enemy_move += game->mlx->delta_time;
 	game->time.delta_animation += game->mlx->delta_time;
-	if (game->time.delta_enemy_move > 0.2 && game->win == 0)
+	if (game->time.delta_enemy_move > 0.8 && game->win == 0)
 	{
 		enemy_move(game);
 		game->time.delta_enemy_move = 0;
 	}
-	if (game->time.delta_animation > 0.1 && game->win == 0)
+	if (game->time.delta_animation > 0.3 && game->win == 0)
 	{
 		player_animation(game);
 		enemy_animation(game);

@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/09 13:36:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/14 12:54:19 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/15 12:17:28 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,6 @@ static void	window_initilization(t_game *game)
 static void	game_initilization(t_game *game)
 {
 	game->mlx = NULL;
-	game->img.f = NULL;
-	game->img.w = NULL;
-	game->img.p = NULL;
-	game->img.p2 = NULL;
-	game->img.c = NULL;
-	game->img.e = NULL;
-	game->img.t = NULL;
-	game->img.t2 = NULL;
 	game->map.grid = NULL;
 	game->map.col = 0;
 	game->map.row = 0;

@@ -6,20 +6,13 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/12/18 14:21:26 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/14 13:21:10 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/15 12:54:53 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <string.h>
-# include <memory.h>
-# include <fcntl.h>
-# include <math.h>
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
 # define IMGW 80
@@ -106,7 +99,6 @@ void	kill_game(t_game *game, char *message, int i);
 void	kill_game_wrapper(void *param);
 void	moves_count(t_game *game);
 void	moves_text(t_game *game);
-void	time_passage(void *param);
 void	draw_enemies(t_game *game, mlx_t *mlx);
 void	enemy_move(t_game *game);
 void	enemy_animation(t_game *game);
