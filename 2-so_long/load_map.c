@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/18 13:51:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/14 15:17:22 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/15 17:26:20 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	load_map(t_game *game, char *argv)
 	rows_columns_check(game, argv);
 	if (game->map.row < 3 || game->map.col < 3)
 		kill_game(game, "ERROR\nMap is too small!", 1);
-	else if (game->map.row * game->map.col < 12)
+	else if (game->map.row * game->map.col < 15)
 		kill_game(game, "ERROR\nMap is too small!", 1);
 	game->map.grid = malloc(game->map.row * sizeof(char *));
 	if (!game->map.grid)
