@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:29:45 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/28 18:35:53 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/28 19:00:17 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ typedef	struct s_list
 void	create_list(t_list **head, int argc, char **argv);
 void	kill_program(t_list **stacka, t_list **stackb, char *msg, int i);
 
-int		ft_swap(t_list **head);
 int		ft_push(t_list **stack_old, t_list **stack_new);
+int		ft_swap(t_list **head);
+int		ft_rotate(t_list **head);
+int		ft_rotate_rev(t_list **head);
 
 #endif

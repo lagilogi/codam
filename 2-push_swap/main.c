@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   push_swap.c                                        :+:    :+:            */
+/*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:28:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/28 18:32:56 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/28 19:06:55 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ int	main(int argc, char **argv)
 		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!\n", 1);
 	create_list(&stacka, argc, argv);
 	ft_swap(&stacka);
+	ft_rotate(&stacka);
 	ft_push(&stacka, &stackb);
-	ft_push(&stackb, &stacka);
-	printf("List A:\n");
-	print_list_data(stacka);
-	printf("\nList B:\n");
-	print_list_data(stackb);
+	
+	printf("List A:\n");		// For testing purposes
+	print_list_data(stacka);	// For testing purposes
+	printf("\nList B:\n");		// For testing purposes
+	print_list_data(stackb);	// For testing purposes
 
 	return (0);
 }
