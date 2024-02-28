@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   push_swap.h                                        :+:    :+:            */
+/*   kill_program.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/02/20 11:29:45 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/28 18:35:53 by wsonepou      ########   odam.nl         */
+/*   Created: 2024/02/28 17:53:01 by wsonepou      #+#    #+#                 */
+/*   Updated: 2024/02/28 18:11:07 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "push_swap.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdbool.h>
-
-typedef	struct s_list
+static void	delete_list(t_list **head)
 {
-	int				data;
-	struct s_list	*next;
-}	t_list;
+	t_list	*tmp;
 
-void	create_list(t_list **head, int argc, char **argv);
-void	kill_program(t_list **stacka, t_list **stackb, char *msg, int i);
+	tmp = *head;
+	while (tmp != NULL)
+	{
+		tmp = tmp->next;
+		free(*head);
+		*head = tmp;
+	}
+	*head = NULL;
+	printf("List deleted!\n");
+}
 
-int		ft_swap(t_list **head);
-int		ft_push(t_list **stack_old, t_list **stack_new);
-
-#endif
+void	kill_program(t_list **stacka, t_list **stackb, char *msg, int i)
+{
+	if (*stacka != NULL)
+		delete_list(stacka);
+	if (*stackb != NULL)
+		delete_list(stackb);
+	printf("%s", msg);
+	exit(i);
+}

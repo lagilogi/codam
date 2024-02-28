@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:30:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/21 18:57:42 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/28 17:31:27 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,65 +39,30 @@ static int	ft_atoi2(const char *nptr)
 	return (o * min);
 }
 
-static t_list	*ft_lstlast(t_list *lst)
+static t_list	*create_node(char *num)
 {
-	t_list	*tmp;
+	t_list	*node;
+	node = malloc(sizeof(t_list));
+	if (!node)
+		exit(1); // EXIT
+	node->data = ft_atoi2(num);
+	node->next = NULL;
 
-	tmp = lst;
-	while (tmp != NULL)
-	{
-		if (tmp->next == NULL)
-			return (tmp);
-		else
-			tmp = tmp->next;
-	}
-	return (tmp);
+	return (node);
 }
 
-static void	ft_lstadd_back(t_list **lst, t_list *new)
+void	create_list(t_list **head, int argc, char **argv)
 {
 	t_list	*tmp;
+	int		i = 1;
 
-	if (*lst == NULL)
-		*lst = new;
-	else
-	{
-		tmp = ft_lstlast(*lst);
-		tmp->next = new;
-	}
-}
-
-static t_list	*ft_lstnew(int num, int index)
-{
-	t_list	*new;
-
-	new = malloc(sizeof(t_list));
-	if (new == NULL)
-		return (NULL);
-	new->value = num;
-	new->index = index;
-	new->next = NULL;
-	// new->prev = NULL;
-	return (new);
-}
-
-t_list	*initialize(t_list *stacka, int argc, char **argv)
-{
-	t_list	*new;
-	t_list	*tmp;
-	int		i;
-	int		num;
-
-	i = 1;
-	num = ft_atoi2(argv[i]);
-	stacka = ft_lstnew(num, i);
+	*head = create_node(argv[i]);
 	i++;
+	tmp = *head;
 	while (i < argc)
 	{
-		num = ft_atoi2(argv[i]);
-		tmp = ft_lstnew(num, i);
-		ft_lstadd_back(&stacka, tmp);
+		tmp->next = create_node(argv[i]);
+		tmp = tmp->next;
 		i++;
 	}
-	return (stacka);
 }

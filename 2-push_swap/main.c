@@ -6,57 +6,43 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:28:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/21 18:58:39 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/02/28 18:32:56 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+void	print_list_data(t_list *head)
+{
+	int		i = 1;
+
+	if (head == NULL)
+		printf("PRINT LIST DATA: Linked list is empty!\n");
+	while (head != NULL)
+	{
+		printf("Node %d contains Num: %d\n", i, head->data);
+		head = head->next;
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_list	*stacka;
+	t_list	*stackb;
 
+	stacka = NULL;
+	stackb = NULL;
 	if (argc < 2)
-	{
-		printf("Not enough arguments!\n"); // VERVANG DOOR FT_PRINTF
-		exit(EXIT_FAILURE); // EXIT
-	}
-	stacka = initialize(stacka, argc, argv);
+		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!\n", 1);
+	create_list(&stacka, argc, argv);
+	ft_swap(&stacka);
+	ft_push(&stacka, &stackb);
+	ft_push(&stackb, &stacka);
+	printf("List A:\n");
+	print_list_data(stacka);
+	printf("\nList B:\n");
+	print_list_data(stackb);
 
 	return (0);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	int 	array[5] = {1, 4, 3, 2, 5};
-// 	int		i;
-// 	int		tmp;
-// 	bool	operation;
-// 	i = 0;
-// 	operation = true;
-// 	while (operation == true)
-// 	{
-// 		operation = false;
-// 		while(i < 5)
-// 		{
-// 			if (array[i] > array[i + 1] && i + 1 != 5)
-// 			{
-// 				tmp = array[i];
-// 				array[i] = array[i + 1];
-// 				array[i + 1] = tmp;
-// 				operation = true;
-// 			}
-// 			i++;
-// 		}
-// 		if (operation == false)
-// 			break ;
-// 		i = 0;
-// 	}
-// 	i = 0;
-// 	while(i < 5)
-// 	{
-// 		printf("%d: %d\n", i, array[i]);
-// 		i++;
-// 	}
-// 	return (0);
-// }
