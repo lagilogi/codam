@@ -27,8 +27,13 @@ void	create_list(t_list **head, int argc, char **argv);
 void	kill_program(t_list **stacka, t_list **stackb, char *msg, int i);
 
 int		ft_push(t_list **stack_old, t_list **stack_new);
-int		ft_swap(t_list **head);
-int		ft_rotate(t_list **head);
-int		ft_rotate_rev(t_list **head);
+// int		ft_swap(t_list **head); // OLD function that switches nodes instead of values
+// int		ft_swap(t_list *head);  // OLD function that switches only A or B
+// int		ft_swap_both(t_list *stacka, t_list *stackb); // OLD function that switches only both A and B
+int		ft_swap(t_list *stacka, t_list *stackb, char x);
+// int		ft_rotate(t_list **head);
+int		ft_rotate(t_list **stack1, t_list **stack2, int i);
+// int		ft_rotate_rev(t_list **head);
+int		ft_rotate_rev(t_list **stack1, t_list **stack2, int i);
 
 #endif
