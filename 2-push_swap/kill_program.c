@@ -29,10 +29,10 @@ static void	delete_list(t_list **head)
 
 void	kill_program(t_list **stacka, t_list **stackb, char *msg, int i)
 {
-	if (*stacka != NULL)
+	if (stacka != NULL && *stacka != NULL)
 		delete_list(stacka);
-	if (*stackb != NULL)
+	if (stackb != NULL && *stackb != NULL)
 		delete_list(stackb);
-	printf("%s", msg);
+	printf("%s\n", msg);
 	exit(i);
 }

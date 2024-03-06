@@ -12,7 +12,27 @@
 
 #include "push_swap.h"
 
-static int	ft_atoi2(const char *nptr)
+void	check_doubles(t_list **head)
+{
+	t_list	*tmp;
+	t_list	*prev;
+
+	tmp = (*head)->next;
+	prev = *head;
+	while (prev->next != NULL)
+	{
+		while (tmp != NULL)
+		{
+			if (prev->data == tmp->data)
+				kill_program(head, NULL, "ERROR: Double integer found!", 1);
+			tmp = tmp->next;
+		}
+		prev = prev->next;
+		tmp = prev->next;
+	}
+}
+
+static int	ft_atoi2(const char *nptr, t_list **head)
 {
 	int			i;
 	int			min;
@@ -29,23 +49,20 @@ static int	ft_atoi2(const char *nptr)
 	while (nptr[i] != '\0')
 	{
 		if (nptr[i] < '0' || nptr[i] > '9')
-		{
-			printf("NOT A NUMBER!\n"); // VERVANG DOOR FT_PRINTF
-			exit(EXIT_FAILURE); // EXIT
-		}
+			kill_program(head, NULL, "ERROR: Not a Number!", 1);
 		o = o * 10 + (nptr[i] - '0');
 		i++;
 	}
 	return (o * min);
 }
 
-static t_list	*create_node(char *num)
+static t_list	*create_node(char *num, t_list **head)
 {
 	t_list	*node;
 	node = malloc(sizeof(t_list));
 	if (!node)
-		exit(1); // EXIT
-	node->data = ft_atoi2(num);
+		kill_program(head, NULL, "ERROR: Failed to malloc node!", 1);
+	node->data = ft_atoi2(num, head);
 	node->next = NULL;
 
 	return (node);
@@ -56,13 +73,14 @@ void	create_list(t_list **head, int argc, char **argv)
 	t_list	*tmp;
 	int		i = 1;
 
-	*head = create_node(argv[i]);
+	*head = create_node(argv[i], head);
 	i++;
 	tmp = *head;
 	while (i < argc)
 	{
-		tmp->next = create_node(argv[i]);
+		tmp->next = create_node(argv[i], head);
 		tmp = tmp->next;
 		i++;
 	}
+	check_doubles(head);
 }

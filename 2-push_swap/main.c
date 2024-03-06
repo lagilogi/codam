@@ -26,6 +26,65 @@ void	print_list_data(t_list *head)
 	}
 }
 
+int		count_nodes(t_list *head)
+{
+	int	count = 0;
+
+	if (head == NULL)
+		printf("Linked list is empty!\n");
+	while (head != NULL)
+	{
+		head = head->next;
+		count++;
+	}
+	return (count);
+}
+
+static void	list_of_2(t_list **head)
+{
+	int	moves;
+
+	moves = 0;
+	if ((*head)->data > (*head)->next->data)
+		moves += ft_swap(*head, NULL, 'a');
+	printf("Moves: %d\n", moves);
+}
+
+static void	list_of_3(t_list **head)
+{
+	int		moves;
+	t_list	*node2;
+	t_list	*node3;
+
+	moves = 0;
+	node2 = (*head)->next;
+	node3 = (*head)->next->next;
+	while (!((*head)->data < node2->data && node2->data < node3->data))
+	{
+		if (((*head)->data > node2->data && (*head)->data < node3->data)
+			|| ((*head)->data < node2->data && (*head)->data < node3->data))
+			moves += ft_swap(*head, NULL, 'a');
+		else if ((*head)->data > node2->data && (*head)->data > node3->data)
+		{
+			moves += ft_rotate(head, NULL, 0, 'a');
+			node2 = (*head)->next;
+			node3 = (*head)->next->next;
+		}
+		else if ((*head)->data < node2->data && (*head)->data > node3->data)
+		{
+			moves += ft_rev_rotate(head, NULL, 0, 'a');
+			node2 = (*head)->next;
+			node3 = (*head)->next->next;
+		}
+	}
+	printf("Moves: %d\n", moves);
+}
+
+// void	list_of_5(t_list **stacka, t_list **stackb)
+// {
+
+// }
+
 int	main(int argc, char **argv)
 {
 	t_list	*stacka;
@@ -34,49 +93,73 @@ int	main(int argc, char **argv)
 	stacka = NULL;
 	stackb = NULL;
 	if (argc < 2)
-		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!\n", 1);
+		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!", 1);
 	create_list(&stacka, argc, argv);
-	// ft_swap(&stacka); // OLD function that switches nodes instead of values
-	// ft_swap(stacka);
-	// ft_swap(stacka, stackb, 'a');
-	// ft_rotate(&stacka);
-	ft_push(&stacka, &stackb);
-	ft_push(&stacka, &stackb);
-	ft_push(&stacka, &stackb);
+	if (argc == 3)
+		list_of_2(&stacka);
+	if (argc == 4)
+		list_of_3(&stacka);
+	// if (argc >= 5 && argc <= 6)
+	// 	list_of_5(&stacka, &stackb);
 
-	printf("List A:\n");		// For testing purposes
-	print_list_data(stacka);	// For testing purposes
-	printf("\nList B:\n");		// For testing purposes
-	print_list_data(stackb);	// For testing purposes
-
-	// ft_swap_both(stacka, stackb);
-	// ft_swap(stacka, stackb, 'b');
-	ft_rotate_rev(&stacka, &stackb, 1);
-	// ft_rotate(&stacka);
-
-	// printf("\n\nAfter Swap Both\n");
-	printf("List A:\n");		// For testing purposes
-	print_list_data(stacka);	// For testing purposes
-	printf("\nList B:\n");		// For testing purposes
-	print_list_data(stackb);	// For testing purposes
-
-	// ft_rotate(&stackb, NULL, 0);
-	// ft_rotate(&stacka);
-
-	// printf("\n\nAfter Swap Both\n");
-	// printf("List A:\n");		// For testing purposes
-	// print_list_data(stacka);	// For testing purposes
-	// printf("\nList B:\n");		// For testing purposes
-	// print_list_data(stackb);	// For testing purposes
-
-	// // ft_rotate(&stacka, &stackb, 1);
-	// ft_rotate(&stacka);
-
-	// printf("\n\nAfter Swap Both\n");
-	// printf("List A:\n");		// For testing purposes
-	// print_list_data(stacka);	// For testing purposes
-	// printf("\nList B:\n");		// For testing purposes
-	// print_list_data(stackb);	// For testing purposes
+	print_list_data(stacka);
 
 	return (0);
 }
+
+// ---------------------------------------------------------------------
+
+// int	main(int argc, char **argv)
+// {
+// 	t_list	*stacka;
+// 	t_list	*stackb;
+
+// 	stacka = NULL;
+// 	stackb = NULL;
+// 	if (argc < 2)
+// 		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!\n", 1);
+// 	create_list(&stacka, argc, argv);
+// 	ft_swap(&stacka); // OLD function that switches nodes instead of values
+// 	ft_swap(stacka);
+// 	ft_swap(stacka, stackb, 'a');
+// 	ft_rotate(&stacka);
+// 	ft_push(&stacka, &stackb);
+// 	ft_push(&stacka, &stackb);
+// 	ft_push(&stacka, &stackb);
+
+// 	printf("List A:\n");		// For testing purposes
+// 	print_list_data(stacka);	// For testing purposes
+// 	printf("\nList B:\n");		// For testing purposes
+// 	print_list_data(stackb);	// For testing purposes
+
+// 	ft_swap_both(stacka, stackb);
+// 	ft_swap(stacka, stackb, 'b');
+// 	ft_rotate_rev(&stacka, &stackb, 1);
+// 	ft_rotate(&stacka);
+
+// 	printf("\n\nAfter Swap Both\n");
+// 	printf("List A:\n");		// For testing purposes
+// 	print_list_data(stacka);	// For testing purposes
+// 	printf("\nList B:\n");		// For testing purposes
+// 	print_list_data(stackb);	// For testing purposes
+
+// 	ft_rotate(&stackb, NULL, 0);
+// 	ft_rotate(&stacka);
+
+// 	printf("\n\nAfter Swap Both\n");
+// 	printf("List A:\n");		// For testing purposes
+// 	print_list_data(stacka);	// For testing purposes
+// 	printf("\nList B:\n");		// For testing purposes
+// 	print_list_data(stackb);	// For testing purposes
+
+// 	// ft_rotate(&stacka, &stackb, 1);
+// 	ft_rotate(&stacka);
+
+// 	printf("\n\nAfter Swap Both\n");
+// 	printf("List A:\n");		// For testing purposes
+// 	print_list_data(stacka);	// For testing purposes
+// 	printf("\nList B:\n");		// For testing purposes
+// 	print_list_data(stackb);	// For testing purposes
+
+// 	return (0);
+// }
