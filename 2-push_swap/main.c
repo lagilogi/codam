@@ -40,17 +40,28 @@ int		count_nodes(t_list *head)
 	return (count);
 }
 
-static void	list_of_2(t_list **head)
+bool	list_check(t_list *head)
+{
+	while (head->data < head->next->data)
+	{
+		head = head->next;
+		if (head->next == NULL)
+			return (true);
+	}
+	return (false);
+}
+
+static int	list_of_2(t_list **head)
 {
 	int	moves;
 
 	moves = 0;
 	if ((*head)->data > (*head)->next->data)
 		moves += ft_swap(*head, NULL, 'a');
-	printf("Moves: %d\n", moves);
+	return (moves);
 }
 
-static void	list_of_3(t_list **head)
+static int	list_of_3(t_list **head)
 {
 	int		moves;
 	t_list	*node2;
@@ -77,18 +88,29 @@ static void	list_of_3(t_list **head)
 			node3 = (*head)->next->next;
 		}
 	}
-	printf("Moves: %d\n", moves);
+	return (moves);
 }
 
-// void	list_of_5(t_list **stacka, t_list **stackb)
-// {
+void	list_of_5(t_list **stacka, t_list **stackb)
+{
+	int	moves;
 
-// }
+	moves = 0;
+	moves += ft_push(stacka, stackb, 'b');
+	moves += ft_push(stacka, stackb, 'b');
+	// while (!list_check(*stacka) && *stacka != NULL)
+	// {
+	// 	moves +=
+	// }
+	return (moves);
+
+}
 
 int	main(int argc, char **argv)
 {
 	t_list	*stacka;
 	t_list	*stackb;
+	int		moves;
 
 	stacka = NULL;
 	stackb = NULL;
@@ -96,9 +118,9 @@ int	main(int argc, char **argv)
 		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!", 1);
 	create_list(&stacka, argc, argv);
 	if (argc == 3)
-		list_of_2(&stacka);
+		printf("Moves: %d", list_of_2(&stacka));
 	if (argc == 4)
-		list_of_3(&stacka);
+		printf("Moves: %d", list_of_3(&stacka));
 	// if (argc >= 5 && argc <= 6)
 	// 	list_of_5(&stacka, &stackb);
 

@@ -31,5 +31,6 @@ int		ft_push(t_list **stack_old, t_list **stack_new, char x);
 int		ft_swap(t_list *stacka, t_list *stackb, char x);
 int		ft_rotate(t_list **stack1, t_list **stack2, int i, char x);
 int		ft_rev_rotate(t_list **stack1, t_list **stack2, int i, char x);
+bool	list_check(t_list *head);
 
 #endif
