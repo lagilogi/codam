@@ -12,7 +12,39 @@
 
 #include "push_swap.h"
 
-void	check_doubles(t_list **head)
+static void	indexing(t_list *head, int argc)
+{
+	t_list	*tmp;
+	t_list	*current;
+	int		i;
+	int		highest;
+
+	i = argc - 2;
+	while (i > 0)
+	{
+		tmp = head;
+		highest = INT_MIN;
+		while (tmp != NULL)
+		{
+			if (tmp->index == 0 && tmp->data > highest)
+			{
+				current = tmp;
+				highest = tmp->data;
+			}
+			// printf("Current vs actual: %d - %d\n", current->data, tmp->data);
+			tmp = tmp->next;
+		}
+		current->index = i;
+		i--;
+		// printf("Current index: %d\n", current->index);
+		// printf("Current data: %d\n", current->data);
+	}
+	printf("1 node, data: %d, index: %d\n", head->data, head->index);
+	printf("2 node, data: %d, index: %d\n", head->next->data, head->next->index);
+	printf("3 node, data: %d, index: %d\n", head->next->next->data, head->next->next->index);
+}
+
+static void	check_doubles(t_list **head)
 {
 	t_list	*tmp;
 	t_list	*prev;
@@ -63,6 +95,7 @@ static t_list	*create_node(char *num, t_list **head)
 	if (!node)
 		kill_program(head, NULL, "ERROR: Failed to malloc node!", 1);
 	node->data = ft_atoi2(num, head);
+	node->index = 0;
 	node->next = NULL;
 
 	return (node);
@@ -83,4 +116,5 @@ void	create_list(t_list **head, int argc, char **argv)
 		i++;
 	}
 	check_doubles(head);
+	indexing(*head, argc);
 }

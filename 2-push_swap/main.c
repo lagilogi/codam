@@ -20,7 +20,7 @@ void	print_list_data(t_list *head)
 		printf("PRINT LIST DATA: Linked list is empty!\n");
 	while (head != NULL)
 	{
-		printf("Node %d contains Num: %d\n", i, head->data);
+		printf("Node %d contains Num: %d, with index: %d\n", i, head->data, head->index);
 		head = head->next;
 		i++;
 	}
@@ -51,15 +51,45 @@ bool	list_check(t_list *head)
 	return (false);
 }
 
-static int	list_of_2(t_list **head)
-{
-	int	moves;
+// static int	list_of_2(t_list **head)
+// {
+// 	int	moves;
 
-	moves = 0;
-	if ((*head)->data > (*head)->next->data)
-		moves += ft_swap(*head, NULL, 'a');
-	return (moves);
-}
+// 	moves = 0;
+// 	if ((*head)->data > (*head)->next->data)
+// 		moves += ft_swap(head, NULL, 'a');
+// 	return (moves);
+// }
+
+// static int	list_of_3(t_list **head)
+// {
+// 	int		moves;
+// 	t_list	*node2;
+// 	t_list	*node3;
+
+// 	moves = 0;
+// 	node2 = (*head)->next;
+// 	node3 = (*head)->next->next;
+// 	while (!((*head)->data < node2->data && node2->data < node3->data))
+// 	{
+// 		if (((*head)->data > node2->data && (*head)->data < node3->data)
+// 			|| ((*head)->data < node2->data && (*head)->data < node3->data))
+// 			moves += ft_swap(head, NULL, 'a');
+// 		else if ((*head)->data > node2->data && (*head)->data > node3->data)
+// 		{
+// 			moves += ft_rotate(head, NULL, 0, 'a');
+// 			node2 = (*head)->next;
+// 			node3 = (*head)->next->next;
+// 		}
+// 		else if ((*head)->data < node2->data && (*head)->data > node3->data)
+// 		{
+// 			moves += ft_rev_rotate(head, NULL, 0, 'a');
+// 			node2 = (*head)->next;
+// 			node3 = (*head)->next->next;
+// 		}
+// 	}
+// 	return (moves);
+// }
 
 static int	list_of_3(t_list **head)
 {
@@ -74,7 +104,7 @@ static int	list_of_3(t_list **head)
 	{
 		if (((*head)->data > node2->data && (*head)->data < node3->data)
 			|| ((*head)->data < node2->data && (*head)->data < node3->data))
-			moves += ft_swap(*head, NULL, 'a');
+			moves += ft_swap(head, NULL, "sa", 'a');
 		else if ((*head)->data > node2->data && (*head)->data > node3->data)
 		{
 			moves += ft_rotate(head, NULL, 0, 'a');
@@ -91,20 +121,19 @@ static int	list_of_3(t_list **head)
 	return (moves);
 }
 
-void	list_of_5(t_list **stacka, t_list **stackb)
-{
-	int	moves;
+// int	list_of_5(t_list **stacka, t_list **stackb)
+// {
+// 	int	moves;
 
-	moves = 0;
-	moves += ft_push(stacka, stackb, 'b');
-	moves += ft_push(stacka, stackb, 'b');
-	// while (!list_check(*stacka) && *stacka != NULL)
-	// {
-	// 	moves +=
-	// }
-	return (moves);
-
-}
+// 	moves = 0;
+// 	moves += ft_push(stacka, stackb, 'b');
+// 	moves += ft_push(stacka, stackb, 'b');
+// 	// while (!list_check(*stacka) && *stacka != NULL)
+// 	// {
+// 	// 	moves +=
+// 	// }
+// 	return (moves);
+// }
 
 int	main(int argc, char **argv)
 {
@@ -117,10 +146,10 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!", 1);
 	create_list(&stacka, argc, argv);
-	if (argc == 3)
-		printf("Moves: %d", list_of_2(&stacka));
+	// if (argc == 3)
+	// 	printf("Moves: %d\n", list_of_2(&stacka));
 	if (argc == 4)
-		printf("Moves: %d", list_of_3(&stacka));
+		printf("Moves: %d\n", list_of_3(&stacka));
 	// if (argc >= 5 && argc <= 6)
 	// 	list_of_5(&stacka, &stackb);
 

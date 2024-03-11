@@ -12,34 +12,61 @@
 
 #include "push_swap.h"
 
-int	ft_swap(t_list *stacka, t_list *stackb, char x)
+int	ft_swap(t_list **stacka, t_list **stackb, char *action, char x)
 {
-	int	tmp;
+	t_list	*tmp;
 
-	if ((x == 'a' || x == 'c') && (stacka == NULL || stacka->next == NULL))
+	if ((x == 'a' || x == 'c') && (*stacka == NULL || (*stacka)->next == NULL))
 		return (0);
-	if ((x == 'b' || x == 'c') && (stackb == NULL || stackb->next == NULL))
+	if ((x == 'b' || x == 'c') && (*stackb == NULL || (*stackb)->next == NULL))
 		return (0);
 	if (x == 'a' || x == 'c')
 	{
-		tmp = stacka->data;
-		stacka->data = stacka->next->data;
-		stacka->next->data = tmp;
+		tmp = (*stacka)->next;
+		(*stacka)->next = tmp->next;
+		tmp->next = *stacka;
+		*stacka = tmp;
 	}
 	if (x == 'b' || x == 'c')
 	{
-		tmp = stackb->data;
-		stackb->data = stackb->next->data;
-		stackb->next->data = tmp;
+		tmp = (*stackb)->next;
+		(*stackb)->next = tmp->next;
+		tmp->next = *stackb;
+		*stackb = tmp;
 	}
-	if (x == 'a')
-		write(1, "sa\n", 3);
-	if (x == 'b')
-		write(1, "sb\n", 3);
-	if (x == 'c')
-		write(1, "ss\n", 3);
+	write(1, action, 2);
+	write(1, "\n", 1);
 	return (1);
 }
+
+// int	ft_swap(t_list *stacka, t_list *stackb, char x)
+// {
+// 	int	tmp;
+
+// 	if ((x == 'a' || x == 'c') && (stacka == NULL || stacka->next == NULL))
+// 		return (0);
+// 	if ((x == 'b' || x == 'c') && (stackb == NULL || stackb->next == NULL))
+// 		return (0);
+// 	if (x == 'a' || x == 'c')
+// 	{
+// 		tmp = stacka->data;
+// 		stacka->data = stacka->next->data;
+// 		stacka->next->data = tmp;
+// 	}
+// 	if (x == 'b' || x == 'c')
+// 	{
+// 		tmp = stackb->data;
+// 		stackb->data = stackb->next->data;
+// 		stackb->next->data = tmp;
+// 	}
+// 	if (x == 'a')
+// 		write(1, "sa\n", 3);
+// 	if (x == 'b')
+// 		write(1, "sb\n", 3);
+// 	if (x == 'c')
+// 		write(1, "ss\n", 3);
+// 	return (1);
+// }
 
 int	ft_push(t_list **stack_old, t_list **stack_new, char x)
 {
