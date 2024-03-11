@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   kill_program.c                                     :+:    :+:            */
+/*   ft_lstsize.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/02/28 17:53:01 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/11 16:48:19 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/23 15:05:51 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/23 17:18:03 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-static void	delete_list(t_stack **head)
+// typedef struct s_list
+// {
+// 	void			*content;
+// 	struct s_list	*next;
+// }	t_list;
+
+int	ft_lstsize(t_list *lst)
 {
-	t_stack	*tmp;
+	int		i;
+	t_list	*tmp;
 
-	tmp = *head;
+	i = 0;
+	tmp = lst;
 	while (tmp != NULL)
 	{
+		i++;
 		tmp = tmp->next;
-		free(*head);
-		*head = tmp;
 	}
-	*head = NULL;
-	// printf("List deleted!\n");
-}
-
-void	kill_program(t_stack **stacka, t_stack **stackb, char *msg, int i)
-{
-	if (stacka != NULL && *stacka != NULL)
-		delete_list(stacka);
-	if (stackb != NULL && *stackb != NULL)
-		delete_list(stackb);
-	printf("%s\n", msg);
-	exit(i);
+	return (i);
 }

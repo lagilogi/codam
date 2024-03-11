@@ -1,76 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   op1.c                                              :+:    :+:            */
+/*   psr.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 17:40:00 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/28 19:08:13 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/11 16:52:14 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_swap(t_list **stacka, t_list **stackb, char *action, char x)
+int	ft_swap(t_stack **stacka, t_stack **stackb, char x)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
-	if ((x == 'a' || x == 'c') && (*stacka == NULL || (*stacka)->next == NULL))
+	if ((x == 'a' || x == 's') && (*stacka == NULL || (*stacka)->next == NULL))
 		return (0);
-	if ((x == 'b' || x == 'c') && (*stackb == NULL || (*stackb)->next == NULL))
+	if ((x == 'b' || x == 's') && (*stackb == NULL || (*stackb)->next == NULL))
 		return (0);
-	if (x == 'a' || x == 'c')
+	if (x == 'a' || x == 's')
 	{
 		tmp = (*stacka)->next;
 		(*stacka)->next = tmp->next;
 		tmp->next = *stacka;
 		*stacka = tmp;
 	}
-	if (x == 'b' || x == 'c')
+	if (x == 'b' || x == 's')
 	{
 		tmp = (*stackb)->next;
 		(*stackb)->next = tmp->next;
 		tmp->next = *stackb;
 		*stackb = tmp;
 	}
-	write(1, action, 2);
-	write(1, "\n", 1);
+	ft_printf("s%c\n", x);
 	return (1);
 }
 
-// int	ft_swap(t_list *stacka, t_list *stackb, char x)
-// {
-// 	int	tmp;
-
-// 	if ((x == 'a' || x == 'c') && (stacka == NULL || stacka->next == NULL))
-// 		return (0);
-// 	if ((x == 'b' || x == 'c') && (stackb == NULL || stackb->next == NULL))
-// 		return (0);
-// 	if (x == 'a' || x == 'c')
-// 	{
-// 		tmp = stacka->data;
-// 		stacka->data = stacka->next->data;
-// 		stacka->next->data = tmp;
-// 	}
-// 	if (x == 'b' || x == 'c')
-// 	{
-// 		tmp = stackb->data;
-// 		stackb->data = stackb->next->data;
-// 		stackb->next->data = tmp;
-// 	}
-// 	if (x == 'a')
-// 		write(1, "sa\n", 3);
-// 	if (x == 'b')
-// 		write(1, "sb\n", 3);
-// 	if (x == 'c')
-// 		write(1, "ss\n", 3);
-// 	return (1);
-// }
-
-int	ft_push(t_list **stack_old, t_list **stack_new, char x)
+int	ft_push(t_stack **stack_old, t_stack **stack_new, char x)
 {
-	t_list	*node;
+	t_stack	*node;
 
 	if (*stack_old == NULL)
 		return (0);
@@ -78,19 +48,16 @@ int	ft_push(t_list **stack_old, t_list **stack_new, char x)
 	*stack_old = (*stack_old)->next;
 	node->next = *stack_new;
 	*stack_new = node;
-	if (x == 'a')
-		write(1, "pa\n", 3);
-	else
-		write(1, "pb\n", 3);
+	ft_printf("p%c\n", x);
 	return(1);
 }
 
-int	ft_rotate(t_list **stack1, t_list **stack2, int i, char x) // first node becomes last for stack A, B or for both stacks
+int	ft_rotate(t_stack **stack1, t_stack **stack2, char x) // first node becomes last
 {
-	t_list	*tmp;
-	t_list	*first;
+	t_stack	*tmp;
+	t_stack	*first;
 
-	if (*stack1 == NULL || (stack2 == NULL && i == 1))
+	if (*stack1 == NULL || (stack2 == NULL && x == 'r'))
 		return (0);
 	tmp = *stack1;
 	first = (*stack1)->next;
@@ -100,22 +67,17 @@ int	ft_rotate(t_list **stack1, t_list **stack2, int i, char x) // first node bec
 	(*stack1)->next = NULL;
 	*stack1 = first;
 	if (stack2 != NULL)
-		ft_rotate(stack2, NULL, 0, x);
-	if (x == 'a')
-		write(1, "ra\n", 3);
-	if (x == 'b')
-		write(1, "rb\n", 3);
-	if (x == 'c')
-		write(1, "rr\n", 3);
+		ft_rotate(stack2, NULL, x);
+	ft_printf("r%c\n", x);
 	return (1);
 }
 
-int	ft_rev_rotate(t_list **stack1, t_list **stack2, int i, char x) // last node becomes first
+int	ft_rev_rotate(t_stack **stack1, t_stack **stack2, char x) // last node becomes first
 {
-	t_list	*tmp;
-	t_list	*last;
+	t_stack	*tmp;
+	t_stack	*last;
 
-	if (*stack1 == NULL || (stack2 == NULL && i == 1))
+	if (*stack1 == NULL || (stack2 == NULL && x == 'r'))
 		return (0);
 	tmp = *stack1;
 	while (tmp->next != NULL)
@@ -130,12 +92,7 @@ int	ft_rev_rotate(t_list **stack1, t_list **stack2, int i, char x) // last node 
 	tmp->next = *stack1;
 	*stack1 = tmp;
 	if (stack2 != NULL)
-		ft_rotate(stack2, NULL, 0, x);
-	if (x == 'a')
-		write(1, "rra\n", 4);
-	if (x == 'b')
-		write(1, "rrb\n", 4);
-	if (x == 'c')
-		write(1, "rrr\n", 4);
+		ft_rotate(stack2, NULL, x);
+	ft_printf("rr%c\n", x);
 	return (1);
 }

@@ -6,16 +6,16 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:30:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/28 17:31:27 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/11 16:10:43 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	indexing(t_list *head, int argc)
+static void	indexing(t_stack *head, int argc)
 {
-	t_list	*tmp;
-	t_list	*current;
+	t_stack	*tmp;
+	t_stack	*current;
 	int		i;
 	int		highest;
 
@@ -31,23 +31,17 @@ static void	indexing(t_list *head, int argc)
 				current = tmp;
 				highest = tmp->data;
 			}
-			// printf("Current vs actual: %d - %d\n", current->data, tmp->data);
 			tmp = tmp->next;
 		}
 		current->index = i;
 		i--;
-		// printf("Current index: %d\n", current->index);
-		// printf("Current data: %d\n", current->data);
 	}
-	printf("1 node, data: %d, index: %d\n", head->data, head->index);
-	printf("2 node, data: %d, index: %d\n", head->next->data, head->next->index);
-	printf("3 node, data: %d, index: %d\n", head->next->next->data, head->next->next->index);
 }
 
-static void	check_doubles(t_list **head)
+static void	check_doubles(t_stack **head)
 {
-	t_list	*tmp;
-	t_list	*prev;
+	t_stack	*tmp;
+	t_stack	*prev;
 
 	tmp = (*head)->next;
 	prev = *head;
@@ -64,7 +58,7 @@ static void	check_doubles(t_list **head)
 	}
 }
 
-static int	ft_atoi2(const char *nptr, t_list **head)
+static int	ft_atoi2(const char *nptr, t_stack **head)
 {
 	int			i;
 	int			min;
@@ -88,22 +82,23 @@ static int	ft_atoi2(const char *nptr, t_list **head)
 	return (o * min);
 }
 
-static t_list	*create_node(char *num, t_list **head)
+static t_stack	*create_node(char *num, t_stack **head)
 {
-	t_list	*node;
-	node = malloc(sizeof(t_list));
+	t_stack	*node;
+	node = malloc(sizeof(t_stack));
 	if (!node)
 		kill_program(head, NULL, "ERROR: Failed to malloc node!", 1);
 	node->data = ft_atoi2(num, head);
 	node->index = 0;
 	node->next = NULL;
+	node->prev = NULL; // prev
 
 	return (node);
 }
 
-void	create_list(t_list **head, int argc, char **argv)
+void	create_list(t_stack **head, int argc, char **argv)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 	int		i = 1;
 
 	*head = create_node(argv[i], head);
@@ -112,6 +107,7 @@ void	create_list(t_list **head, int argc, char **argv)
 	while (i < argc)
 	{
 		tmp->next = create_node(argv[i], head);
+		tmp->next->prev = tmp; // prev
 		tmp = tmp->next;
 		i++;
 	}

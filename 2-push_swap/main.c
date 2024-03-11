@@ -6,13 +6,13 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:28:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/02/28 19:06:55 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/11 16:57:42 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_list_data(t_list *head)
+void	print_list_data(t_stack *head)
 {
 	int		i = 1;
 
@@ -20,13 +20,13 @@ void	print_list_data(t_list *head)
 		printf("PRINT LIST DATA: Linked list is empty!\n");
 	while (head != NULL)
 	{
-		printf("Node %d contains Num: %d, with index: %d\n", i, head->data, head->index);
+		printf("Node %d - Num: %d, index: %d\n", i, head->data, head->index);
 		head = head->next;
 		i++;
 	}
 }
 
-int		count_nodes(t_list *head)
+int		count_nodes(t_stack *head)
 {
 	int	count = 0;
 
@@ -40,7 +40,7 @@ int		count_nodes(t_list *head)
 	return (count);
 }
 
-bool	list_check(t_list *head)
+bool	list_check(t_stack *head)
 {
 	while (head->data < head->next->data)
 	{
@@ -51,109 +51,27 @@ bool	list_check(t_list *head)
 	return (false);
 }
 
-// static int	list_of_2(t_list **head)
-// {
-// 	int	moves;
-
-// 	moves = 0;
-// 	if ((*head)->data > (*head)->next->data)
-// 		moves += ft_swap(head, NULL, 'a');
-// 	return (moves);
-// }
-
-// static int	list_of_3(t_list **head)
-// {
-// 	int		moves;
-// 	t_list	*node2;
-// 	t_list	*node3;
-
-// 	moves = 0;
-// 	node2 = (*head)->next;
-// 	node3 = (*head)->next->next;
-// 	while (!((*head)->data < node2->data && node2->data < node3->data))
-// 	{
-// 		if (((*head)->data > node2->data && (*head)->data < node3->data)
-// 			|| ((*head)->data < node2->data && (*head)->data < node3->data))
-// 			moves += ft_swap(head, NULL, 'a');
-// 		else if ((*head)->data > node2->data && (*head)->data > node3->data)
-// 		{
-// 			moves += ft_rotate(head, NULL, 0, 'a');
-// 			node2 = (*head)->next;
-// 			node3 = (*head)->next->next;
-// 		}
-// 		else if ((*head)->data < node2->data && (*head)->data > node3->data)
-// 		{
-// 			moves += ft_rev_rotate(head, NULL, 0, 'a');
-// 			node2 = (*head)->next;
-// 			node3 = (*head)->next->next;
-// 		}
-// 	}
-// 	return (moves);
-// }
-
-static int	list_of_3(t_list **head)
-{
-	int		moves;
-	t_list	*node2;
-	t_list	*node3;
-
-	moves = 0;
-	node2 = (*head)->next;
-	node3 = (*head)->next->next;
-	while (!((*head)->data < node2->data && node2->data < node3->data))
-	{
-		if (((*head)->data > node2->data && (*head)->data < node3->data)
-			|| ((*head)->data < node2->data && (*head)->data < node3->data))
-			moves += ft_swap(head, NULL, "sa", 'a');
-		else if ((*head)->data > node2->data && (*head)->data > node3->data)
-		{
-			moves += ft_rotate(head, NULL, 0, 'a');
-			node2 = (*head)->next;
-			node3 = (*head)->next->next;
-		}
-		else if ((*head)->data < node2->data && (*head)->data > node3->data)
-		{
-			moves += ft_rev_rotate(head, NULL, 0, 'a');
-			node2 = (*head)->next;
-			node3 = (*head)->next->next;
-		}
-	}
-	return (moves);
-}
-
-// int	list_of_5(t_list **stacka, t_list **stackb)
-// {
-// 	int	moves;
-
-// 	moves = 0;
-// 	moves += ft_push(stacka, stackb, 'b');
-// 	moves += ft_push(stacka, stackb, 'b');
-// 	// while (!list_check(*stacka) && *stacka != NULL)
-// 	// {
-// 	// 	moves +=
-// 	// }
-// 	return (moves);
-// }
-
 int	main(int argc, char **argv)
 {
-	t_list	*stacka;
-	t_list	*stackb;
+	t_stack	*stacka;
+	t_stack	*stackb;
 	int		moves;
 
 	stacka = NULL;
 	stackb = NULL;
+	moves = 0;
 	if (argc < 2)
 		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!", 1);
 	create_list(&stacka, argc, argv);
-	// if (argc == 3)
-	// 	printf("Moves: %d\n", list_of_2(&stacka));
-	if (argc == 4)
-		printf("Moves: %d\n", list_of_3(&stacka));
-	// if (argc >= 5 && argc <= 6)
-	// 	list_of_5(&stacka, &stackb);
+	if (argc == 3 || argc == 4)
+		moves += list_of_3(&stacka, moves, argc);
+	else if (argc == 5 || argc == 6)
+		moves += list_of_5(&stacka, &stackb, moves, argc);
+	// else if (argc > 6)
 
+	printf("Moves: %d\n", moves); // CHANGE FOR OWN PRINTF
 	print_list_data(stacka);
+	kill_program(&stacka, &stackb, "Sorting was Succesful!", 0);
 
 	return (0);
 }
