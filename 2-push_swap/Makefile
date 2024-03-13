@@ -4,7 +4,8 @@ CFLAGS =	-Wall -Wextra -Werror -fsanitize=address
 HEADER =	push_swap.h
 LIBFTDIR = 	./libft
 
-SRCS = 		main.c build_nodes.c kill_program.c psr.c small_lists.c move_to_a.c
+SRCS = 		main.c build_nodes.c kill_program.c psr.c sorting.c check_list.c \
+			move_to_a.c move_to_b.c find_position.c
 LIBFT = 	./libft.a
 OBJS =		$(SRCS:.c=.o)
 

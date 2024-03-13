@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 17:53:01 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/11 16:48:19 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/12 16:01:33 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	delete_list(t_stack **head)
 		*head = tmp;
 	}
 	*head = NULL;
-	// printf("List deleted!\n");
 }
 
 void	kill_program(t_stack **stacka, t_stack **stackb, char *msg, int i)

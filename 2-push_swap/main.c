@@ -6,73 +6,64 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:28:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/11 16:57:42 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/13 18:11:13 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_list_data(t_stack *head)
+void	print_list_data(t_stack *stacka, t_stack *stackb)
 {
-	int		i = 1;
+	int		i = 0;
 
-	if (head == NULL)
-		printf("PRINT LIST DATA: Linked list is empty!\n");
-	while (head != NULL)
+	ft_printf("\n- Stack A -\n");
+	if (stacka == NULL)
+		ft_printf("Stack empty!\n");
+	while (stacka != NULL)
 	{
-		printf("Node %d - Num: %d, index: %d\n", i, head->data, head->index);
-		head = head->next;
+		ft_printf("Node %d - Num: %d\n", i, stacka->data);
+		stacka = stacka->next;
 		i++;
 	}
+	i = 0;
+	// stackb = NULL;
+	ft_printf("\n");
+	ft_printf("- Stack B -\n");
+	if (stackb == NULL)
+		ft_printf("Stack empty!\n");
+	while (stackb != NULL)
+	{
+		ft_printf("Node %d - Num: %d\n", i, stackb->data);
+		stackb = stackb->next;
+		i++;
+	}
+	ft_printf("\n\n");
 }
 
-int		count_nodes(t_stack *head)
+static void	set_info(t_info *info, int argc)
 {
-	int	count = 0;
-
-	if (head == NULL)
-		printf("Linked list is empty!\n");
-	while (head != NULL)
-	{
-		head = head->next;
-		count++;
-	}
-	return (count);
-}
-
-bool	list_check(t_stack *head)
-{
-	while (head->data < head->next->data)
-	{
-		head = head->next;
-		if (head->next == NULL)
-			return (true);
-	}
-	return (false);
+	info->size_a = argc - 1;
+	info->size_b = 0;
+	info->moves = 0;
 }
 
 int	main(int argc, char **argv)
 {
 	t_stack	*stacka;
 	t_stack	*stackb;
-	int		moves;
+	t_info	info;
 
 	stacka = NULL;
 	stackb = NULL;
-	moves = 0;
 	if (argc < 2)
 		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!", 1);
+	set_info(&info, argc);
 	create_list(&stacka, argc, argv);
-	if (argc == 3 || argc == 4)
-		moves += list_of_3(&stacka, moves, argc);
-	else if (argc == 5 || argc == 6)
-		moves += list_of_5(&stacka, &stackb, moves, argc);
-	// else if (argc > 6)
+	sorting(&stacka, &stackb, &info);
 
-	printf("Moves: %d\n", moves); // CHANGE FOR OWN PRINTF
-	print_list_data(stacka);
+	ft_printf("Moves: %d\n", info.moves);
+	print_list_data(stacka, stackb);
 	kill_program(&stacka, &stackb, "Sorting was Succesful!", 0);
-
 	return (0);
 }
 

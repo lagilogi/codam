@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:30:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/11 16:10:43 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/12 19:38:48 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,26 +91,26 @@ static t_stack	*create_node(char *num, t_stack **head)
 	node->data = ft_atoi2(num, head);
 	node->index = 0;
 	node->next = NULL;
-	node->prev = NULL; // prev
-
 	return (node);
 }
 
-void	create_list(t_stack **head, int argc, char **argv)
+void	create_list(t_stack **stacka, int argc, char **argv)
 {
 	t_stack	*tmp;
-	int		i = 1;
+	int		i;
 
-	*head = create_node(argv[i], head);
+	i = 1;
+	*stacka = create_node(argv[i], stacka);
 	i++;
-	tmp = *head;
+	tmp = *stacka;
 	while (i < argc)
 	{
-		tmp->next = create_node(argv[i], head);
-		tmp->next->prev = tmp; // prev
+		tmp->next = create_node(argv[i], stacka);
 		tmp = tmp->next;
 		i++;
 	}
-	check_doubles(head);
-	indexing(*head, argc);
+	check_doubles(stacka);
+	indexing(*stacka, argc);
+	if (list_check(*stacka))
+		kill_program(stacka, NULL, "Nothing to sort!\n", 0);
 }
