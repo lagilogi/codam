@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 17:53:01 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/12 16:01:33 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/14 14:13:18 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ static void	delete_list(t_stack **head)
 	*head = NULL;
 }
 
-void	kill_program(t_stack **stacka, t_stack **stackb, char *msg, int i)
+void	kill_program(t_stack **stacka, t_stack **stackb, int i)
 {
 	if (stacka != NULL && *stacka != NULL)
 		delete_list(stacka);
 	if (stackb != NULL && *stackb != NULL)
 		delete_list(stackb);
-	printf("%s\n", msg);
+	if (i == 1)
+		write(2, "Error\n", 6);
 	exit(i);
 }

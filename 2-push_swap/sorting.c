@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 14:30:44 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/13 18:10:24 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/14 15:26:09 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool	just_rotate(t_stack **stacka)
 	tmp = *stacka;
 	first = tmp->data;
 	i = 0;
-	while (tmp != NULL)
+	while (tmp != NULL && i < 2)
 	{
 		if (tmp->next == NULL)
 		{
@@ -76,16 +76,15 @@ void	sorting(t_stack **stacka, t_stack **stackb, t_info *info)
 		rotate_till_correct(stacka, info);
 		return ;
 	}
-	print_list_data(*stacka, *stackb);
+	// print_list_data(*stacka, *stackb);
 	ft_push(stacka, stackb, info, 'b');
 	if (info->size_a > 3 && !just_rotate(stacka))
 		ft_push(stacka, stackb, info, 'b');
-	if (info->size_a > 3)
+	if (info->size_a > 3 && !just_rotate(stacka))
 		move_to_b(stacka, stackb, info);
-	if (!just_rotate(stacka))
-		list_of_3(stacka, info);
+	list_of_3(stacka, info);	
 	// printf("\nAFTER PUSHING TO B\n"); // List checker
-	print_list_data(*stacka, *stackb); // List checker
+	// print_list_data(*stacka, *stackb); // List checker
 	move_to_a(stacka, stackb, info);
 	if (list_check(*stacka))
 		return ;

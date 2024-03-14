@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:29:45 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/13 18:12:06 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/14 13:42:32 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ typedef struct s_info
 }	t_info;
 
 void	create_list(t_stack **head, int argc, char **argv);
-void	kill_program(t_stack **stacka, t_stack **stackb, char *msg, int i);
+void	kill_program(t_stack **stacka, t_stack **stackb, int i);
 
-void		ft_push(t_stack **stack_old, t_stack **stack_new, t_info *info, char x);
-void		ft_swap(t_stack **stacka, t_stack **stackb, t_info *info, char x);
-void		ft_rotate(t_stack **stack1, t_stack **stack2, t_info *info, char x);
-void		ft_rev_rotate(t_stack **stack1, t_stack **stack2, t_info *info, char x);
+void	ft_push(t_stack **stack_old, t_stack **stack_new, t_info *info, char x);
+void	ft_swap(t_stack **stacka, t_stack **stackb, t_info *info, char x);
+void	ft_rotate(t_stack **stack1, t_stack **stack2, t_info *info, char x);
+void	ft_rev_rotate(t_stack **stack1, t_stack **stack2, t_info *info, char x);
 
 void	list_of_3(t_stack **head, t_info *info);
 void	sorting(t_stack **stacka, t_stack **stackb, t_info *info);

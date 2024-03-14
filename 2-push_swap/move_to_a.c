@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 17:30:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/13 18:12:17 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/14 10:37:42 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	move_to_a(t_stack **stacka, t_stack **stackb, t_info *info)
 	while (*stackb != NULL)
 	{
 		pos = find_position(*stacka, *stackb);
-		printf("Position: %d, Size_a: %d\n", pos, info->size_a);
+		// printf("Position: %d, Size_a: %d\n", pos, info->size_a);
 		if (pos == info->size_a - 1)
 			ft_rev_rotate(stacka, NULL, info, 'a');
 		else if (pos <= info->size_a / 2)
@@ -39,6 +39,6 @@ void	move_to_a(t_stack **stacka, t_stack **stackb, t_info *info)
 			}
 		}
 		ft_push(stackb, stacka, info, 'a');
-		print_list_data(*stacka, *stackb);
+		// print_list_data(*stacka, *stackb);
 	}
 }

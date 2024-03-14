@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:28:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/13 18:11:13 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/14 15:28:00 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,70 +56,13 @@ int	main(int argc, char **argv)
 	stacka = NULL;
 	stackb = NULL;
 	if (argc < 2)
-		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!", 1);
+		kill_program(&stacka, &stackb, 1);
 	set_info(&info, argc);
 	create_list(&stacka, argc, argv);
 	sorting(&stacka, &stackb, &info);
 
-	ft_printf("Moves: %d\n", info.moves);
-	print_list_data(stacka, stackb);
-	kill_program(&stacka, &stackb, "Sorting was Succesful!", 0);
+	// ft_printf("Moves: %d\n", info.moves);
+	// print_list_data(stacka, stackb);
+	kill_program(&stacka, &stackb, 0);
 	return (0);
 }
-
-// ---------------------------------------------------------------------
-
-// int	main(int argc, char **argv)
-// {
-// 	t_list	*stacka;
-// 	t_list	*stackb;
-
-// 	stacka = NULL;
-// 	stackb = NULL;
-// 	if (argc < 2)
-// 		kill_program(&stacka, &stackb, "ERROR: Not enough arguments!\n", 1);
-// 	create_list(&stacka, argc, argv);
-// 	ft_swap(&stacka); // OLD function that switches nodes instead of values
-// 	ft_swap(stacka);
-// 	ft_swap(stacka, stackb, 'a');
-// 	ft_rotate(&stacka);
-// 	ft_push(&stacka, &stackb);
-// 	ft_push(&stacka, &stackb);
-// 	ft_push(&stacka, &stackb);
-
-// 	printf("List A:\n");		// For testing purposes
-// 	print_list_data(stacka);	// For testing purposes
-// 	printf("\nList B:\n");		// For testing purposes
-// 	print_list_data(stackb);	// For testing purposes
-
-// 	ft_swap_both(stacka, stackb);
-// 	ft_swap(stacka, stackb, 'b');
-// 	ft_rotate_rev(&stacka, &stackb, 1);
-// 	ft_rotate(&stacka);
-
-// 	printf("\n\nAfter Swap Both\n");
-// 	printf("List A:\n");		// For testing purposes
-// 	print_list_data(stacka);	// For testing purposes
-// 	printf("\nList B:\n");		// For testing purposes
-// 	print_list_data(stackb);	// For testing purposes
-
-// 	ft_rotate(&stackb, NULL, 0);
-// 	ft_rotate(&stacka);
-
-// 	printf("\n\nAfter Swap Both\n");
-// 	printf("List A:\n");		// For testing purposes
-// 	print_list_data(stacka);	// For testing purposes
-// 	printf("\nList B:\n");		// For testing purposes
-// 	print_list_data(stackb);	// For testing purposes
-
-// 	// ft_rotate(&stacka, &stackb, 1);
-// 	ft_rotate(&stacka);
-
-// 	printf("\n\nAfter Swap Both\n");
-// 	printf("List A:\n");		// For testing purposes
-// 	print_list_data(stacka);	// For testing purposes
-// 	printf("\nList B:\n");		// For testing purposes
-// 	print_list_data(stackb);	// For testing purposes
-
-// 	return (0);
-// }

@@ -1,6 +1,6 @@
 NAME =		push_swap
 CC = 		cc
-CFLAGS =	-Wall -Wextra -Werror -fsanitize=address
+CFLAGS =	-Wall -Wextra -Werror #-fsanitize=address
 HEADER =	push_swap.h
 LIBFTDIR = 	./libft
 

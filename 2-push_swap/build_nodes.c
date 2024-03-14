@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:30:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/12 19:38:48 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/14 15:09:21 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	check_doubles(t_stack **head)
 		while (tmp != NULL)
 		{
 			if (prev->data == tmp->data)
-				kill_program(head, NULL, "ERROR: Double integer found!", 1);
+				kill_program(head, NULL, 1);
 			tmp = tmp->next;
 		}
 		prev = prev->next;
@@ -60,9 +60,9 @@ static void	check_doubles(t_stack **head)
 
 static int	ft_atoi2(const char *nptr, t_stack **head)
 {
-	int			i;
-	int			min;
-	int			o;
+	int		i;
+	int		min;
+	long	o;
 
 	i = 0;
 	min = 1;
@@ -72,11 +72,15 @@ static int	ft_atoi2(const char *nptr, t_stack **head)
 		min = -1;
 		i++;
 	}
+	if (nptr[i] == '\0')
+		kill_program(head, NULL, 1);
 	while (nptr[i] != '\0')
 	{
 		if (nptr[i] < '0' || nptr[i] > '9')
-			kill_program(head, NULL, "ERROR: Not a Number!", 1);
+			kill_program(head, NULL, 1);
 		o = o * 10 + (nptr[i] - '0');
+		if (o < INT_MIN || o > INT_MAX)
+			kill_program(head, NULL, 1);
 		i++;
 	}
 	return (o * min);
@@ -87,7 +91,7 @@ static t_stack	*create_node(char *num, t_stack **head)
 	t_stack	*node;
 	node = malloc(sizeof(t_stack));
 	if (!node)
-		kill_program(head, NULL, "ERROR: Failed to malloc node!", 1);
+		kill_program(head, NULL, 1);
 	node->data = ft_atoi2(num, head);
 	node->index = 0;
 	node->next = NULL;
@@ -112,5 +116,5 @@ void	create_list(t_stack **stacka, int argc, char **argv)
 	check_doubles(stacka);
 	indexing(*stacka, argc);
 	if (list_check(*stacka))
-		kill_program(stacka, NULL, "Nothing to sort!\n", 0);
+		kill_program(stacka, NULL, 0);
 }
