@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 14:30:44 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/14 15:26:09 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/18 21:19:51 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,22 @@ void	sorting(t_stack **stacka, t_stack **stackb, t_info *info)
 		rotate_till_correct(stacka, info);
 		return ;
 	}
+
+
+	
 	// print_list_data(*stacka, *stackb);
 	ft_push(stacka, stackb, info, 'b');
 	if (info->size_a > 3 && !just_rotate(stacka))
 		ft_push(stacka, stackb, info, 'b');
 	if (info->size_a > 3 && !just_rotate(stacka))
 		move_to_b(stacka, stackb, info);
-	list_of_3(stacka, info);	
+	list_of_3(stacka, info);
+
+
 	// printf("\nAFTER PUSHING TO B\n"); // List checker
 	// print_list_data(*stacka, *stackb); // List checker
+
+	
 	move_to_a(stacka, stackb, info);
 	if (list_check(*stacka))
 		return ;

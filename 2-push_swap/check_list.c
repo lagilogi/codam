@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/12 14:21:57 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/13 13:42:41 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/18 16:51:39 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,9 @@ void	rotate_till_correct(t_stack **stacka, t_info *info)
 	tmp = *stacka;
 	pos = find_minimum(*stacka);
 	if (pos < info->size_a / 2)
-	{
 		while (!list_check(*stacka))
 			ft_rotate(stacka, NULL, info, 'a');
-	}
 	else
-	{
 		while (!list_check(*stacka))
 			ft_rev_rotate(stacka, NULL, info, 'a');
-	}
 }

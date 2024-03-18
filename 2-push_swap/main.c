@@ -6,13 +6,13 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:28:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/14 15:28:00 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/18 21:20:16 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_list_data(t_stack *stacka, t_stack *stackb)
+void	print_list_data(t_stack *stacka, t_stack *stackb) // For testing purposes
 {
 	int		i = 0;
 
@@ -40,12 +40,38 @@ void	print_list_data(t_stack *stacka, t_stack *stackb)
 	ft_printf("\n\n");
 }
 
-static void	set_info(t_info *info, int argc)
+void	print_info(t_info *info) // For testing purposes
+{
+	printf("rot a: %d\n", info->rot_a);
+	printf("rev rot a: %d\n", info->rev_rot_a);
+	printf("rot b: %d\n", info->rot_b);
+	printf("rev rot b: %d\n", info->rev_rot_b);
+	printf("rot a b: %d\n", info->rot_a_b);
+	printf("rev rot a b: %d\n", info->rev_rot_a_b);
+	printf("min moves: %d\n\n", info->min_moves);
+}
+
+static void	init_info(t_info *info, int argc)
 {
 	info->size_a = argc - 1;
+	info->rot_a = 0;
+	info->rev_rot_a = 0;
 	info->size_b = 0;
+	info->rot_b = 0;
+	info->rev_rot_b = 0;
+	info->rot_a_b = 0;
+	info->rev_rot_a_b = 0;
+	info->min_moves = argc - 1;
 	info->moves = 0;
 }
+
+// void	search_length(t_stack *stacka) // tryout
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while ()
+// }
 
 int	main(int argc, char **argv)
 {
@@ -57,12 +83,14 @@ int	main(int argc, char **argv)
 	stackb = NULL;
 	if (argc < 2)
 		kill_program(&stacka, &stackb, 1);
-	set_info(&info, argc);
+	init_info(&info, argc);
 	create_list(&stacka, argc, argv);
+	// search_length(stacka); // tryout
 	sorting(&stacka, &stackb, &info);
 
-	// ft_printf("Moves: %d\n", info.moves);
-	// print_list_data(stacka, stackb);
+	print_list_data(stacka, stackb); // For testing purposes
+	
+	// ft_printf("Moves: %d\n", info.moves); // For testing purposes
 	kill_program(&stacka, &stackb, 0);
 	return (0);
 }

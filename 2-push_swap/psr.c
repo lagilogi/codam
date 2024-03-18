@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 17:40:00 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/13 13:41:16 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/18 21:22:01 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_rotate(t_stack **stack1, t_stack **stack2, t_info *info, char x) // firs
 	t_stack	*tmp;
 	t_stack	*first;
 
-	if (*stack1 == NULL || (stack2 == NULL && x == 'r'))
+	if (*stack1 == NULL)
 		return ;
 	tmp = *stack1;
 	first = (*stack1)->next;
@@ -90,7 +90,7 @@ void	ft_rev_rotate(t_stack **stack1, t_stack **stack2, t_info *info, char x) // 
 	t_stack	*tmp;
 	t_stack	*last;
 
-	if (*stack1 == NULL || (stack2 == NULL && x == 'r'))
+	if (*stack1 == NULL)
 		return ;
 	tmp = *stack1;
 	while (tmp->next != NULL)
@@ -105,7 +105,7 @@ void	ft_rev_rotate(t_stack **stack1, t_stack **stack2, t_info *info, char x) // 
 	tmp->next = *stack1;
 	*stack1 = tmp;
 	if (stack2 != NULL)
-		ft_rotate(stack2, NULL, info, x);
+		ft_rev_rotate(stack2, NULL, info, x);
 	else
 	{
 		ft_printf("rr%c\n", x);
