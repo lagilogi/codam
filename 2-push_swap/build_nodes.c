@@ -6,37 +6,11 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:30:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/14 15:09:21 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/19 15:27:30 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static void	indexing(t_stack *head, int argc)
-{
-	t_stack	*tmp;
-	t_stack	*current;
-	int		i;
-	int		highest;
-
-	i = argc - 2;
-	while (i > 0)
-	{
-		tmp = head;
-		highest = INT_MIN;
-		while (tmp != NULL)
-		{
-			if (tmp->index == 0 && tmp->data > highest)
-			{
-				current = tmp;
-				highest = tmp->data;
-			}
-			tmp = tmp->next;
-		}
-		current->index = i;
-		i--;
-	}
-}
 
 static void	check_doubles(t_stack **head)
 {
@@ -79,7 +53,7 @@ static int	ft_atoi2(const char *nptr, t_stack **head)
 		if (nptr[i] < '0' || nptr[i] > '9')
 			kill_program(head, NULL, 1);
 		o = o * 10 + (nptr[i] - '0');
-		if (o < INT_MIN || o > INT_MAX)
+		if ((o > INT_MAX && min == 1) || (o - 1 > INT_MAX && min == -1))
 			kill_program(head, NULL, 1);
 		i++;
 	}
@@ -88,12 +62,14 @@ static int	ft_atoi2(const char *nptr, t_stack **head)
 
 static t_stack	*create_node(char *num, t_stack **head)
 {
+	int		value;
 	t_stack	*node;
+
+	value = ft_atoi2(num, head);
 	node = malloc(sizeof(t_stack));
 	if (!node)
 		kill_program(head, NULL, 1);
-	node->data = ft_atoi2(num, head);
-	node->index = 0;
+	node->data = value;
 	node->next = NULL;
 	return (node);
 }
@@ -114,7 +90,6 @@ void	create_list(t_stack **stacka, int argc, char **argv)
 		i++;
 	}
 	check_doubles(stacka);
-	indexing(*stacka, argc);
 	if (list_check(*stacka))
 		kill_program(stacka, NULL, 0);
 }

@@ -1,6 +1,6 @@
 NAME =		push_swap
 CC = 		cc
-CFLAGS =	-Wall -Wextra -Werror #-fsanitize=address
+CFLAGS =	-Wall -Wextra -Werror -g #-fsanitize=address
 HEADER =	push_swap.h
 LIBFTDIR = 	./libft
 
@@ -15,7 +15,7 @@ $(NAME): $(OBJS)
 	@make -C $(LIBFTDIR) all
 	@cp $(LIBFTDIR)/libft.a .
 	@rm $(LIBFTDIR)/libft.a
-	@$(CC) $(CFLAGS) -g $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

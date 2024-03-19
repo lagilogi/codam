@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/12 14:21:57 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/18 16:51:39 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/19 13:22:04 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 bool	list_check(t_stack *head)
 {
-	while (head->data < head->next->data)
+	if (head->next != NULL)
 	{
-		head = head->next;
-		if (head->next == NULL)
-			return (true);
+		while (head->data < head->next->data)
+		{
+			head = head->next;
+			if (head->next == NULL)
+				return (true);
+		}
 	}
 	return (false);
 }

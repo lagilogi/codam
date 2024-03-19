@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 17:30:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/18 21:19:43 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/19 15:29:08 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	move_to_a(t_stack **stacka, t_stack **stackb, t_info *info)
 	while (*stackb != NULL)
 	{
 		find_min_moves(*stacka, *stackb, info);
-		// print_info(info);  // For testing purposes
 		while (info->rot_a_b--)
 			ft_rotate(stacka, stackb, info, 'r');
 		while (info->rev_rot_a_b--)
@@ -107,6 +106,5 @@ void	move_to_a(t_stack **stacka, t_stack **stackb, t_info *info)
 			ft_rev_rotate(stackb, NULL, info, 'b');
 		ft_push(stackb, stacka, info, 'a');
 		reset_info(info);
-		// print_list_data(*stacka, *stackb);  // For testing purposes
 	}
 }

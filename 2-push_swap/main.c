@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:28:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/18 21:20:16 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/19 15:23:06 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	print_list_data(t_stack *stacka, t_stack *stackb) // For testing purposes
 		i++;
 	}
 	i = 0;
-	// stackb = NULL;
 	ft_printf("\n");
 	ft_printf("- Stack B -\n");
 	if (stackb == NULL)
@@ -65,14 +64,6 @@ static void	init_info(t_info *info, int argc)
 	info->moves = 0;
 }
 
-// void	search_length(t_stack *stacka) // tryout
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while ()
-// }
-
 int	main(int argc, char **argv)
 {
 	t_stack	*stacka;
@@ -82,15 +73,10 @@ int	main(int argc, char **argv)
 	stacka = NULL;
 	stackb = NULL;
 	if (argc < 2)
-		kill_program(&stacka, &stackb, 1);
+		kill_program(&stacka, &stackb, 0);
 	init_info(&info, argc);
 	create_list(&stacka, argc, argv);
-	// search_length(stacka); // tryout
 	sorting(&stacka, &stackb, &info);
-
-	print_list_data(stacka, stackb); // For testing purposes
-	
-	// ft_printf("Moves: %d\n", info.moves); // For testing purposes
 	kill_program(&stacka, &stackb, 0);
 	return (0);
 }

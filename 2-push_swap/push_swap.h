@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:29:45 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/18 20:51:38 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/19 15:23:29 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ typedef struct s_info
 	int	rev_rot_a_b;
 	int	min_moves;
 	int	moves;
-	int	first; // Check for first num ascending order - tryout
-	int	last; // Check for last num in ascending order - tryout
-	int	length; // Check length from first to last num - tryout
 }	t_info;
 
 void	create_list(t_stack **head, int argc, char **argv);
