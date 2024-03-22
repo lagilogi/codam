@@ -18,7 +18,7 @@ char	*ft_strrchr(const char *s, int c)
 	unsigned char	x;
 
 	x = (unsigned char) c;
-	if (x < 0 || x > 127)
+	if (x > 127)
 		return ((char *)s);
 	i = ft_strlen(s);
 	while (i >= 0)
