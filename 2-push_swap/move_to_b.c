@@ -6,18 +6,35 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 17:31:14 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/19 15:29:29 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/26 18:46:25 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	find_biggest(t_stack *stackb)
+static bool	smallest_check(t_stack *stackb, t_info *info, int num)
+{
+	while (stackb != NULL)
+	{
+		if (info->halved == true && stackb->data == info->min)
+		{
+			skip_half(&stackb, info);
+			if (stackb == NULL)
+				return (true);
+		}
+		if (num > stackb->data)
+			return (false);
+		stackb = stackb->next;
+	}
+	return (true);
+}
+
+static int	find_biggest(t_stack *stackb, t_info *info)
 {
 	int	biggest;
 	int	pos;
 	int	i;
-	
+
 	biggest = stackb->data;
 	i = 0;
 	pos = 0;
@@ -26,6 +43,10 @@ static int	find_biggest(t_stack *stackb)
 	while (stackb != NULL)
 	{
 		i++;
+		if (info->halved == true && stackb->data == info->min)
+			i += skip_half(&stackb, info);
+		if (stackb == NULL)
+			return (pos);
 		if (stackb->data > biggest)
 		{
 			biggest = stackb->data;
@@ -36,43 +57,44 @@ static int	find_biggest(t_stack *stackb)
 	return (pos);
 }
 
-static int	find_pos_in_b(t_stack *stacka, t_stack *stackb, int num)
+static int	pos_in_b(t_stack *stacka, t_stack *stackb, t_info *info, int num)
 {
-	int	i;
-	int dif;
-	int pos;
+	t_pos_b	tmp;
 
-	i = 0;
-	pos = 0;
-	dif = INT_MAX;
-	if (smallest_check(stackb, stacka->data))
-		return (find_biggest(stackb));
+	tmp.current_pos = 0;
+	tmp.pos = 0;
+	tmp.dif = INT_MAX;
+	if (info->halved == false && smallest_check(stackb, info, stacka->data))
+		return (find_biggest(stackb, info));
+	else if (smallest_check(stackb, info, stacka->data))
+		return (find_smallest_b(stackb, info));
 	while (stackb != NULL)
 	{
-		if (num > stackb->data)
+		if (info->halved == true && stackb->data == info->min)
+			tmp.current_pos += skip_half(&stackb, info);
+		if (stackb == NULL)
+			return (tmp.pos);
+		if (num > stackb->data && num - stackb->data < tmp.dif)
 		{
-			if (num - stackb->data > 0 && num - stackb->data < dif)
-			{
-				dif = num - stackb->data;
-				pos = i;
-			}
+			tmp.dif = num - stackb->data;
+			tmp.pos = tmp.current_pos;
 		}
-		i++;
+		tmp.current_pos++;
 		stackb = stackb->next;
 	}
-	return (pos);
+	return (tmp.pos);
 }
 
 static void	find_min_moves(t_stack *stacka, t_stack *stackb, t_info *info)
 {
-	int a;
+	int	a;
 	int	b;
 	int	moves;
 
 	a = 0;
 	while (stacka != NULL)
 	{
-		b = find_pos_in_b(stacka, stackb, stacka->data);
+		b = pos_in_b(stacka, stackb, info, stacka->data);
 		moves = check_moves(a, b, info);
 		if (moves == 0)
 			break ;
@@ -89,21 +111,27 @@ static void	find_min_moves(t_stack *stacka, t_stack *stackb, t_info *info)
 
 void	move_to_b(t_stack **stacka, t_stack **stackb, t_info *info)
 {
-	while (info->size_a > 3 && !list_check(*stacka))
+	while (info->size_a > 3 && !list_check_a(*stacka))
 	{
+		if (info->halved == false && info->size_a < info->size_b
+			&& info->size_a > 100)
+		{
+			limit_stack_b(*stackb, info);
+			ft_push(stacka, stackb, info, 'b');
+		}
 		find_min_moves(*stacka, *stackb, info);
 		while (info->rot_a_b--)
-			ft_rotate(stacka, stackb, info, 'r');
+			ft_rotate(stacka, stackb, 'r');
 		while (info->rev_rot_a_b--)
-			ft_rev_rotate(stacka, stackb, info, 'r');
+			ft_rev_rotate(stacka, stackb, 'r');
 		while (info->rot_a--)
-			ft_rotate(stacka, NULL, info, 'a');
+			ft_rotate(stacka, NULL, 'a');
 		while (info->rot_b--)
-			ft_rotate(stackb, NULL, info, 'b');
+			ft_rotate(stackb, NULL, 'b');
 		while (info->rev_rot_a--)
-			ft_rev_rotate(stacka, NULL, info, 'a');
+			ft_rev_rotate(stacka, NULL, 'a');
 		while (info->rev_rot_b--)
-			ft_rev_rotate(stackb, NULL, info, 'b');
+			ft_rev_rotate(stackb, NULL, 'b');
 		ft_push(stacka, stackb, info, 'b');
 		reset_info(info);
 	}

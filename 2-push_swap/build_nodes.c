@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:30:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/19 15:27:30 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/26 16:35:47 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ void	create_list(t_stack **stacka, int argc, char **argv)
 		i++;
 	}
 	check_doubles(stacka);
-	if (list_check(*stacka))
+	if (list_check_a(*stacka))
 		kill_program(stacka, NULL, 0);
 }

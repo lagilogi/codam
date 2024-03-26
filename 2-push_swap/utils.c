@@ -6,21 +6,37 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/18 14:53:44 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/19 15:28:57 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/26 17:23:15 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	reset_info(t_info *info)
+int	check_moves(int a, int b, t_info *info)
 {
-	info->rot_a = 0;
-	info->rev_rot_a = 0;
-	info->rot_b = 0;
-	info->rev_rot_b = 0;
-	info->rot_a_b = 0;
-	info->rev_rot_a_b = 0;
-	info->min_moves = info->size_a + info->size_b;
+	if (a > info->size_a / 2)
+		a = a - info->size_a;
+	if (b > info->size_b / 2)
+		b = b - info->size_b;
+	if (a >= 0 && b >= 0)
+	{
+		if (a >= b)
+			return (b + (a - b));
+		else
+			return (a + (b - a));
+	}
+	else if (a < 0 && b < 0)
+	{
+		a = a * -1;
+		b = b * -1;
+		if (a >= b)
+			return (b + (a - b));
+		else
+			return (a + (b - a));
+	}
+	else if (a < 0 && b >= 0)
+		return ((a * -1) + b);
+	return (a + (b * -1));
 }
 
 void	set_info(int a, int b, t_info *info)
@@ -51,51 +67,35 @@ void	set_info(int a, int b, t_info *info)
 	}
 }
 
-int	check_moves(int a, int b, t_info *info)
+int	find_minimum(t_stack *head)
 {
-	if (a > info->size_a / 2)
-		a = a - info->size_a;
-	if (b > info->size_b / 2)
-		b = b - info->size_b;
-    if (a >= 0 && b >= 0)
-    {
-    	if (a >= b)
-    		return (b + (a - b));
-    	else
-    		return (a + (b - a));
-    }
-    else if (a < 0 && b < 0)
-    {
-    	a = a * -1;
-    	b = b * -1;
-		if (a >= b)
-			return (b + (a - b));
-		else
-			return (a + (b - a));
-    }
-    else if (a < 0 && b >= 0)
-        return ((a * -1) + b);
-    return (a + (b * -1));
+	int		i;
+	int		min;
+	int		pos;
+
+	min = INT_MAX;
+	i = 0;
+	while (head != NULL)
+	{
+		if (head->data < min)
+		{
+			min = head->data;
+			pos = i;
+		}
+		i++;
+		head = head->next;
+	}
+	return (pos);
 }
 
-bool	smallest_check(t_stack *stackb, int num)
+void	reset_info(t_info *info)
 {
-	while(stackb != NULL)
-	{
-		if (num > stackb->data)
-			return (false);
-		stackb = stackb->next;
-	}
-	return (true);
-}
-
-bool	biggest_check(t_stack *stacka, int num)
-{
-	while(stacka != NULL)
-	{
-		if (num < stacka->data)
-			return (false);
-		stacka = stacka->next;
-	}
-	return (true);
+	info->rot_a = 0;
+	info->rev_rot_a = 0;
+	info->rot_b = 0;
+	info->rev_rot_b = 0;
+	info->rot_a_b = 0;
+	info->rev_rot_a_b = 0;
+	info->min_moves = info->size_a + info->size_b;
+	info->end = false;
 }

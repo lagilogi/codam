@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 14:30:44 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/19 15:29:40 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/26 18:48:01 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,45 +22,43 @@ void	list_of_3(t_stack **head, t_info *info)
 	if (info->size_a == 2)
 	{
 		if ((*head)->data > (*head)->next->data)
-			ft_swap(head, NULL, info, 'a');
+			ft_swap(head, NULL, 'a');
 		return ;
 	}
 	while (!((*head)->data < node2->data && node2->data < node3->data))
 	{
 		if (((*head)->data > node2->data && (*head)->data < node3->data)
 			|| ((*head)->data < node2->data && (*head)->data < node3->data))
-			ft_swap(head, NULL, info, 'a');
+			ft_swap(head, NULL, 'a');
 		else if ((*head)->data > node2->data && (*head)->data > node3->data)
-			ft_rotate(head, NULL, info, 'a');
+			ft_rotate(head, NULL, 'a');
 		else if ((*head)->data < node2->data && (*head)->data > node3->data)
-			ft_rev_rotate(head, NULL, info, 'a');
+			ft_rev_rotate(head, NULL, 'a');
 		node2 = (*head)->next;
 		node3 = (*head)->next->next;
 	}
 }
 
-bool	just_rotate(t_stack **stacka)
+bool	just_rotate(t_stack *stacka)
 {
-	t_stack *tmp;
 	int		i;
 	int		first;
 
-	tmp = *stacka;
-	first = tmp->data;
+	first = stacka->data;
 	i = 0;
-	while (tmp != NULL && i < 2)
+	while (stacka != NULL && i < 2)
 	{
-		if (tmp->next == NULL)
+		if (stacka->next == NULL)
 		{
-			if (tmp->data > first)
+			if (stacka->data > first)
 				i++;
 		}
-		if (tmp->next != NULL && tmp->data > tmp->next->data)
+		if (stacka->next != NULL && stacka->data > stacka->next->data)
 			i++;
-		tmp = tmp->next;
+		stacka = stacka->next;
 	}
 	if (i >= 2)
-		return(false);
+		return (false);
 	return (true);
 }
 
@@ -73,19 +71,19 @@ void	sorting(t_stack **stacka, t_stack **stackb, t_info *info)
 		list_of_3(stacka, info);
 		return ;
 	}
-	else if (just_rotate(stacka))
+	else if (just_rotate(*stacka))
 	{
 		rotate_till_correct(stacka, info);
 		return ;
 	}
 	ft_push(stacka, stackb, info, 'b');
-	if (info->size_a > 3 && !just_rotate(stacka))
+	if (info->size_a > 3 && !just_rotate(*stacka))
 		ft_push(stacka, stackb, info, 'b');
-	if (info->size_a > 3 && !just_rotate(stacka))
+	if (info->size_a > 3 && !just_rotate(*stacka))
 		move_to_b(stacka, stackb, info);
 	list_of_3(stacka, info);
 	move_to_a(stacka, stackb, info);
-	if (list_check(*stacka))
+	if (list_check_a(*stacka))
 		return ;
 	rotate_till_correct(stacka, info);
 }

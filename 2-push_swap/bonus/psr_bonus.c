@@ -1,16 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   psr.c                                              :+:    :+:            */
+/*   psr_bonus.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 17:40:00 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/26 18:45:39 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/26 18:42:28 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
+
+void	ft_swap(t_stack **stacka, t_stack **stackb, t_info *info, char x)
+{
+	t_stack	*tmp;
+
+	if ((x == 'a' || x == 's') && (*stacka == NULL || (*stacka)->next == NULL))
+		return ;
+	if ((x == 'b' || x == 's') && (*stackb == NULL || (*stackb)->next == NULL))
+		return ;
+	if (x == 'a' || x == 's')
+	{
+		tmp = (*stacka)->next;
+		(*stacka)->next = tmp->next;
+		tmp->next = *stacka;
+		*stacka = tmp;
+	}
+	if (x == 'b' || x == 's')
+	{
+		tmp = (*stackb)->next;
+		(*stackb)->next = tmp->next;
+		tmp->next = *stackb;
+		*stackb = tmp;
+	}
+}
 
 void	ft_push(t_stack **stack_old, t_stack **stack_new, t_info *info, char x)
 {
@@ -35,32 +59,7 @@ void	ft_push(t_stack **stack_old, t_stack **stack_new, t_info *info, char x)
 	}
 }
 
-void	ft_swap(t_stack **stacka, t_stack **stackb, char x)
-{
-	t_stack	*tmp;
-
-	if ((x == 'a' || x == 's') && (*stacka == NULL || (*stacka)->next == NULL))
-		return ;
-	if ((x == 'b' || x == 's') && (*stackb == NULL || (*stackb)->next == NULL))
-		return ;
-	if (x == 'a' || x == 's')
-	{
-		tmp = (*stacka)->next;
-		(*stacka)->next = tmp->next;
-		tmp->next = *stacka;
-		*stacka = tmp;
-	}
-	if (x == 'b' || x == 's')
-	{
-		tmp = (*stackb)->next;
-		(*stackb)->next = tmp->next;
-		tmp->next = *stackb;
-		*stackb = tmp;
-	}
-	ft_printf("s%c\n", x);
-}
-
-void	ft_rotate(t_stack **stack1, t_stack **stack2, char x)
+void	ft_rotate(t_stack **stack1, t_stack **stack2, t_info *info, char x)
 {
 	t_stack	*tmp;
 	t_stack	*first;
@@ -75,12 +74,10 @@ void	ft_rotate(t_stack **stack1, t_stack **stack2, char x)
 	(*stack1)->next = NULL;
 	*stack1 = first;
 	if (stack2 != NULL)
-		ft_rotate(stack2, NULL, x);
-	else
-		ft_printf("r%c\n", x);
+		ft_rotate(stack2, NULL, info, x);
 }
 
-void	ft_rev_rotate(t_stack **stack1, t_stack **stack2, char x)
+void	ft_rev_rotate(t_stack **stack1, t_stack **stack2, t_info *info, char x)
 {
 	t_stack	*tmp;
 	t_stack	*last;
@@ -100,7 +97,5 @@ void	ft_rev_rotate(t_stack **stack1, t_stack **stack2, char x)
 	tmp->next = *stack1;
 	*stack1 = tmp;
 	if (stack2 != NULL)
-		ft_rev_rotate(stack2, NULL, x);
-	else
-		ft_printf("rr%c\n", x);
+		ft_rev_rotate(stack2, NULL, info, x);
 }
