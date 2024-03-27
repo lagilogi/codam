@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:29:45 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/26 18:45:29 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/27 17:26:40 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	rotate_b_till_correct(t_stack **stackb, t_info *info);
 void	limit_stack_b(t_stack *stackb, t_info *info);
 int		find_smallest_b(t_stack *stackb, t_info *info);
 int		skip_half(t_stack **stackb, t_info *info);
+void	set_info_pos_b(t_pos_b	*tmp);
 
 bool	just_rotate(t_stack *stacka);
 int		find_minimum(t_stack *head);

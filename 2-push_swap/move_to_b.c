@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 17:31:14 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/26 18:46:25 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/27 17:28:05 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ static int	pos_in_b(t_stack *stacka, t_stack *stackb, t_info *info, int num)
 {
 	t_pos_b	tmp;
 
-	tmp.current_pos = 0;
-	tmp.pos = 0;
-	tmp.dif = INT_MAX;
+	set_info_pos_b(&tmp);
 	if (info->halved == false && smallest_check(stackb, info, stacka->data))
 		return (find_biggest(stackb, info));
 	else if (smallest_check(stackb, info, stacka->data))
@@ -79,6 +77,8 @@ static int	pos_in_b(t_stack *stacka, t_stack *stackb, t_info *info, int num)
 			tmp.dif = num - stackb->data;
 			tmp.pos = tmp.current_pos;
 		}
+		if (tmp.dif == 1)
+			return (tmp.pos);
 		tmp.current_pos++;
 		stackb = stackb->next;
 	}

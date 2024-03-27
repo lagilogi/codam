@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 17:40:00 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/26 18:45:39 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/27 17:49:56 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_rotate(t_stack **stack1, t_stack **stack2, char x)
 	t_stack	*tmp;
 	t_stack	*first;
 
-	if (*stack1 == NULL)
+	if (*stack1 == NULL || (*stack1)->next == NULL)
 		return ;
 	tmp = *stack1;
 	first = (*stack1)->next;
@@ -85,7 +85,7 @@ void	ft_rev_rotate(t_stack **stack1, t_stack **stack2, char x)
 	t_stack	*tmp;
 	t_stack	*last;
 
-	if (*stack1 == NULL)
+	if (*stack1 == NULL || (*stack1)->next == NULL)
 		return ;
 	tmp = *stack1;
 	while (tmp->next != NULL)

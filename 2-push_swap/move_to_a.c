@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 17:30:31 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/26 18:46:12 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/27 17:24:18 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,25 @@ static bool	biggest_check(t_stack *stacka, int num)
 
 static int	find_pos_in_a(t_stack *stacka, t_stack *stackb, int num)
 {
-	int	i;
-	int	dif;
+	int	current_pos;
 	int	pos;
+	int	dif;
 
-	i = 0;
+	current_pos = 0;
 	pos = 0;
 	dif = INT_MAX;
 	if (biggest_check(stacka, stackb->data))
 		return (find_smallest(stacka));
 	while (stacka != NULL)
 	{
-		if (num < stacka->data)
+		if (num < stacka->data && stacka->data - num < dif)
 		{
-			if (stacka->data - num > 0 && stacka->data - num < dif)
-			{
-				dif = stacka->data - num;
-				pos = i;
-			}
+			dif = stacka->data - num;
+			pos = current_pos;
 		}
-		i++;
+		if (dif == 1)
+			return (pos);
+		current_pos++;
 		stacka = stacka->next;
 	}
 	return (pos);
