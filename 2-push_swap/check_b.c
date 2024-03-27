@@ -14,9 +14,6 @@
 
 void	limit_stack_b(t_stack *stackb, t_info *info)
 {
-	t_stack	*tmp;
-
-	tmp = stackb;
 	info->min = stackb->data;
 	while (stackb->next != NULL)
 		stackb = stackb->next;
