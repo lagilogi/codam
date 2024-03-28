@@ -14,14 +14,10 @@
 
 void	limit_stack_b(t_stack *stackb, t_info *info)
 {
-<<<<<<< HEAD
 	t_stack	*tmp;
 
 	tmp = stackb;
 	info->top = stackb->data;
-=======
-	info->min = stackb->data;
->>>>>>> refs/remotes/origin/main
 	while (stackb->next != NULL)
 		stackb = stackb->next;
 	info->bottom = stackb->data;
