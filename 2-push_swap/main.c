@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:28:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/26 17:04:35 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/28 18:42:39 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	init_info(t_info *info, int argc)
 	info->rot_a_b = 0;
 	info->rev_rot_a_b = 0;
 	info->min_moves = argc - 1;
-	info->min = INT_MAX;
-	info->max = INT_MIN;
+	info->top = INT_MAX;
+	info->bottom = INT_MIN;
 	info->halved = false;
 	info->end = false;
 	info->moves = 0;

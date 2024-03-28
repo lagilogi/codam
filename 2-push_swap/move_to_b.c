@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 17:31:14 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/27 17:28:05 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/28 18:43:40 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	smallest_check(t_stack *stackb, t_info *info, int num)
 {
 	while (stackb != NULL)
 	{
-		if (info->halved == true && stackb->data == info->min)
+		if (info->halved == true && stackb->data == info->top)
 		{
 			skip_half(&stackb, info);
 			if (stackb == NULL)
@@ -43,7 +43,7 @@ static int	find_biggest(t_stack *stackb, t_info *info)
 	while (stackb != NULL)
 	{
 		i++;
-		if (info->halved == true && stackb->data == info->min)
+		if (info->halved == true && stackb->data == info->top)
 			i += skip_half(&stackb, info);
 		if (stackb == NULL)
 			return (pos);
@@ -65,10 +65,10 @@ static int	pos_in_b(t_stack *stacka, t_stack *stackb, t_info *info, int num)
 	if (info->halved == false && smallest_check(stackb, info, stacka->data))
 		return (find_biggest(stackb, info));
 	else if (smallest_check(stackb, info, stacka->data))
-		return (find_smallest_b(stackb, info));
+		return (find_top(stackb, info));
 	while (stackb != NULL)
 	{
-		if (info->halved == true && stackb->data == info->min)
+		if (info->halved == true && stackb->data == info->top)
 			tmp.current_pos += skip_half(&stackb, info);
 		if (stackb == NULL)
 			return (tmp.pos);

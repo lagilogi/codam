@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:30:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/27 14:13:18 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/28 19:18:31 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,6 @@ static t_stack	*create_node(char *num, t_stack **head)
 	return (node);
 }
 
-bool	list_check_a(t_stack *head) // NEEDS TO BE REMOVED
-{
-	if (head->next != NULL)
-	{
-		while (head->data < head->next->data)
-		{
-			head = head->next;
-			if (head->next == NULL)
-				return (true);
-		}
-	}
-	return (false);
-}
-
 void	create_list(t_stack **stacka, int argc, char **argv)
 {
 	t_stack	*tmp;
@@ -104,6 +90,4 @@ void	create_list(t_stack **stacka, int argc, char **argv)
 		i++;
 	}
 	check_doubles(stacka);
-	if (list_check_a(*stacka))
-		kill_program(stacka, NULL, NULL, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/20 11:29:45 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/27 17:26:40 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/28 18:42:05 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ typedef struct s_info
 	int		rot_a_b;
 	int		rev_rot_a_b;
 	int		min_moves;
-	int		min;
-	int		max;
+	int		top;
+	int		bottom;
 	bool	halved;
 	bool	end;
 	int		moves;
@@ -69,7 +69,7 @@ bool	list_check_a(t_stack *head);
 void	move_to_b(t_stack **stacka, t_stack **stackb, t_info *info);
 void	rotate_b_till_correct(t_stack **stackb, t_info *info);
 void	limit_stack_b(t_stack *stackb, t_info *info);
-int		find_smallest_b(t_stack *stackb, t_info *info);
+int		find_top(t_stack *stackb, t_info *info);
 int		skip_half(t_stack **stackb, t_info *info);
 void	set_info_pos_b(t_pos_b	*tmp);
 

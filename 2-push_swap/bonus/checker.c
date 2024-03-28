@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 18:42:08 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/27 14:44:17 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/28 19:29:31 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,12 @@ static void	manual_sorting(t_stack **stacka, t_stack **stackb)
 	char	*str;
 
 	str = get_next_line(0);
-	while (input(stacka, stackb, &str))
+	while (str != NULL)
 	{
+		input(stacka, stackb, &str);
 		free (str);
 		str = get_next_line(0);
-		if (str == NULL)
-			break ;
 	}
-	free (str);
 	if (check_list(*stacka, *stackb))
 		write(1, "OK\n", 3);
 	else

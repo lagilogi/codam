@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 17:31:14 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/03/27 17:44:16 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/03/28 18:42:27 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	limit_stack_b(t_stack *stackb, t_info *info)
 	t_stack	*tmp;
 
 	tmp = stackb;
-	info->min = stackb->data;
+	info->top = stackb->data;
 	while (stackb->next != NULL)
 		stackb = stackb->next;
-	info->max = stackb->data;
+	info->bottom = stackb->data;
 	info->halved = true;
 }
 
@@ -31,7 +31,7 @@ int	skip_half(t_stack **stackb, t_info *info)
 	i = 0;
 	while (*stackb != NULL)
 	{
-		if ((*stackb)->data == info->max)
+		if ((*stackb)->data == info->bottom)
 		{
 			*stackb = (*stackb)->next;
 			return (i + 1);
@@ -43,30 +43,15 @@ int	skip_half(t_stack **stackb, t_info *info)
 	return (i);
 }
 
-int	find_smallest_b(t_stack *stackb, t_info *info)
+int	find_top(t_stack *stackb, t_info *info)
 {
-	int	smallest;
 	int	pos;
-	int	i;
 
-	smallest = stackb->data;
-	i = 0;
 	pos = 0;
-	if (stackb->next != NULL)
-		stackb = stackb->next;
-	while (stackb != NULL)
+	while (stackb->next->data != info->top)
 	{
-		i++;
-		if (info->halved == true && stackb->data == info->min)
-			i += skip_half(&stackb, info);
-		if (stackb == NULL)
-			return (pos + 1);
-		if (stackb->data < smallest)
-		{
-			smallest = stackb->data;
-			pos = i;
-		}
 		stackb = stackb->next;
+		pos++;
 	}
 	return (pos + 1);
 }
