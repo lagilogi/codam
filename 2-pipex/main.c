@@ -1,25 +1,25 @@
 
 #include "pipex.h"
 
-static void	checking_parsing(t_info *info) // CHECKING PARSING
-{
-	int i = 0;
-	int o = 0;
-	t_cmds	*tmp;
+// static void	checking_parsing(t_info *info) // CHECKING PARSING
+// {
+// 	int i = 0;
+// 	int o = 0;
+// 	t_cmds	*tmp;
 
-	tmp = info->cmds;
-	while (tmp != NULL)
-	{
-		while (tmp->str[i] != NULL)
-		{
-			printf("CMD %d-%d: %s\n", o, i, tmp->str[i]);
-			i++;
-		}
-		tmp = tmp->next;
-		o++;
-		i = 0;
-	}
-}
+// 	tmp = info->cmds;
+// 	while (tmp != NULL)
+// 	{
+// 		while (tmp->str[i] != NULL)
+// 		{
+// 			printf("CMD %d-%d: %s\n", o, i, tmp->str[i]);
+// 			i++;
+// 		}
+// 		tmp = tmp->next;
+// 		o++;
+// 		i = 0;
+// 	}
+// }
 
 
 // int	main(int argc, char **argv, char **envp)
@@ -40,8 +40,9 @@ static void	checking_parsing(t_info *info) // CHECKING PARSING
 
 
 
-// 	char *str[] = {"ls", NULL}; // TESTING EXECVE FUNCTION
-// 	execve("/bin/ls", str, envp); // TESTING EXECVE FUNCTION
+	// char *str[] = {"ls", NULL}; // TESTING EXECVE FUNCTION
+	// execve("/bin/ls", str, envp); // TESTING EXECVE FUNCTION
+	// str = {"wc", "-l"}; // TESTING - This is what is in str
 
 
 
@@ -152,13 +153,23 @@ int		main(int argc, char **argv)
 
 
 	int fd_infile = open("file1.txt", O_RDONLY); // TRYOUT 5
-	int fd_outfile = open("file2.txt", O_WRONLY);
+	// int fd_infile = open(argv[1], O_RDONLY); // TRYOUT 5
+	int fd_outfile = open("file2.txt", O_CREAT | O_TRUNC | O_WRONLY, 0777);
+	// int fd_outfile = open(argv[argc - 1], O_WRONLY);
 
+	argc = 0;
 	int fd[2];
-	int fd_infile_dup = dup2(fd_infile, fd[1]);
-	int fd_outfile_dup = dup2(fd_outfile, fd[0]);
+	// int fd_infile_dup = dup2(fd_infile, fd[1]);
+	// int fd_outfile_dup = dup2(fd_outfile, fd[0]);
 	pipe(fd);
 	int pid = fork();
+	int og_stdin = dup(STDIN_FILENO); // 0
+	int og_stdout = dup(STDOUT_FILENO);// 1
+
+	dup2(fd, STDIN_FILENO); // 0
+	close(fd);
+	dup2(STDIN_FILENO, og_stdin); // 0
+	
 
 	if (pid == 0)
 	{
@@ -196,10 +207,28 @@ int		main(int argc, char **argv)
 		close(fd[0]);
 		close(fd_outfile);
 	}
+	close(0);
+	close(1);
 
-
+	argv = NULL;
+	return 0;
 
 
 
 }
+
+printf("here\n");
+ft_printf(char *c, ...);
+
+ft_printf_fd(int fd, char *c, ...);
+{
+	write (fd)
+}
+
+ptr hello
+ptr world
+write(2, ptr, strlen(ptr));
+write(2, "\n", 1);
+
+write(2, ptr2, strlen(ptr2));
 
