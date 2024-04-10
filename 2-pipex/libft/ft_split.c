@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/13 13:26:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2023/11/01 15:40:14 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/10 13:38:36 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	**ft_split(char const *s, char c)
 // int main (){
 // 	int i = 0;
 // 	char str[] = " Hello World ";
-// 	char del = 32:' ';
+// 	char del = ' ';
 
 // 	int o = ft_wordcount(str, del);
 // 	char **p = ft_split(str, del);

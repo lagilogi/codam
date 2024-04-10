@@ -6,13 +6,36 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/08 17:01:44 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/08 18:40:13 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/10 16:56:39 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*path_check(t_info *info, char **envp)
+char	*ft_pathjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		o;
+	char	*p;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	i = 0;
+	o = ft_strlen(s1) + ft_strlen(s2);
+	p = malloc((o + 2) * sizeof(char));
+	if (!p)
+		return (NULL);
+	while (*s1)
+		p[i++] = *s1++;
+	p[i] = '/';
+	i++;
+	while (*s2)
+		p[i++] = *s2++;
+	p[i] = '\0';
+	return (p);
+}
+
+static char	*find_paths(t_info *info, char **envp)
 {
 	int	i;
 
@@ -23,33 +46,20 @@ char	*path_check(t_info *info, char **envp)
 			return (envp[i] + 5);
 		i++;
 	}
+	if (envp[i] == NULL)
+		kill_program(info, "ERROR: Couldn't find paths!", 1);
 	return (NULL);
 }
 
-void	command_check(t_info *info, char *cmd, char **envp)
+void	getting_paths(t_info *info, char **envp)
 {
-	char	*path;
-	char	**path_split;
-	char	*cmd_path;
-	
-	int		i = 0;
+	char	*paths;
 
-	path = path_check(info, envp); // CAN BE IN MAIN - DOES NOT NEED TO BE CHECKED FOR EVERY CHILD
-	if (path == NULL)
-		... // Free necessary things and kill child
-	path_split = ft_split(path, ':');
-	if (path_split == NULL)
-		... // Free necessary things and kill child
-	cmd_path = ft_strjoin(path_split[i], info->cmds->str[0]); // DON'T FORGET THE /
-	while (access(cmd_path, F_OK) == -1 && path_split[i] != NULL) // CHECK mode - man 3 access
-	{
-		cmd_path = ft_strjoin(path_split[i], info->cmds->str[0]);
-		i++;
-	}
-	if (path_split[i] == NULL)
-		... // Free necessary things and kill child
+	paths = find_paths(info, envp);
+	info->paths = ft_split(paths, ':');
+	if (info->paths == NULL)
+		kill_program(info, "ERROR: Couldn't split paths!", 1);
 	
-
 }
 
 

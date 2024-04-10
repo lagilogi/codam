@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:29:20 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/08 17:41:10 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/10 13:29:35 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void	kill_program(t_info *info, char *msg, int i)
 		free_cmd_list(info->cmds);
 	}
 	if (i == 1)
-		ft_printf("%s\n", msg);
+	{
+		write(2, msg, ft_strlen(msg));
+		write(2, "\n", 1);
+	}
 	exit(i);
 }
