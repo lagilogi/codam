@@ -30,6 +30,8 @@ int	main(int argc, char **argv, char **envp)
 		if (pid == 0)
 			child_process(&info, argv[i]);
 		i++;
+		if (pid > 0)
+			wait(NULL);
 	}
 
 
@@ -38,8 +40,6 @@ int	main(int argc, char **argv, char **envp)
 	kill_program(&info, "Ended program succesfully!", 1);
 	return (0);
 }
-
-
 
 
 

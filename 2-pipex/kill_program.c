@@ -12,32 +12,37 @@
 
 #include "pipex.h"
 
-static void	free_cmd_list(t_cmds *cmds)
+void	free_command(char **cmds, char **cmd_path)
 {
-	t_cmds	*tmp;
-	int		i;
-
-	while (cmds != NULL)
+	if (*cmd_path != NULL)
 	{
-		i = 0;
-		tmp = cmds->next;
-		while (cmds->str[i] != NULL)
-		{
-			free(cmds->str[i]);
-			i++;
-		}
-		free(cmds->str);
-		cmds = tmp;
+		printf("CMD_PATH IS NOT NULL\n");
+		free(cmd_path);
 	}
+	free(cmds[0]);
+	if (cmds[1] != NULL)
+		free(cmds[1]);
+	free(cmds);
+}
+
+static void	free_paths(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (info->paths[i] != NULL)
+	{
+		free(info->paths[i]);
+		i++;
+	}
+	free(info->paths);
 }
 
 void	kill_program(t_info *info, char *msg, int i)
 {
-	if (info->cmds != NULL)
-	{
-		printf("TRUE!\n");
-		free_cmd_list(info->cmds);
-	}
+	info = NULL;
+	if (info->paths != NULL)
+		free_paths(info);
 	if (i == 1)
 	{
 		write(2, msg, ft_strlen(msg));

@@ -31,7 +31,7 @@ typedef struct s_info {
 
 
 void	kill_program(t_info *info, char *msg, int i);
-void	parsing_command(t_info *info, int argc, char **argv);
+void	free_command(char **cmds, char **cmd_path);
 
 void	getting_paths(t_info *info, char **envp);
 char	*ft_pathjoin(char const *s1, char const *s2);

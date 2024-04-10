@@ -4,7 +4,7 @@ CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address
 HEADER		=	pipex.h
 LIBFTDIR	= 	./libft
 
-SRCS 		= 	main.c kill_program.c parsing.c command_check.c child_process.c
+SRCS 		= 	main.c kill_program.c command_check.c child_process.c
 
 LIBFT		= 	./libft.a
 OBJS		=	$(SRCS:.c=.o) 
