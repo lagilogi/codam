@@ -6,40 +6,63 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:59:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/10 16:59:15 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/11 18:10:37 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+static void	init_info(t_info *info, int argc, char **argv)
+{
+	info->infile = open(argv[1], O_RDONLY);
+	info->outfile = open(argv[argc - 1], O_CREAT | O_TRUNC | O_WRONLY, 0777);
+	info->paths = NULL;
+	info->limiter = argv[2];
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
 	int		i;
-	int		pid;
+	// int		pid;
 
 	if (argc < 5)
 		return (1);
-
+	init_info(&info, argc, argv);
 	getting_paths(&info, envp);
-
 	i = 2;
 	while (i < argc - 1)
 	{
-		pid = fork();
-		if (pid == 0)
-			child_process(&info, argv[i]);
+		creating_child(&info, argv[i], envp);
 		i++;
-		if (pid > 0)
-			wait(NULL);
 	}
-
-
-
-
-	kill_program(&info, "Ended program succesfully!", 1);
+	// pid = waitpid();
+	while (wait(NULL) != -1)
+		continue ;
+	kill_program(&info, 0);
 	return (0);
 }
+
+// FOR PIPES
+// 1. Set 
+
+
+
+
+
+
+// FOR HERE_DOC
+// 1. Check that argv[1] is here_doc
+// 2. if True save argv[2] as the 'limiter'
+// 3. Set int i to 3 as argv[3] will now be the first command
+// 4. Create new file to write to from here_doc (with Get_Next_line)
+// 5. Check if 'limiter' has been read to stop reading from here_doc
+// 6. When limiter has been read, stop here_doc child process
+// 7. Now pass that information to the pipe
+// 8. Use the 'unlink' function to delete the file that was written to
+
+
+
 
 
 
@@ -81,15 +104,6 @@ int	main(int argc, char **argv, char **envp)
 // 	// 	printf("This is the child and has id %d\n", id);
 // 	// else		// Parent process is never ID 0
 // 	// 	printf("This is the parent with id %d\n", id);
-
-
-
-
-
-// char *str[] = {"ls", NULL}; // TESTING EXECVE FUNCTION
-// execve("/bin/ls", str, envp); // TESTING EXECVE FUNCTION
-// str = {"wc", "-l"}; // TESTING - This is what is in str
-
 
 
 
@@ -173,7 +187,7 @@ int	main(int argc, char **argv, char **envp)
 // 	int fd_infile = open("file1.txt", O_RDONLY); // TRYOUT 5
 // 	// int fd_infile = open(argv[1], O_RDONLY); // TRYOUT 5
 // 	int fd_outfile = open("file2.txt", O_CREAT | O_TRUNC | O_WRONLY, 0777);
-// 	// int fd_outfile = open(argv[argc - 1], O_WRONLY);
+// 	// int fd_outfile = open(argv[argc - 1], O_CREAT | O_TRUNC | O_WRONLY, 0777);
 
 	// argc = 0;
 	// int fd[2];
@@ -230,10 +244,9 @@ int	main(int argc, char **argv, char **envp)
 
 // 	argv = NULL;
 // 	return 0;
-
-
-
 // }
+
+
 
 // printf("here\n");
 // ft_printf(char *c, ...);

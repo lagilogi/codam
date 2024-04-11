@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:29:20 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/10 13:29:35 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/11 14:17:24 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 void	free_command(char **cmds, char **cmd_path)
 {
 	if (*cmd_path != NULL)
-	{
-		printf("CMD_PATH IS NOT NULL\n");
 		free(cmd_path);
-	}
 	free(cmds[0]);
 	if (cmds[1] != NULL)
 		free(cmds[1]);
@@ -38,15 +35,12 @@ static void	free_paths(t_info *info)
 	free(info->paths);
 }
 
-void	kill_program(t_info *info, char *msg, int i)
+void	kill_program(t_info *info, int i)
 {
-	info = NULL;
 	if (info->paths != NULL)
 		free_paths(info);
 	if (i == 1)
-	{
-		write(2, msg, ft_strlen(msg));
-		write(2, "\n", 1);
-	}
+		perror("ERROR");
+		// write(2, msg, ft_strlen(msg));
 	exit(i);
 }

@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/08 17:01:44 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/10 16:56:39 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/11 14:18:24 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*find_paths(t_info *info, char **envp)
 		i++;
 	}
 	if (envp[i] == NULL)
-		kill_program(info, "ERROR: Couldn't find paths!", 1);
+		kill_program(info, errno);
 	return (NULL);
 }
 
@@ -58,8 +58,7 @@ void	getting_paths(t_info *info, char **envp)
 	paths = find_paths(info, envp);
 	info->paths = ft_split(paths, ':');
 	if (info->paths == NULL)
-		kill_program(info, "ERROR: Couldn't split paths!", 1);
-	
+		kill_program(info, errno);
 }
 
 
