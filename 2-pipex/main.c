@@ -6,18 +6,50 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:59:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/11 18:10:37 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/12 19:33:07 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+static char	*find_paths(t_info *info, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+			return (envp[i] + 5);
+		i++;
+	}
+	if (envp[i] == NULL)
+		kill_program(info, errno);
+	return (NULL);
+}
+
+static void	getting_paths(t_info *info, char **envp)
+{
+	char	*paths;
+
+	paths = find_paths(info, envp);
+	info->paths = ft_split(paths, ':');
+	if (info->paths == NULL)
+		kill_program(info, errno);
+}
+
 static void	init_info(t_info *info, int argc, char **argv)
 {
-	info->infile = open(argv[1], O_RDONLY);
-	info->outfile = open(argv[argc - 1], O_CREAT | O_TRUNC | O_WRONLY, 0777);
 	info->paths = NULL;
-	info->limiter = argv[2];
+	info->infile = open(argv[1], O_RDONLY);
+	if (info->infile == -1)
+		kill_program(info, errno);
+	info->outfile = open(argv[argc - 1], O_CREAT | O_TRUNC | O_WRONLY, 0777);
+	if (info->outfile == -1)
+		kill_program(info, errno);
+	argc++;
+
+	info->limiter = argv[2]; // BONUS
 }
 
 int	main(int argc, char **argv, char **envp)
