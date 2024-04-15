@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:59:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/12 19:33:07 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/15 16:41:13 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,15 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
 	int		i;
-	// int		pid;
+	// pid_t	pid; // Int or pid_t?
+	// int		*fds[2];
 
-	if (argc < 5)
-		return (1);
+	// if (argc < 5)
+	// 	return (1);
 	init_info(&info, argc, argv);
 	getting_paths(&info, envp);
+	// if (pipe(fds) == -1)
+	// 	kill_program(&info, errno);
 	i = 2;
 	while (i < argc - 1)
 	{
@@ -73,10 +76,15 @@ int	main(int argc, char **argv, char **envp)
 		continue ;
 	kill_program(&info, 0);
 	return (0);
+
 }
 
 // FOR PIPES
-// 1. Set 
+// 1. create an array int *fd[2], which is then populated with 2 unused file descriptors
+// 	  by the pipe() function
+// 2. Must be created before a process is forked so that both parent and child process
+//    have the same pipe() fds in memory, but NOTE that they have their own seperate
+//    file descriptor table
 
 
 

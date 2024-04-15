@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:23:30 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/12 18:54:42 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/15 16:53:19 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	child_process(t_info *info, char *cmd, char **envp)
 
 	i = 0;
 	cmds = ft_split(cmd, ' ');
-	if (cmd == NULL)
+	if (cmds == NULL || cmds[0] == NULL)
 		kill_program(info, errno);
 	else if (cmds[0][0] == '.' || cmds[0][0] == '/')
 		execve(cmds[0], cmds, envp);
@@ -81,5 +81,8 @@ void	creating_child(t_info *info, char *argv, char **envp)
 	if (pid == -1)
 		kill_program(info, errno);
 	if (pid == 0)
+	{
+		// dup2(fds[0]);
 		child_process(info, argv, envp);
+	}
 }
