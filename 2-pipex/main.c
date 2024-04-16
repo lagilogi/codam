@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:59:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/15 16:41:13 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/16 18:58:29 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,22 @@ static void	getting_paths(t_info *info, char **envp)
 
 static void	init_info(t_info *info, int argc, char **argv)
 {
-	info->paths = NULL;
+	info->paths = NULL; // Needs to be at the top so kill_program does not segv
+	
+	info->std_in = dup(STDIN_FILENO);
+	info->std_out = dup(STDOUT_FILENO);
+
 	info->infile = open(argv[1], O_RDONLY);
-	if (info->infile == -1)
-		kill_program(info, errno);
-	info->outfile = open(argv[argc - 1], O_CREAT | O_TRUNC | O_WRONLY, 0777);
-	if (info->outfile == -1)
-		kill_program(info, errno);
-	argc++;
+	// if (info->infile == -1)
+	// 	kill_program(info, errno); // Program still needs to work if open fails
+	dup2(info->infile, STDIN_FILENO); // To read from the file instead of 'STDIN'
+	close(info->infile);
+
+	info->cmds = argc - 3;
+
+	info->child_nr = 1;
+
+	info->argc = argc;
 
 	info->limiter = argv[2]; // BONUS
 }
@@ -55,25 +63,37 @@ static void	init_info(t_info *info, int argc, char **argv)
 int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
-	int		i;
 	// pid_t	pid; // Int or pid_t?
-	// int		*fds[2];
+	int		i;
+	int		fds[2];
 
-	// if (argc < 5)
-	// 	return (1);
+	if (argc != 5) // For mandatory
+		return (1);
 	init_info(&info, argc, argv);
 	getting_paths(&info, envp);
-	// if (pipe(fds) == -1)
-	// 	kill_program(&info, errno);
+	
+	dup2(info.infile, STDIN_FILENO); // To read from the file instead of 'STDIN'
+	
 	i = 2;
 	while (i < argc - 1)
 	{
-		creating_child(&info, argv[i], envp);
+		if (i <= argc - 2)
+			if (pipe(fds) == -1)
+				kill_program(&info, errno);
+		
+		creating_child(&info, argv[i], fds, envp);
 		i++;
 	}
+	
+	dup2(info.outfile, STDOUT_FILENO);
+	
 	// pid = waitpid();
-	while (wait(NULL) != -1)
-		continue ;
+	// while (wait(NULL) != -1)
+	// 	continue ;
+	
+	info.outfile = open(argv[argc - 1], O_CREAT | O_TRUNC | O_WRONLY, 0777); // MIGHT need to be placed in another function
+	if (info.outfile == -1)
+		kill_program(&info, errno);
 	kill_program(&info, 0);
 	return (0);
 

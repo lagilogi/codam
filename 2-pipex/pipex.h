@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:39:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/12 18:56:22 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/16 18:58:24 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,22 @@
 # include "./libft/libft.h"
 
 typedef struct s_info {
+	char	**paths;
+	int		std_in;
+	int		std_out;
 	int		infile;
 	int		outfile;
-	char	**paths;
+	int		cmds;
+	int		child_nr;
+	int		argc;
 	char	*limiter; // bonus
 }	t_info;
 
 
 void	kill_program(t_info *info, int i);
-void	creating_child(t_info *info, char *argv, char **envp);
+void	free_command(char **cmds, char **cmd_path);
+
+void	creating_child(t_info *info, char *argv, int *fds, char **envp);
+
 
 #endif

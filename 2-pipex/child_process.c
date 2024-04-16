@@ -6,21 +6,11 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:23:30 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/15 16:53:19 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/16 18:59:19 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-static void	free_command(char **cmds, char **cmd_path)
-{
-	if (*cmd_path != NULL)
-		free(cmd_path);
-	free(cmds[0]);
-	if (cmds[1] != NULL)
-		free(cmds[1]);
-	free(cmds);
-}
 
 char	*ft_pathjoin(char const *s1, char const *s2)
 {
@@ -55,8 +45,6 @@ static void	child_process(t_info *info, char *cmd, char **envp)
 	cmds = ft_split(cmd, ' ');
 	if (cmds == NULL || cmds[0] == NULL)
 		kill_program(info, errno);
-	else if (cmds[0][0] == '.' || cmds[0][0] == '/')
-		execve(cmds[0], cmds, envp);
 	cmd_path = ft_pathjoin(info->paths[i], cmds[0]);
 	while (cmd_path != NULL && access(cmd_path, F_OK | X_OK) == -1)
 	{
@@ -64,25 +52,38 @@ static void	child_process(t_info *info, char *cmd, char **envp)
 		cmd_path = ft_pathjoin(info->paths[i], cmds[0]);
 		i++;
 	}
-	if (cmd_path == NULL)
-	{
+	if (cmd_path == NULL && !access(cmd, F_OK | X_OK))
 		free_command(cmds, &cmd_path);
-		kill_program(info, errno);
-	}
 	else
 		execve(cmd_path, cmds, envp);
 	kill_program(info, errno);
 }
 
-void	creating_child(t_info *info, char *argv, char **envp)
+void	creating_child(t_info *info, char *argv, int *fds, char **envp)
 {
-	const int	pid = fork();
+	const pid_t	pid = fork();
 
 	if (pid == -1)
 		kill_program(info, errno);
 	if (pid == 0)
 	{
-		// dup2(fds[0]);
+		close(fds[0]);
+		if (info->child_nr == info->cmds)
+		{
+			info->outfile = open(++argv, O_CREAT | O_TRUNC | O_WRONLY, 0777); // argv klopt niet
+			dup2(info->outfile, STDOUT_FILENO);
+		}
+		else
+			dup2(fds[1], STDOUT_FILENO); // To write to the pipe with 'STDOUT'
+		close(fds[1]);
+		
 		child_process(info, argv, envp);
 	}
+	else if (pid > 0) // Parent
+	{
+		close(fds[1]);
+		dup2(fds[0], STDIN_FILENO);
+		close(fds[0]);
+	}
+	info->child_nr++;
 }

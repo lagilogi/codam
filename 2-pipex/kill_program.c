@@ -6,11 +6,21 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:29:20 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/15 16:38:25 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/16 17:24:22 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	free_command(char **cmds, char **cmd_path)
+{
+	if (*cmd_path != NULL)
+		free(cmd_path);
+	free(cmds[0]);
+	if (cmds[1] != NULL)
+		free(cmds[1]);
+	free(cmds);
+}
 
 static void	free_paths(t_info *info)
 {
