@@ -6,11 +6,11 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:29:20 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/22 19:01:41 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/22 18:44:55 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	free_command(char **cmds, char **cmd_path)
 {
@@ -22,23 +22,25 @@ void	free_command(char **cmds, char **cmd_path)
 	free(cmds);
 }
 
-void	free_paths(char **paths)
+static void	free_paths(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	while (paths[i] != NULL)
+	while (info->paths[i] != NULL)
 	{
-		free(paths[i]);
+		free(info->paths[i]);
 		i++;
 	}
-	free(paths);
+	free(info->paths);
 }
 
-void	kill_program(char **paths, int i)
+void	kill_program(t_info *info, int i)
 {
-	if (paths != NULL)
-		free_paths(paths);
+	if (info->paths != NULL)
+		free_paths(info);
+	close (info->infile);
+	close (info->outfile);
 	if (i > 0)
 		perror("ERROR");
 	exit(i);

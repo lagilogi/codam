@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex.h                                            :+:    :+:            */
+/*   pipex_bonus.h                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:39:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/22 19:19:53 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/22 18:47:41 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,26 @@
 # include <stdbool.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 
-void	kill_program(char **paths, int i);
-void	free_paths(char **paths);
+typedef struct s_info
+{
+	char	**paths;
+	int		infile;
+	int		outfile;
+	int		cmds;
+	int		child_nr;
+	int		argc;
+	bool	heredoc; // bonus
+	char	*limiter; // bonus
+	int		limiter_len; // bonus
+}	t_info;
+
+void	kill_program(t_info *info, int i);
 void	free_command(char **cmds, char **cmd_path);
 
-void	cmd_1(char **paths, char **argv, int *fds, char **envp);
-pid_t	cmd_2(char **paths, char **argv, int *fds, char **envp);
+void	creating_child(t_info *info, char *argv, int *fds, char **envp);
+
+void	here_doccer(t_info *info); // BONUS
 
 #endif

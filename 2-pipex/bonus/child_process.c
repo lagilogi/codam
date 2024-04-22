@@ -6,11 +6,11 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:23:30 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/22 20:07:40 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/22 18:44:49 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	*ft_pathjoin(char const *s1, char const *s2)
 {
@@ -35,7 +35,7 @@ char	*ft_pathjoin(char const *s1, char const *s2)
 	return (p);
 }
 
-static void	child_process(char **paths, char *cmd, char **envp)
+static void	child_process(t_info *info, char *cmd, char **envp)
 {
 	int		i;
 	char	**cmds;
@@ -44,70 +44,65 @@ static void	child_process(char **paths, char *cmd, char **envp)
 	i = 0;
 	cmds = ft_split(cmd, ' ');
 	if (cmds == NULL || cmds[0] == NULL)
-		kill_program(paths, errno);
-	cmd_path = ft_pathjoin(paths[i], cmds[0]);
+		kill_program(info, errno);
+	cmd_path = ft_pathjoin(info->paths[i], cmds[0]);
 	while (cmd_path != NULL && access(cmd_path, F_OK | X_OK) == -1)
 	{
 		free(cmd_path);
-		cmd_path = ft_pathjoin(paths[i], cmds[0]);
+		cmd_path = ft_pathjoin(info->paths[i], cmds[0]);
 		i++;
 	}
-	cmd_path = NULL; // TEST
-	if (cmd_path == NULL && access(cmd, F_OK | X_OK) == -1) // Testing if a cmd/program is found in current directory
-	{
+	if (cmd_path == NULL && !access(cmd, F_OK | X_OK))
 		free_command(cmds, &cmd_path);
-		kill_program(paths, 127);
-	}
 	else
 		execve(cmd_path, cmds, envp);
-	kill_program(paths, errno);
+	kill_program(info, errno);
 }
 
-pid_t	cmd_2(char **paths, char **argv, int *fds, char **envp)
+void	creating_child(t_info *info, char *argv, int *fds, char **envp)
 {
-	int			outfile;
 	const pid_t	pid = fork();
-	
+
 	if (pid == -1)
-		kill_program(paths, errno);
-	if (pid == 0)
+		kill_program(info, errno);
+	else if (pid == 0)
 	{
-		outfile = open(argv[4], O_CREAT | O_TRUNC | O_WRONLY, 0777);
-		if (outfile == -1)
-			kill_program(paths, errno);
-		if (dup2(fds[0], STDIN_FILENO) == -1)
-			kill_program(paths, errno);
-		if (dup2(outfile, STDOUT_FILENO) == -1)
-			kill_program(paths, errno);
 		close (fds[0]);
-		close (fds[1]);
-		close (outfile);
-		child_process(paths, argv[3], envp);
-	}
-	close(fds[1]);
-	return (pid);
-}
-
-void	cmd_1(char **paths, char **argv, int *fds, char **envp)
-{
-	int			infile;
-	const pid_t	pid = fork();
-
-	if (pid == -1)
-		kill_program(paths, errno);
-	if (pid == 0)
-	{
-		infile = open(argv[1], O_RDONLY);
-		if (infile == -1)
-			kill_program(paths, errno);
-		if (dup2(infile, STDIN_FILENO) == -1)
-			kill_program(paths, errno);
 		if (dup2(fds[1], STDOUT_FILENO) == -1)
-			kill_program(paths, errno);
-		close (fds[0]);
+			kill_program(info, errno);
 		close (fds[1]);
-		close (infile);
-		child_process(paths, argv[2], envp);
+		child_process(info, argv, envp);
 	}
-	close(fds[1]);
+	else
+	{
+		close (fds[1]);
+		if (dup2(fds[0], STDIN_FILENO))
+			kill_program(info, errno);
+		close (fds[0]);
+	}
+	info->child_nr++;
+}
+
+
+pid_t	last_child(t_info *info, char **argv, int *fds, char **envp)
+{
+	int			open_flags;
+	const pid_t	pid = fork();
+
+	if (pid == -1)
+		kill_program(info, errno);
+	else if (pid == 0)
+	{
+		if (info->heredoc == true)
+			open_flags = O_CREAT | O_APPEND | O_WRONLY;
+		else
+			open_flags = O_CREAT | O_TRUNC | O_WRONLY;
+		info->outfile = open(argv[info->argc - 1], open_flags, 0777);
+		if (info->outfile == -1)
+			kill_program(info, errno);
+		if (dup2(info->outfile, STDOUT_FILENO) == -1)
+			kill_program(info, errno);
+		close(info->outfile);		
+		child_process(info, argv, envp);
+	}
 }
