@@ -6,34 +6,13 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:23:30 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:13 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/23 17:45:48 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
-char	*ft_pathjoin(char const *s1, char const *s2)
-{
-	int		i;
-	int		o;
-	char	*p;
 
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	i = 0;
-	o = ft_strlen(s1) + ft_strlen(s2);
-	p = malloc((o + 2) * sizeof(char));
-	if (!p)
-		return (NULL);
-	while (*s1)
-		p[i++] = *s1++;
-	p[i] = '/';
-	i++;
-	while (*s2)
-		p[i++] = *s2++;
-	p[i] = '\0';
-	return (p);
-}
 
 static void	child_process(t_info *info, char *cmd, char **envp)
 {
@@ -59,31 +38,7 @@ static void	child_process(t_info *info, char *cmd, char **envp)
 	kill_program(info, errno);
 }
 
-void	creating_child(t_info *info, char *argv, int *fds, char **envp)
-{
-	const pid_t	pid = fork();
-
-	if (pid == -1)
-		kill_program(info, errno);
-	else if (pid == 0)
-	{
-		close (fds[0]);
-		if (dup2(fds[1], STDOUT_FILENO) == -1)
-			kill_program(info, errno);
-		close (fds[1]);
-		child_process(info, argv, envp);
-	}
-	else
-	{
-		close (fds[1]);
-		if (dup2(fds[0], STDIN_FILENO))
-			kill_program(info, errno);
-		close (fds[0]);
-	}
-	info->child_nr++;
-}
-
-pid_t	last_child(t_info *info, char **argv, char **envp)
+static pid_t	last_child(t_info *info, char **argv, char **envp)
 {
 	int			open_flags;
 	const pid_t	pid = fork();
@@ -106,3 +61,79 @@ pid_t	last_child(t_info *info, char **argv, char **envp)
 	}
 	return (pid);
 }
+
+static void	mid_child(t_info *info, char *argv, int *fds, char **envp)
+{
+	const pid_t	pid = fork();
+
+	if (pid == -1)
+		kill_program(info, errno);
+	else if (pid == 0)
+	{
+		if (dup2(fds[1], STDOUT_FILENO) == -1)
+			kill_program(info, errno);
+		closing_fds(fds);
+		child_process(info, argv, envp);
+	}
+	if (dup2(fds[0], STDIN_FILENO))
+	{
+		closing_fds(fds);
+		kill_program(info, errno);
+	}
+}
+
+static void	first_child(t_info *info, char **argv, int *fds, char **envp)
+{
+	const pid_t	pid = fork();
+	int			i;
+
+	if (pipe(fds) == -1)
+		kill_program(info, errno);
+	if (pid == -1)
+		kill_program(info, errno);
+	else if (pid == 0)
+	{
+		if (info->heredoc == true)
+			i = 3;
+		else
+		{
+			info->infile = open(argv[1], O_RDONLY);
+			if (info->infile == -1)
+				kill_program(info, errno);
+			if (dup2(info->infile, STDIN_FILENO) == -1)
+				kill_program(info, errno);
+			i = 2;
+		}
+		if (dup2(fds[1], STDOUT_FILENO) == -1)
+			kill_program(info, errno);
+		closing_fds(fds);
+		child_process(info, argv[i], envp);
+	}
+	closing_fds(fds);
+}
+
+pid_t	creating_childs(t_info *info, char **argv, char **envp)
+{
+	int		i;
+	int		fds[2];
+	pid_t	pid;
+	
+	if (info->heredoc == true)
+		i = 3;
+	else
+		i = 2;
+	while (i < info->argc - 2)
+	{
+		if (pipe(fds) == -1)
+			kill_program(info, errno);
+		if (info->child_nr == 1)
+			first_child(info, argv, fds, envp);
+		else
+			mid_child(info, argv[i], fds, envp);
+		i++;
+		info->child_nr++;
+	}
+	pid = last_child(info, argv, envp);
+	return (pid);
+}
+

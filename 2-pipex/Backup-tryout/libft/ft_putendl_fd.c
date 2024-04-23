@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_putendl_fd.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/13 12:52:55 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/19 18:53:28 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+void	ft_putendl_fd(char *s, int fd)
 {
-	char	*str;
+	char	n;
 
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
+	n = '\n';
+	while (*s)
 	{
-		free (str);
-		str = get_next_line(0);
+		write(fd, s, 1);
+		s++;
 	}
+	write(fd, &n, 1);
 }
+
+// int main(){
+// 	char x[] = "Ssdfsdfsdf";
+// 	int fd = open("easie.txt", O_RDWR);
+// 	ft_putendl_fd(x, fd);
+// 	close(fd);
+// 	return 0;
+// }

@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_isalpha.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/02 13:23:46 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/19 18:54:45 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+int	ft_isalpha(int c)
 {
-	char	*str;
-
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
-	{
-		free (str);
-		str = get_next_line(0);
-	}
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	return (0);
 }

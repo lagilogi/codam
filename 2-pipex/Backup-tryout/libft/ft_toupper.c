@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_toupper.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/03 16:33:17 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/19 18:51:45 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+int	ft_toupper(int c)
 {
-	char	*str;
-
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
-	{
-		free (str);
-		str = get_next_line(0);
-	}
+	if (c >= 97 && c <= 122)
+		c -= 32;
+	return (c);
 }

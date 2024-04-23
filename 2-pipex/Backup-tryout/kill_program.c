@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:29:20 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 13:58:04 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/23 14:10:50 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,32 @@ void	free_command(char **cmds, char **cmd_path)
 {
 	if (*cmd_path != NULL)
 		free(cmd_path);
+	free(cmds[0]);
 	if (cmds[1] != NULL)
 		free(cmds[1]);
-	if (cmds[0] != NULL)
-		free(cmds[0]);
-	if (cmds != NULL)
-		free(cmds);
+	free(cmds);
 }
 
-void	free_paths(char **paths)
+static void	free_paths(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	while (paths[i] != NULL)
+	while (info->paths[i] != NULL)
 	{
-		free(paths[i]);
+		free(info->paths[i]);
 		i++;
 	}
-	free(paths);
+	free(info->paths);
 }
 
-void	kill_program(char **paths, char *argv, int i)
+void	kill_program(t_info *info, int i)
 {
-	if (paths != NULL)
-		free_paths(paths);
+	if (info->paths != NULL)
+		free_paths(info);
+	close (info->infile);
+	close (info->outfile);
 	if (i > 0)
-		perror(argv);
+		perror("ERROR");
 	exit(i);
 }

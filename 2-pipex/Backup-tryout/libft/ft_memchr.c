@@ -1,25 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_memchr.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/10 10:27:52 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/19 18:54:16 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	*str;
+	size_t			i;
+	unsigned char	*hay;
 
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
+	i = 0;
+	hay = (unsigned char *) s;
+	while (i < n)
 	{
-		free (str);
-		str = get_next_line(0);
+		if (*hay == (unsigned char) c)
+			return (hay);
+		else
+		{
+			hay++;
+			i++;
+		}
 	}
+	return (0);
 }
+
+// int main(){
+// 	char s[50] = "This is a string";
+// 	char c = '.';
+// 	printf("%p\n", ft_memchr(s, c, 20));
+// 	printf("%p", memchr(s, c, 20));
+
+// 	return 0;
+// }

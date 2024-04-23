@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_putstr.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/31 16:55:41 by wsonepou      #+#    #+#                 */
+/*   Updated: 2024/01/15 17:09:15 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+int	ft_putstr(char *s)
 {
-	char	*str;
+	int	i;
 
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
-	{
-		free (str);
-		str = get_next_line(0);
-	}
+	i = 0;
+	if (!s)
+		s = "(null)";
+	while (s[i])
+		i++;
+	return (write(1, s, i));
 }

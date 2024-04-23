@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_striteri.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/17 11:02:05 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/18 11:21:37 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	char	*str;
+	unsigned int	i;
 
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
+	i = 0;
+	while (*s)
 	{
-		free (str);
-		str = get_next_line(0);
+		f(i, s);
+		i++;
+		s++;
 	}
 }
+
+// int main(){
+// 	char *s = "Hello World!";
+// 	printf("%s", functie);
+
+// 	return 0;
+// }

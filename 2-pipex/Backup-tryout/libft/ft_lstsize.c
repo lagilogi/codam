@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_lstsize.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/23 15:05:51 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/23 17:18:03 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+// typedef struct s_list
+// {
+// 	void			*content;
+// 	struct s_list	*next;
+// }	t_list;
+
+int	ft_lstsize(t_list *lst)
 {
-	char	*str;
+	int		i;
+	t_list	*tmp;
 
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
+	i = 0;
+	tmp = lst;
+	while (tmp != NULL)
 	{
-		free (str);
-		str = get_next_line(0);
+		i++;
+		tmp = tmp->next;
 	}
+	return (i);
 }

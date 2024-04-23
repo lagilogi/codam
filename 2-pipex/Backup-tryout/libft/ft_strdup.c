@@ -1,25 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_strdup.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/11 14:29:03 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/19 10:32:47 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+char	*ft_strdup(const char *s)
 {
-	char	*str;
+	size_t	c;
+	size_t	i;
+	char	*p;
 
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
+	c = ft_strlen(s);
+	i = c + 1;
+	p = malloc(i);
+	if (p == NULL)
+		return (NULL);
+	while (i > 0)
 	{
-		free (str);
-		str = get_next_line(0);
+		*p = *s;
+		s++;
+		i--;
+		if (i > 0)
+			p++;
 	}
+	return (p - c);
 }
+
+// int main(){
+// 	int i = 0;
+// 	char s[] = "Hey";
+// 	printf("%p\n", s);
+
+// 	char *q = ft_strdup(s);
+// 	printf("%p\n", q);
+// 	printf("%s", q);
+
+// 	return 0;
+// }

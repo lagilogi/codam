@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:59:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/22 20:11:22 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/23 14:03:59 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*find_paths(char **envp)
 		i++;
 	}
 	if (envp[i] == NULL)
-		kill_program(NULL, errno);
+		kill_program(NULL, "Couldn't find env paths", errno);
 	return (NULL);
 }
 
@@ -36,7 +36,7 @@ static char	**getting_paths(char **envp)
 	paths_str = find_paths(envp);
 	paths = ft_split(paths_str, ':');
 	if (paths == NULL)
-		kill_program(paths, errno);
+		kill_program(paths, "Getting paths", errno);
 	return (paths);
 }
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	paths = getting_paths(envp);
 	if (pipe(fds) == -1)
-		kill_program(paths, errno);	
+		kill_program(paths, "Pipe 1", errno);	
 	cmd_1(paths, argv, fds, envp);
 	pid = cmd_2(paths, argv, fds, envp);
 	waitpid(pid, &status, 0);
@@ -60,8 +60,6 @@ int	main(int argc, char **argv, char **envp)
 		continue ;
 	if (WIFEXITED(status) == true)
 		status = WEXITSTATUS(status);
-	dprintf(2, "Status: %d\n", status); // TEST
-	dprintf(2, "Pid: %d\n", pid); // TEST
 	free_paths(paths);
 	return (status);
 }

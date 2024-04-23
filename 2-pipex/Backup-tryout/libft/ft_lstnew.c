@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_lstnew.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/20 10:52:41 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/24 14:26:57 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+t_list	*ft_lstnew(void *content)
 {
-	char	*str;
+	t_list	*new;
 
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
-	{
-		free (str);
-		str = get_next_line(0);
-	}
+	new = malloc(sizeof(t_list));
+	if (new == NULL)
+		return (NULL);
+	(*new).content = content;
+	(*new).next = NULL;
+	return (new);
 }
+
+// int	main(void)
+// {
+// 	char x = 'c';
+// 	printf("%s\n", (char *)ft_lstnew(&x)->content);
+// printf("%p", (char *)ft_lstnew(&x));
+// 	return 0;
+// }

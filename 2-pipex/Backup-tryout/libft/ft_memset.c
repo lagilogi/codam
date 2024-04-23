@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_memset.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/04 12:19:06 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/18 12:47:45 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+void	*ft_memset(void *s, int c, size_t n)
 {
-	char	*str;
+	unsigned char	*p;
 
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
+	p = (unsigned char *)s;
+	while (n > 0)
 	{
-		free (str);
-		str = get_next_line(0);
+		*p = c;
+		p++;
+		n--;
 	}
+	return ((char *)s);
 }
+
+// int main(){
+// 	char str[] = "testcase";
+// 	char c = 'Q';
+// 	printf("%s\n\n", str);
+// 	printf("%s\n", (char *)ft_memset(str, c, 3));
+// 	printf("%s", (char *)memset(str, c, 3));
+// }

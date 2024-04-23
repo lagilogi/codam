@@ -1,25 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_strrchr.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/08 13:55:19 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/23 14:45:26 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+char	*ft_strrchr(const char *s, int c)
 {
-	char	*str;
+	int				i;
+	unsigned char	x;
 
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
+	x = (unsigned char) c;
+	if (x > 127)
+		return ((char *)s);
+	i = ft_strlen(s);
+	while (i >= 0)
 	{
-		free (str);
-		str = get_next_line(0);
+		if (s[i] == x)
+			return ((char *)s + i);
+		i--;
 	}
+	return (0);
 }
+
+// int main(){
+// 	char hay[] = "haystacks";
+// 	char ndl = 'h';
+// 	printf("%p\n", strrchr(hay, ndl));
+// 	printf("%p\n", ft_strrchr(hay, ndl));
+// 	return 0;
+// }

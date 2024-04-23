@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_bzero.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/08 15:36:42 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/19 18:55:10 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+void	ft_bzero(void *s, size_t n)
 {
-	char	*str;
+	unsigned char	*p;
 
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
+	p = s;
+	while (n > 0)
 	{
-		free (str);
-		str = get_next_line(0);
+		*p = 0;
+		n--;
+		if (n > 0)
+			p++;
 	}
 }
+
+// int main(){
+// 	char str[] = "testcase";
+// 	printf("%s\n", str);
+
+// 	return 0;
+// }

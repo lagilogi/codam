@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_lstiter.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/24 13:11:48 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/24 13:30:19 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+// typedef struct s_list
+// {
+// 	void			*content;
+// 	struct s_list	*next;
+// }	t_list;
+
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	char	*str;
-
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
+	if (!lst || !f)
+		return ;
+	while (lst)
 	{
-		free (str);
-		str = get_next_line(0);
+		f(lst->content);
+		lst = lst->next;
 	}
 }

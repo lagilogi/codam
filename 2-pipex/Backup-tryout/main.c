@@ -6,11 +6,11 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:59:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:22:47 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/23 17:23:25 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 static char	*find_paths(t_info *info, char **envp)
 {
@@ -38,7 +38,7 @@ static void	getting_paths(t_info *info, char **envp)
 		kill_program(info, errno);
 }
 
-static int	init_info(t_info *info, int argc, char **argv)
+static void	init_info(t_info *info, int argc, char **argv)
 {
 	info->paths = NULL;
 	info->child_nr = 1;
@@ -49,19 +49,18 @@ static int	init_info(t_info *info, int argc, char **argv)
 		info->cmds = argc - 4;
 		info->limiter = argv[2];
 		info->limiter_len = ft_strlen(info->limiter);
-		return (3);
 	}
 	else
 	{
 		info->infile = open(argv[1], O_RDONLY);
 		if (info->infile == -1)
 			kill_program(info, errno);
-		dup2(info->infile, STDERR_FILENO);
+		if (dup2(info->infile, STDERR_FILENO) == -1)
+			kill_program(info, errno);
 		close (info->infile);
 		info->heredoc = false;
 		info->cmds = argc - 3;
 		info->limiter = NULL;
-		return (2);
 	}
 }
 
@@ -69,23 +68,13 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_info	info;
 	pid_t	pid;
-	int		i;
-	int		fds[2];
 	int		status;
 
 	if (argc < 5)
 		return (1);
-	i = init_info(&info, argc, argv);
+	init_info(&info, argc, argv);
 	getting_paths(&info, envp);
-	while (i < argc - 1)
-	{
-		if (i <= argc - 2)
-			if (pipe(fds) == -1)
-				kill_program(&info, errno);
-		creating_child(&info, argv[i], fds, envp);
-		i++;
-	}
-	pid = last_child(&info, argv, envp);
+	pid = creating_childs(&info, argv, envp);
 	waitpid(pid, &status, 0);
 	while (wait(NULL) != -1)
 		continue ;

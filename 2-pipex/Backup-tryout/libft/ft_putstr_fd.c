@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_utils.c                                      :+:    :+:            */
+/*   ft_putstr_fd.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:23:36 by wsonepou      ########   odam.nl         */
+/*   Created: 2023/10/13 12:30:51 by wsonepou      #+#    #+#                 */
+/*   Updated: 2023/10/18 11:21:32 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "libft.h"
 
-void	here_doccer()
+void	ft_putstr_fd(char *s, int fd)
 {
-	char	*str;
-
-	str = get_next_line(0);
-	while (str != NULL) // str != NULL && something else
+	while (*s)
 	{
-		free (str);
-		str = get_next_line(0);
+		write(fd, s, sizeof(char));
+		s++;
 	}
 }
+
+// int main(){
+// 	char str[] = "bbhbhbhgv hg";
+// 	int fd = open("easy.txt", O_RDWR);
+// 	if (fd == -1)
+// 		printf("Error opening file");
+// 	ft_putstr_fd(str, fd);
+// 	close(fd);
+
+// 	return 0;
+// }
