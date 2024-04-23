@@ -41,7 +41,7 @@ void	free_command(char **cmds, char **cmd_path);
 
 pid_t	creating_childs(t_info *info, char **argv, char **envp);
 
-void	here_doccer(t_info *info);
+void	ft_heredoc();
 char	*ft_pathjoin(char const *s1, char const *s2);
 void	closing_fds(int *fds);
 

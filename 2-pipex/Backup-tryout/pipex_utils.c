@@ -43,7 +43,7 @@ char	*ft_pathjoin(char const *s1, char const *s2)
 	return (p);
 }
 
-void	here_doccer()
+void	ft_heredoc()
 {
 	char	*str;
 

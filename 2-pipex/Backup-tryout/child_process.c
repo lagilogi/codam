@@ -20,6 +20,7 @@ static void	child_process(t_info *info, char *cmd, char **envp)
 	char	**cmds;
 	char	*cmd_path;
 
+	printf("Last child\n");
 	i = 0;
 	cmds = ft_split(cmd, ' ');
 	if (cmds == NULL || cmds[0] == NULL)
@@ -34,7 +35,9 @@ static void	child_process(t_info *info, char *cmd, char **envp)
 	if (cmd_path == NULL && !access(cmd, F_OK | X_OK))
 		free_command(cmds, &cmd_path);
 	else
+	{
 		execve(cmd_path, cmds, envp);
+	}
 	kill_program(info, errno);
 }
 
@@ -76,10 +79,7 @@ static void	mid_child(t_info *info, char *argv, int *fds, char **envp)
 		child_process(info, argv, envp);
 	}
 	if (dup2(fds[0], STDIN_FILENO))
-	{
-		closing_fds(fds);
 		kill_program(info, errno);
-	}
 }
 
 static void	first_child(t_info *info, char **argv, int *fds, char **envp)
@@ -87,8 +87,6 @@ static void	first_child(t_info *info, char **argv, int *fds, char **envp)
 	const pid_t	pid = fork();
 	int			i;
 
-	if (pipe(fds) == -1)
-		kill_program(info, errno);
 	if (pid == -1)
 		kill_program(info, errno);
 	else if (pid == 0)
@@ -109,7 +107,7 @@ static void	first_child(t_info *info, char **argv, int *fds, char **envp)
 		closing_fds(fds);
 		child_process(info, argv[i], envp);
 	}
-	closing_fds(fds);
+	close(fds[1]);
 }
 
 pid_t	creating_childs(t_info *info, char **argv, char **envp)
@@ -130,6 +128,10 @@ pid_t	creating_childs(t_info *info, char **argv, char **envp)
 			first_child(info, argv, fds, envp);
 		else
 			mid_child(info, argv[i], fds, envp);
+		close (fds[1]);
+		if (dup2(fds[0], STDIN_FILENO))
+			kill_program(info, errno);
+		close (fds[0]);
 		i++;
 		info->child_nr++;
 	}
