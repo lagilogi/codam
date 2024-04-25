@@ -6,23 +6,35 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:29:20 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:10:50 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/25 19:18:38 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_command(char **cmds, char **cmd_path)
+void	closing_fds(int *fds)
 {
-	if (*cmd_path != NULL)
-		free(cmd_path);
-	free(cmds[0]);
-	if (cmds[1] != NULL)
-		free(cmds[1]);
-	free(cmds);
+	if (fds[0] != -1 && close(fds[0]) == -1)
+		perror("fds[0]");
+	if (fds[1] != -1 && close(fds[1]) == -1)
+		perror("fds[1]");
+	fds[0] = -1;
+	fds[1] = -1;
 }
 
-static void	free_paths(t_info *info)
+void	free_command(char **cmds, char **cmd_path)
+{
+	if (cmd_path != NULL && *cmd_path != NULL)
+		free(cmd_path);
+	if (cmds[0] != NULL && cmds != NULL && cmds[1] != NULL)
+		free(cmds[1]);
+	if (cmds != NULL && cmds[0] != NULL)
+		free(cmds[0]);
+	if (cmds != NULL)
+		free(cmds);
+}
+
+void	free_paths(t_info *info)
 {
 	int	i;
 
@@ -35,11 +47,12 @@ static void	free_paths(t_info *info)
 	free(info->paths);
 }
 
-void	kill_program(t_info *info, int i)
+void	kill_program(t_info *info, char *arg, int i)
 {
+	closing_fds(info->fds);
 	if (info->paths != NULL)
 		free_paths(info);
-	if (i > 0)
-		perror("ERROR");
+	if (i > 0 && errno > 0 && arg != NULL)
+		perror(arg);
 	exit(i);
 }

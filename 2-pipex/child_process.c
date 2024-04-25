@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:23:30 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:20:53 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/25 18:19:22 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ pid_t	cmd_2(char **paths, char **argv, int *fds, char **envp)
 		child_process(paths, argv[3], envp);
 	}
 	close(fds[1]);
+	close(STDIN_FILENO);
 	return (pid);
 }
 

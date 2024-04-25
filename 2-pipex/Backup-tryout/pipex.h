@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:39:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 17:44:03 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/25 18:42:12 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,26 @@
 typedef struct s_info
 {
 	char	**paths;
-	int		infile;
-	int		outfile;
+	char	*infile;
+	char	*outfile;
 	int		cmds;
-	int		child_nr;
+	int		current_cmd;
 	int		argc;
+	int		fds[2];
 	bool	heredoc;
 	char	*limiter;
 	int		limiter_len;
 }	t_info;
 
-void	kill_program(t_info *info, int i);
+void	kill_program(t_info *info, char *arg, int i);
 void	free_command(char **cmds, char **cmd_path);
+void	free_paths(t_info *info);
 
 pid_t	creating_children(t_info *info, char **argv, char **envp);
 
-void	ft_heredoc();
+void	ft_heredoc(t_info *info);
 char	*ft_pathjoin(char const *s1, char const *s2);
 void	closing_fds(int *fds);
+void	setting_io(t_info *info);
 
 #endif
