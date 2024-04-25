@@ -52,12 +52,6 @@ static void	init_info(t_info *info, int argc, char **argv)
 	}
 	else
 	{
-		info->infile = open(argv[1], O_RDONLY);
-		if (info->infile == -1)
-			kill_program(info, errno);
-		if (dup2(info->infile, STDERR_FILENO) == -1)
-			kill_program(info, errno);
-		close (info->infile);
 		info->heredoc = false;
 		info->cmds = argc - 3;
 		info->limiter = NULL;
@@ -74,7 +68,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	init_info(&info, argc, argv);
 	getting_paths(&info, envp);
-	pid = creating_childs(&info, argv, envp);
+	pid = creating_children(&info, argv, envp);
 	waitpid(pid, &status, 0);
 	while (wait(NULL) != -1)
 		continue ;

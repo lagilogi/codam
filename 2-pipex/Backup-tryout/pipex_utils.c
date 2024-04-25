@@ -14,9 +14,9 @@
 
 void	closing_fds(int *fds)
 {
-	if (close(fds[0]) == -1)
+	if (fds[0] > 2 && close(fds[0]) == -1)
 		perror("fds[0]");
-	if (close(fds[1]) == -1)
+	if (fds[1] > 2 && close(fds[1]) == -1)
 		perror("fds[1]");
 }
 

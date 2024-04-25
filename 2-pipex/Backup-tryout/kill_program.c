@@ -39,8 +39,6 @@ void	kill_program(t_info *info, int i)
 {
 	if (info->paths != NULL)
 		free_paths(info);
-	close (info->infile);
-	close (info->outfile);
 	if (i > 0)
 		perror("ERROR");
 	exit(i);

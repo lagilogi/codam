@@ -59,7 +59,8 @@ static pid_t	last_child(t_info *info, char **argv, char **envp)
 			kill_program(info, errno);
 		if (dup2(info->outfile, STDOUT_FILENO) == -1)
 			kill_program(info, errno);
-		close(info->outfile);
+		if (close(info->outfile) == -1)
+			perror(argv[info->argc - 1]);
 		child_process(info, argv[info->argc - 2], envp);
 	}
 	return (pid);
@@ -78,8 +79,6 @@ static void	mid_child(t_info *info, char *argv, int *fds, char **envp)
 		closing_fds(fds);
 		child_process(info, argv, envp);
 	}
-	if (dup2(fds[0], STDIN_FILENO))
-		kill_program(info, errno);
 }
 
 static void	first_child(t_info *info, char **argv, int *fds, char **envp)
@@ -97,20 +96,22 @@ static void	first_child(t_info *info, char **argv, int *fds, char **envp)
 		{
 			info->infile = open(argv[1], O_RDONLY);
 			if (info->infile == -1)
-				kill_program(info, errno);
-			if (dup2(info->infile, STDIN_FILENO) == -1)
-				kill_program(info, errno);
+				perror(argv[1]);
+			if (dup2(info->infile, STDIN_FILENO) == -1) // Something has to be done about dup2 when the infile is incorrect
+				kill_program(info, errno);				// to make the cmd still be executed but taking input from nowhere (not even terminal input)
+			if (info->infile > 2 && close(info->infile) == -1)
+				perror(argv[1]);
 			i = 2;
 		}
+		close(fds[0]);
 		if (dup2(fds[1], STDOUT_FILENO) == -1)
 			kill_program(info, errno);
 		closing_fds(fds);
 		child_process(info, argv[i], envp);
 	}
-	close(fds[1]);
 }
 
-pid_t	creating_childs(t_info *info, char **argv, char **envp)
+pid_t	creating_children(t_info *info, char **argv, char **envp)
 {
 	int		i;
 	int		fds[2];
@@ -128,10 +129,9 @@ pid_t	creating_childs(t_info *info, char **argv, char **envp)
 			first_child(info, argv, fds, envp);
 		else
 			mid_child(info, argv[i], fds, envp);
-		close (fds[1]);
 		if (dup2(fds[0], STDIN_FILENO))
 			kill_program(info, errno);
-		close (fds[0]);
+		closing_fds(fds);
 		i++;
 		info->child_nr++;
 	}
