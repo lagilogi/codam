@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/13 13:26:24 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/25 19:15:41 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/26 16:50:27 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,17 @@ char	**ft_split(char const *s, char c)
 	return (p);
 }
 
-int main (){
-	int i = 0;
-	char str[] = " Hello World ";
-	char del = ' ';
+// int	main (){
+// 	int i = 0;
+// 	char str[] = " Hello World ";
+// 	char del = ' ';
 
-	int o = ft_wordcount(str, del);
-	char **p = ft_split(str, del);
-	while(i < o)
-	{
-		printf("%s\n", p[i]);
-		i++;
-	}
-	return 0;
-}
+// 	int o = ft_wordcount(str, del);
+// 	char **p = ft_split(str, del);
+// 	while(i < o)
+// 	{
+// 		printf("%s\n", p[i]);
+// 		i++;
+// 	}
+// 	return 0;
+// }

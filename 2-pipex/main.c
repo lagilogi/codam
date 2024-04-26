@@ -6,60 +6,73 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/10 16:59:12 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/25 18:15:57 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/26 16:52:35 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*find_paths(char **envp)
+static void	getting_paths(t_info *info, char **envp)
 {
-	int	i;
+	int		i;
+	char	*paths;
 
 	i = 0;
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			return (envp[i] + 5);
+		{
+			paths = envp[i] + 5;
+			break ;
+		}
 		i++;
 	}
 	if (envp[i] == NULL)
-		kill_program(NULL, "Couldn't find env paths", errno);
-	return (NULL);
+		kill_program(info, "envp", 1);
+	info->paths = ft_split(paths, ':');
+	if (info->paths == NULL)
+		kill_program(info, "paths", errno);
 }
 
-static char	**getting_paths(char **envp)
+static void	init_info(t_info *info, int argc, char **argv)
 {
-	char	*paths_str;
-	char	**paths;
-
-	paths_str = find_paths(envp);
-	paths = ft_split(paths_str, ':');
-	if (paths == NULL)
-		kill_program(paths, "Getting paths", errno);
-	return (paths);
+	info->paths = NULL;
+	info->argc = argc;
+	info->current_cmd = 1;
+	info->outfile = argv[argc - 1];
+	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
+	{
+		info->heredoc = true;
+		info->cmds = argc - 4;
+		info->limiter = argv[2];
+		info->limiter_len = ft_strlen(info->limiter);
+	}
+	else
+	{
+		info->infile = argv[1];
+		info->cmds = argc - 3;
+		info->heredoc = false;
+		info->limiter = NULL;
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	**paths;
+	t_info	info;
 	pid_t	pid;
-	int		fds[2];
+	pid_t	wpid;
 	int		status;
 
-	paths = NULL;
-	if (argc != 5)
+	if (argc < 5)
 		return (1);
-	paths = getting_paths(envp);
-	if (pipe(fds) == -1)
-		kill_program(paths, "Pipe 1", errno);	
-	cmd_1(paths, argv, fds, envp);
-	pid = cmd_2(paths, argv, fds, envp);
-	waitpid(pid, &status, 0);
+	init_info(&info, argc, argv);
+	getting_paths(&info, envp);
+	pid = creating_children(&info, argv, envp);
+	wpid = waitpid(pid, &status, 0);
 	while (wait(NULL) != -1)
 		continue ;
-	if (WIFEXITED(status) == true)
-		status = WEXITSTATUS(status);
-	free_paths(paths);
+	if (wpid == -1)
+		kill_program(&info, "wpid", errno);
+	kill_program(&info, NULL, WEXITSTATUS(status));
 	return (status);
 }

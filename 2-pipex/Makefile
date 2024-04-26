@@ -7,7 +7,7 @@ BONUS_HEADR	=	./bonus/pipex_bonus.h
 LIBFTDIR	= 	./libft
 BONUSDIR	=	./bonus
 
-SRCS 		= 	main.c kill_program.c child_process.c
+SRCS 		= 	main.c child_process.c pipex_utils.c kill_program.c
 
 BONUS_SRCS	=	./bonus/main.c \
 				./bonus/kill_program.c \

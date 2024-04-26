@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex_bonus.h                                      :+:    :+:            */
+/*   pipex.h                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:39:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:22:14 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/26 17:25:30 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -21,27 +21,29 @@
 # include <stdbool.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include "../libft/libft.h"
+# include "./libft/libft.h"
 
 typedef struct s_info
 {
 	char	**paths;
-	int		infile;
-	int		outfile;
+	char	*infile;
+	char	*outfile;
 	int		cmds;
-	int		child_nr;
+	int		current_cmd;
 	int		argc;
+	int		fds[2];
 	bool	heredoc;
 	char	*limiter;
 	int		limiter_len;
 }	t_info;
 
-void	kill_program(t_info *info, int i);
+pid_t	creating_children(t_info *info, char **argv, char **envp);
+void	ft_heredoc(t_info *info);
+char	*ft_pathjoin(char const *s1, char const *s2);
+void	setting_io(t_info *info);
+void	kill_program(t_info *info, char *arg, int i);
 void	free_command(char **cmds, char **cmd_path);
-
-void	creating_child(t_info *info, char *argv, int *fds, char **envp);
-pid_t	last_child(t_info *info, char **argv, char **envp);
-
-void	here_doccer(t_info *info);
+void	free_paths(t_info *info);
+void	closing_fds(int *fds);
 
 #endif

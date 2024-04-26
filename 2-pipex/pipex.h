@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 13:39:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/23 13:58:40 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/26 17:25:30 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,27 @@
 # include <sys/wait.h>
 # include "./libft/libft.h"
 
-void	kill_program(char **paths, char *argv, int i);
-void	free_paths(char **paths);
-void	free_command(char **cmds, char **cmd_path);
+typedef struct s_info
+{
+	char	**paths;
+	char	*infile;
+	char	*outfile;
+	int		cmds;
+	int		current_cmd;
+	int		argc;
+	int		fds[2];
+	bool	heredoc;
+	char	*limiter;
+	int		limiter_len;
+}	t_info;
 
-void	cmd_1(char **paths, char **argv, int *fds, char **envp);
-pid_t	cmd_2(char **paths, char **argv, int *fds, char **envp);
+pid_t	creating_children(t_info *info, char **argv, char **envp);
+void	ft_heredoc(t_info *info);
+char	*ft_pathjoin(char const *s1, char const *s2);
+void	setting_io(t_info *info);
+void	kill_program(t_info *info, char *arg, int i);
+void	free_command(char **cmds, char **cmd_path);
+void	free_paths(t_info *info);
+void	closing_fds(int *fds);
 
 #endif

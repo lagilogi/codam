@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/22 14:36:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/04/25 19:20:05 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/04/26 16:52:54 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	setting_io(t_info *info)
 		if (dup2(infile, STDIN_FILENO) == -1)
 			kill_program(info, "dup2 infile", errno);
 		if (close(infile) == -1)
-			perror("infile");			
+			perror("infile");
 	}
 	if (dup2(info->fds[1], STDOUT_FILENO) == -1)
 		kill_program(info, "dup2 info->fds[1]", errno);
