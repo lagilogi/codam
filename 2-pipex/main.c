@@ -37,23 +37,8 @@ static void	getting_paths(t_info *info, char **envp)
 static void	init_info(t_info *info, int argc, char **argv)
 {
 	info->paths = NULL;
-	info->argc = argc;
-	info->current_cmd = 1;
 	info->outfile = argv[argc - 1];
-	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
-	{
-		info->heredoc = true;
-		info->cmds = argc - 4;
-		info->limiter = argv[2];
-		info->limiter_len = ft_strlen(info->limiter);
-	}
-	else
-	{
-		info->infile = argv[1];
-		info->cmds = argc - 3;
-		info->heredoc = false;
-		info->limiter = NULL;
-	}
+	info->infile = argv[1];
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -63,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	wpid;
 	int		status;
 
-	if (argc < 5)
+	if (argc != 5)
 		return (1);
 	init_info(&info, argc, argv);
 	getting_paths(&info, envp);

@@ -9,10 +9,10 @@ BONUSDIR	=	./bonus
 
 SRCS 		= 	main.c child_process.c pipex_utils.c kill_program.c
 
-BONUS_SRCS	=	./bonus/main.c \
-				./bonus/kill_program.c \
-				./bonus/child_process.c \
-				./bonus/pipex_utils.c
+BONUS_SRCS	=	./bonus/main_bonus.c \
+				./bonus/kill_program_bonus.c \
+				./bonus/child_process_bonus.c \
+				./bonus/pipex_utils_bonus.c
 
 LIBFT		= 	./libft.a
 OBJS		=	$(SRCS:.c=.o)

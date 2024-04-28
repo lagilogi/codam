@@ -16,16 +16,13 @@ void	setting_io(t_info *info)
 {
 	int	infile;
 
-	if (info->current_cmd == 1 && info->heredoc == false)
-	{
-		infile = open(info->infile, O_RDONLY);
-		if (infile == -1)
-			kill_program(info, "infile", errno);
-		if (dup2(infile, STDIN_FILENO) == -1)
-			kill_program(info, "dup2 infile", errno);
-		if (close(infile) == -1)
-			perror("infile");
-	}
+	infile = open(info->infile, O_RDONLY);
+	if (infile == -1)
+		kill_program(info, "infile", errno);
+	if (dup2(infile, STDIN_FILENO) == -1)
+		kill_program(info, "dup2 infile", errno);
+	if (close(infile) == -1)
+		perror("infile");
 	if (dup2(info->fds[1], STDOUT_FILENO) == -1)
 		kill_program(info, "dup2 info->fds[1]", errno);
 	closing_fds(info->fds);

@@ -50,10 +50,7 @@ static pid_t	last_child(t_info *info, char *argv, char **envp)
 		kill_program(info, "last child fork", errno);
 	if (pid == 0)
 	{
-		if (info->heredoc == true)
-			outfile = open(info->outfile, O_CREAT | O_APPEND | O_WRONLY, 0777);
-		else
-			outfile = open(info->outfile, O_CREAT | O_TRUNC | O_WRONLY, 0777);
+		outfile = open(info->outfile, O_CREAT | O_TRUNC | O_WRONLY, 0777);
 		if (outfile == -1)
 			kill_program(info, "outfile", EXIT_FAILURE);
 		if (dup2(outfile, STDOUT_FILENO) == -1)
@@ -82,53 +79,14 @@ static void	child(t_info *info, char *argv, char **envp)
 	closing_fds(info->fds);
 }
 
-void	ft_heredoc(t_info *info)
-{
-	char	*str;
-
-	while (1)
-	{
-		str = get_next_line(0);
-		if (str == NULL)
-			break ;
-		if (strncmp(str, info->limiter, info->limiter_len) == 0
-			&& str[info->limiter_len] == '\n')
-		{
-			free(str);
-			break ;
-		}
-		write(info->fds[1], str, ft_strlen(str));
-		free (str);
-	}
-	if (dup2(info->fds[0], STDIN_FILENO) == -1)
-		kill_program(info, "child dup2 fds[0]", errno);
-	closing_fds(info->fds);
-}
-
 pid_t	creating_children(t_info *info, char **argv, char **envp)
 {
-	int		i;
 	pid_t	pid;
 
-	if (info->heredoc == false)
-		i = 2;
-	else
-		i = 3;
-	while (i < info->argc - 2)
-	{
-		if (pipe(info->fds) == -1)
-			kill_program(info, "pipe", errno);
-		if (info->current_cmd == 1 && info->heredoc == true)
-		{
-			ft_heredoc(info);
-			if (pipe(info->fds) == -1)
-				kill_program(info, "pipe heredoc", errno);
-		}
-		child(info, argv[i], envp);
-		i++;
-		info->current_cmd++;
-	}
-	pid = last_child(info, argv[i], envp);
+	if (pipe(info->fds) == -1)
+		kill_program(info, "pipe", errno);
+	child(info, argv[2], envp);
+	pid = last_child(info, argv[3], envp);
 	closing_fds(info->fds);
 	return (pid);
 }

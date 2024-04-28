@@ -28,17 +28,10 @@ typedef struct s_info
 	char	**paths;
 	char	*infile;
 	char	*outfile;
-	int		cmds;
-	int		current_cmd;
-	int		argc;
 	int		fds[2];
-	bool	heredoc;
-	char	*limiter;
-	int		limiter_len;
 }	t_info;
 
 pid_t	creating_children(t_info *info, char **argv, char **envp);
-void	ft_heredoc(t_info *info);
 char	*ft_pathjoin(char const *s1, char const *s2);
 void	setting_io(t_info *info);
 void	kill_program(t_info *info, char *arg, int i);
