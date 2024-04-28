@@ -73,6 +73,8 @@ int	main(int argc, char **argv, char **envp)
 		continue ;
 	if (wpid == -1)
 		kill_program(&info, "wpid", errno);
-	kill_program(&info, NULL, WEXITSTATUS(status));
-	return (status);
+	closing_fds(info.fds);
+	if (info.paths != NULL)
+		free_paths(&info);
+	return (WEXITSTATUS(status));
 }
