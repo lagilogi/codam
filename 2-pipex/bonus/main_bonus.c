@@ -76,5 +76,7 @@ int	main(int argc, char **argv, char **envp)
 	closing_fds(info.fds);
 	if (info.paths != NULL)
 		free_paths(&info);
-	return (WEXITSTATUS(status));
+	if (WIFEXITED(status) == true)
+		return (WEXITSTATUS(status));
+	return (0);
 }
