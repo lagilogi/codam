@@ -22,9 +22,10 @@ static void	window_initilization(t_game *game)
 
 	width = game->map.col * IMGW;
 	height = game->map.row * IMGH;
-	game->mlx = mlx_init(width, height, "Escape The Moon", false);
+	game->mlx = mlx_init(width, height, "Escape The Moon", true);
 	if (!game->mlx)
 		kill_game(game, "ERROR: Couldn't initialize MLX!", 1);
+	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
 }
 
 // This function sets all important pointers to NULL before setting them to

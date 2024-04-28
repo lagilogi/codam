@@ -97,6 +97,7 @@ void	win(t_game *game);
 void	lose(t_game *game);
 void	kill_game(t_game *game, char *message, int i);
 void	kill_game_wrapper(void *param);
+void	clear_gnl(char *line, int fd);
 void	moves_count(t_game *game);
 void	moves_text(t_game *game);
 void	draw_enemies(t_game *game, mlx_t *mlx);

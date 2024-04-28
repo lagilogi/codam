@@ -23,3 +23,14 @@ int	ft_linelen(char *line)
 		i++;
 	return (i);
 }
+
+void	clear_gnl(char *line, int fd)
+{
+	free(line);
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		free (line);
+		line = get_next_line(fd);
+	}
+}

@@ -1,5 +1,5 @@
 NAME	:= so_long
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -fsanitize=address
+CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code #-Ofast -fsanitize=address
 LIBMLX	:= ./MLX42
 LIBFTDR	:= ./libft
 

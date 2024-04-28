@@ -14,7 +14,7 @@
 # define LIBFT_H
 
 # ifndef GNLBUFFER_SIZE
-#  define GNLBUFFER_SIZE 10
+#  define GNLBUFFER_SIZE 100
 # endif
 
 # include <bsd/string.h>

@@ -127,7 +127,10 @@ static void	rows_columns_check(t_game *game, char *argv)
 		if (line == NULL)
 			break ;
 		if (ft_linelen(line) != game->map.col)
+		{
+			clear_gnl(line, fd);
 			kill_game(game, "ERROR\nMap not rectangular!", 1);
+		}
 		free (line);
 	}
 	close(fd);
