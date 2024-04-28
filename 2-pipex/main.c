@@ -65,25 +65,3 @@ int	main(int argc, char **argv, char **envp)
 		return (WEXITSTATUS(status));
 	return (0);
 }
-
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_info	info;
-// 	pid_t	pid;
-// 	pid_t	wpid;
-// 	int		status;
-
-// 	if (argc != 5)
-// 		return (1);
-// 	init_info(&info, argc, argv);
-// 	getting_paths(&info, envp);
-// 	pid = creating_children(&info, argv, envp);
-// 	wpid = waitpid(pid, &status, 0);
-// 	while (wait(NULL) != -1)
-// 		continue ;
-// 	if (wpid == -1)
-// 		kill_program(&info, "wpid", errno);
-// 	kill_program(&info, NULL, WEXITSTATUS(status));
-// 	return (status);
-// }
