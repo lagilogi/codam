@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/06 14:35:37 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/08 16:48:51 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/09 16:35:06 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,22 @@ static void	getting_forks(t_info *info)
 	int	i;
 
 	i = 0;
-	info->forks = malloc((info->input->philos + 1) * sizeof(t_fork *)); // Malloc-ing fork array
+	info->forks = malloc((info->input->philos + 1) * sizeof(pthread_mutex_t *)); // Malloc-ing fork array
 	if (info->forks == NULL)
 		kill_program(info, "Failed to malloc info->forks", errno);
 	info->forks[info->input->philos] = NULL; // setting last pointer to NULL
 	while (i < info->input->philos)
 	{
-		info->forks[i] = malloc(sizeof(t_fork));
+		info->forks[i] = malloc(sizeof(pthread_mutex_t));
 		if (info->forks[i] == NULL)
 			free_failed_fork_array(info, i);
-		info->forks[i]->fork_id = i;
-		pthread_mutex_init(&info->forks[i]->fork_lock, NULL);
+		pthread_mutex_init(info->forks[i], NULL);
 		i++;
 	}
 }
 
-static void	summon_philos(t_info *info)
+static void	summon_philos(t_info *info, int i, unsigned long tt_start)
 {
-	int	i;
-
-	i = 0;
 	info->philos = malloc((info->input->philos + 1) * sizeof(t_philo *));
 	if (info->philos == NULL)
 		kill_program(info, "Failed mallocing info->philos", errno);
@@ -101,17 +97,18 @@ static void	summon_philos(t_info *info)
 		info->philos[i] = malloc(sizeof(t_philo));
 		if (info->philos[i] == NULL)
 			free_failed_philo_array(info, i);
-		info->philos[i]->philo_id = i + 1;
+		info->philos[i]->id = i + 1;
 		info->philos[i]->tt_die = info->input->tt_die;
 		info->philos[i]->tt_eat = info->input->tt_eat;
 		info->philos[i]->tt_sleep = info->input->tt_sleep;
 		info->philos[i]->max_eat = info->input->max_eat;
 		info->philos[i]->left_fork = info->forks[i];
-		info->philos[i]->time_to_start = ft_gettime() + 2000; // To set start time for all philos to start
 		if (i + 1 != info->input->philos)
 			info->philos[i]->right_fork = info->forks[i + 1];
 		else
 			info->philos[i]->right_fork = info->forks[0];
+		info->philos[i]->time_to_start = tt_start;
+		info->philos[i]->stop = false;
 		i++;
 	}
 }
@@ -121,5 +118,5 @@ void	process_input(t_info *info, int argc, char **argv)
 	input_check(argc, argv);
 	parsing_input(info, argv);
 	getting_forks(info);
-	summon_philos(info);
+	summon_philos(info, 0, ft_gettime() + 1000);
 }

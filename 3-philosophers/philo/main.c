@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/06 13:59:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/08 16:15:20 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/09 14:14:00 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ void	philo_tester(t_info *info)
 	printf("\ntt_sleep: %lu", info->input->tt_sleep);
 	printf("\nmax_eat:  %lu\n\n", info->input->max_eat);
 
-	int i = 0;
-	printf("PHILOS AND FORKS\n");
-	while (i < info->input->philos)
-	{
-		printf("Philo %d, has lfork %d and rfork %d\n", info->philos[i]->philo_id, info->philos[i]->left_fork->fork_id, info->philos[i]->right_fork->fork_id);
-		i++;
-	}
+	// Can't be tested because forks no longer have a struct with a fork_id
+	// int i = 0;
+	// printf("PHILOS AND FORKS\n");
+	// while (i < info->input->philos)
+	// {
+	// 	printf("Philo %d, has lfork %d and rfork %d\n", info->philos[i]->philo_id, info->philos[i]->left_fork->fork_id, info->philos[i]->right_fork->fork_id);
+	// 	i++;
+	// }
 }
 
 
@@ -43,7 +44,7 @@ int main(int argc, char **argv)
 	tabling_philos(&info, 0);
 
 
-	philo_tester(&info); // tester
+	// philo_tester(&info); // tester
 
 
 	kill_program(&info, NULL, 0);
@@ -59,7 +60,7 @@ int main(int argc, char **argv)
 //
 // 2. Create fork struct array		-CHECK-
 //
-// 3. Set fork struct array data	-CHECK-
+// 3. Set fork array data			-CHECK-
 //
 // 4. Create philo struct array		-CHECK-
 //

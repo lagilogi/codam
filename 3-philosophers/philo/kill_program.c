@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/06 17:49:28 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/08 16:49:23 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/09 16:08:44 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	kill_program(t_info *info, char *msg, int exit_code)
 	i = 0;
 	while(info->forks != NULL && info->forks[i] != NULL)
 	{
-		pthread_mutex_destroy(&info->forks[i]->fork_lock);
+		pthread_mutex_destroy(info->forks[i]);
 		free(info->forks[i++]);
 	}
 	free(info->forks);
@@ -72,7 +72,7 @@ void free_failed_fork_array(t_info *info, int i)
 	o = 0;
 	while (o < i)
 	{
-		pthread_mutex_destroy(&info->forks[o]->fork_lock);
+		pthread_mutex_destroy(info->forks[o]);
 		free(info->forks[o]);
 		o++;
 	}

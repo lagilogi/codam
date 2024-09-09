@@ -6,24 +6,67 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/06 13:16:20 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/08 16:44:41 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/09 16:37:16 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+void	ending_dinner(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+}
+
+void	eating(t_philo *philo)
+{
+	unsigned long	current_time;
+	unsigned long	done_eating_time;
+
+	current_time = ft_gettime();
+	done_eating_time = current_time + philo->tt_eat;
+	printf("%lu %d is eating\n", current_time, philo->id);
+	while (ft_gettime() < done_eating_time)
+		continue ;
+}
+
+
+
+
+void	sleeping(t_philo *philo)
+{
+	unsigned long	current_time;
+	unsigned long	wake_up_time;
+
+	current_time = ft_gettime();
+	wake_up_time = current_time + philo->tt_sleep;
+	printf("%lu %d is sleeping\n", current_time, philo->id);
+	while (ft_gettime() < wake_up_time)
+		continue ;
+}
+
+
+
+
+
 static void	*dinner_simulation(void *data)
 {
-	t_philo			*philo;
+	t_philo	*philo;
 
 	philo = data;
 	while (ft_gettime() < philo->time_to_start)
 		continue ;
-	printf("Philo %d starting at %ld\n", philo->philo_id, ft_gettime());
-
-
-
-
+	// printf("Philo %d starting at %ld\n", philo->id, ft_gettime()); // start time test
+	// while (philo->stop == false)
+	// {
+	// 	eating(philo);
+	// 	sleeping(philo);
+	// }
+	for (int i = 0; i < 5; i++)
+	{
+		eating(philo);
+		sleeping(philo);
+	}
 
 	return (NULL);
 }
@@ -51,5 +94,4 @@ void	tabling_philos(t_info *info, int philo)
 		pthread_join(info->philos[philo]->thread, NULL);
 		philo++;
 	}
-	kill_program(info, NULL, 0);
 }

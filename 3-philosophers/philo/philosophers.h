@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/06 13:59:48 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/08 16:41:24 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/09 14:18:32 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,19 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-
-// struct for every fork
-typedef struct s_fork
-{
-	int				fork_id;
-	pthread_mutex_t	fork_lock;
-}	t_fork;
-
-
 // Struct that every philo has
 typedef struct s_philo
 {
 	pthread_t		thread;
-	int				philo_id;
+	int				id;
 	unsigned long	tt_die;
 	unsigned long	tt_eat;
 	unsigned long	tt_sleep;
 	unsigned long	max_eat;
-	t_fork			*left_fork;
-	t_fork			*right_fork;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
 	unsigned long	time_to_start;
+	bool			stop;
 }	t_philo;
 
 
@@ -62,7 +54,7 @@ typedef struct s_input
 typedef struct s_info
 {
 	t_input			*input;
-	t_fork			**forks;
+	pthread_mutex_t	**forks;
 	t_philo			**philos;
 }   t_info;
 
@@ -84,3 +76,9 @@ unsigned long	atol_unsigned(char *num_str);
 unsigned long	ft_gettime();
 
 #endif
+
+
+// pthread_mutex_lock(left_fork)
+// pthread_mutex_lock(right)
+// while (sleep_functon(eat_time));
+// pthread_mutex_unlock()
