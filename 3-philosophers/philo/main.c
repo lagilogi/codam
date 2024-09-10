@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/06 13:59:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/09 14:14:00 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/10 19:20:25 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	philo_tester(t_info *info)
 {
 	printf("\nGIVEN INPUT:");
-	printf("\nPhilos:   %u", info->input->philos);
+	printf("\nPhilos:   %ld", info->input->philos);
 	printf("\ntt_die:   %lu", info->input->tt_die);
 	printf("\ntt_eat:   %lu", info->input->tt_eat);
 	printf("\ntt_sleep: %lu", info->input->tt_sleep);
-	printf("\nmax_eat:  %lu\n\n", info->input->max_eat);
+	printf("\nmax_eat:  %ld\n\n", info->input->max_eat);
 
 	// Can't be tested because forks no longer have a struct with a fork_id
 	// int i = 0;

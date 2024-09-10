@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/06 17:49:28 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/09 16:08:44 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/10 19:21:01 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,31 +50,32 @@ void	kill_program(t_info *info, char *msg, int exit_code)
 	exit(exit_code);
 }
 
-void free_failed_philo_array(t_info *info, int i)
+void free_failed_philo_array(t_info *info, int index)
 {
-	int o;
+	int i;
 
-	o = 0;
-	while (o < i)
+	i = 0;
+	while (i < index)
 	{
-		free(info->philos[o]);
-		o++;
+		pthread_mutex_destroy(&info->philos[i]->stoplock);
+		free(info->philos[i]);
+		i++;
 	}
 	free(info->philos);
 	info->philos = NULL;
 	kill_program(info, "Failed mallocing info->fork[i]", errno);
 }
 
-void free_failed_fork_array(t_info *info, int i)
+void free_failed_fork_array(t_info *info, int index)
 {
-	int o;
+	int i;
 
-	o = 0;
-	while (o < i)
+	i = 0;
+	while (i < index)
 	{
-		pthread_mutex_destroy(info->forks[o]);
-		free(info->forks[o]);
-		o++;
+		pthread_mutex_destroy(info->forks[i]);
+		free(info->forks[i]);
+		i++;
 	}
 	free(info->forks);
 	info->forks = NULL;

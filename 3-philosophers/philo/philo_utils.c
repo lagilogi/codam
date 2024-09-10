@@ -6,16 +6,16 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/06 13:45:56 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/08 16:26:22 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/10 19:21:24 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_atoi(char *num_str)
+long	ft_atol(char *num_str)
 {
-	int	i;
-	int	o;
+	long	i;
+	long	o;
 
 	i = 0;
 	o = 0;
@@ -49,6 +49,19 @@ unsigned long	atol_unsigned(char *num_str)
 	}
 	return (o);
 }
+
+// unsigned long	ft_passtime(unsigned long end_time)
+// {
+	
+// 	unsigned long	current_ms_time;
+
+// 	while (end_time > current_ms_time)
+// 	{
+// 		usleep(1000);
+// 		current_ms_time = ft_gettime();
+// 	}
+// 	return (current_ms_time);
+// }
 
 unsigned long	ft_gettime()
 {

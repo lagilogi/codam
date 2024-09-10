@@ -7,6 +7,7 @@ OBJ_DIR		=	objects/
 SRCS 		= 	main.c \
 				process_input.c \
 				tabling_philos.c \
+				monitor.c \
 				kill_program.c \
 				philo_utils.c
 

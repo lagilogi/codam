@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/06 14:35:37 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/09 16:35:06 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/10 19:18:45 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void parsing_input(t_info *info, char **argv)
 {
-    info->input->philos = ft_atoi(argv[1]);
+    info->input->philos = ft_atol(argv[1]);
 	if (info->input->philos == 0)
 		exit (0);
 	else if (info->input->philos > 200)
@@ -30,14 +30,15 @@ static void parsing_input(t_info *info, char **argv)
 		input_error(5, argv[4]);
 	if (argv[5] != NULL)
 	{
-    	info->input->max_eat = atol_unsigned(argv[5]);
+    	info->input->max_eat = ft_atol(argv[5]);
 		if (info->input->max_eat > INT_MAX)
 			input_error(5, argv[5]);
 	}
 	else
-		info->input->max_eat = 0;
+		info->input->max_eat = -1;
 	info->forks = NULL;
 	info->philos = NULL;
+	info->stop = false;
 }
 
 static void	input_check(int argc, char **argv)
@@ -81,7 +82,11 @@ static void	getting_forks(t_info *info)
 		info->forks[i] = malloc(sizeof(pthread_mutex_t));
 		if (info->forks[i] == NULL)
 			free_failed_fork_array(info, i);
-		pthread_mutex_init(info->forks[i], NULL);
+		if (pthread_mutex_init(info->forks[i], NULL))
+		{
+			free(info->forks[i]);
+			free_failed_philo_array(info, i);
+		}
 		i++;
 	}
 }
@@ -96,12 +101,9 @@ static void	summon_philos(t_info *info, int i, unsigned long tt_start)
 	{
 		info->philos[i] = malloc(sizeof(t_philo));
 		if (info->philos[i] == NULL)
-			free_failed_philo_array(info, i);
+			free_failed_philo_array(info, i);		
 		info->philos[i]->id = i + 1;
-		info->philos[i]->tt_die = info->input->tt_die;
-		info->philos[i]->tt_eat = info->input->tt_eat;
-		info->philos[i]->tt_sleep = info->input->tt_sleep;
-		info->philos[i]->max_eat = info->input->max_eat;
+		info->philos[i]->input = info->input;
 		info->philos[i]->left_fork = info->forks[i];
 		if (i + 1 != info->input->philos)
 			info->philos[i]->right_fork = info->forks[i + 1];
@@ -109,9 +111,48 @@ static void	summon_philos(t_info *info, int i, unsigned long tt_start)
 			info->philos[i]->right_fork = info->forks[0];
 		info->philos[i]->time_to_start = tt_start;
 		info->philos[i]->stop = false;
+		info->philos[i]->full = false; // for optional case
+		info->philos[i]->times_eaten = 0;
+		if (pthread_mutex_init(&info->philos[i]->stoplock, NULL))
+		{
+			free(info->philos[i]);
+			free_failed_philo_array(info, i);
+		}
 		i++;
 	}
 }
+
+// static void	summon_philos(t_info *info, int i, unsigned long tt_start)
+// {
+// 	info->philos = malloc((info->input->philos + 1) * sizeof(t_philo *));
+// 	if (info->philos == NULL)
+// 		kill_program(info, "Failed mallocing info->philos", errno);
+// 	info->philos[info->input->philos] = NULL;
+// 	while (i < info->input->philos)
+// 	{
+// 		info->philos[i] = malloc(sizeof(t_philo));
+// 		if (info->philos[i] == NULL)
+// 			free_failed_philo_array(info, i);
+// 		info->philos[i]->id = i + 1;
+// 		info->philos[i]->tt_die = info->input->tt_die;
+// 		info->philos[i]->tt_eat = info->input->tt_eat;
+// 		info->philos[i]->tt_sleep = info->input->tt_sleep;
+// 		info->philos[i]->max_eat = info->input->max_eat;
+// 		info->philos[i]->left_fork = info->forks[i];
+// 		if (i + 1 != info->input->philos)
+// 			info->philos[i]->right_fork = info->forks[i + 1];
+// 		else
+// 			info->philos[i]->right_fork = info->forks[0];
+// 		info->philos[i]->time_to_start = tt_start;
+// 		info->philos[i]->stop = false;
+// 		if (pthread_mutex_init(info->philos[i]->stoplock, NULL))
+// 		{
+// 			free (info->philos[i]);
+// 			free_failed_philo_array(info, i);
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	process_input(t_info *info, int argc, char **argv)
 {
