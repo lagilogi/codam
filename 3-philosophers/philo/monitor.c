@@ -6,52 +6,64 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/10 18:33:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/10 19:30:04 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/17 18:12:40 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	stopping_philos(t_info *info)
+void	check_death(t_info *info, int id)
+{
+	unsigned long	time_of_death;
+
+	time_of_death = info->philo[id].last_meal + info->tt_die;
+	if (ft_gettime() > time_of_death)
+	{
+		if (ft_gettime() > info->philo[id].time_of_death)
+			print_status(info, "died", id + 1);
+		pthread_mutex_lock(&info->stoplock);
+		info->stop = true;
+		pthread_mutex_unlock(&info->stoplock);
+	}
+}
+
+void	check_full(t_info *info, int id)
+{
+	if (info->max_eat == -1 || info->philo[id].full == true)
+		return ;
+	if (info->philo[id].times_eaten >= info->max_eat)
+	{
+		printf("Philo %d is full\n", id + 1);
+		info->philo[id].full = true;
+		info->full++;
+	}
+	if (info->full == info->philos)
+	{
+		pthread_mutex_lock(&info->stoplock);
+		info->stop = true;
+		pthread_mutex_unlock(&info->stoplock);
+	}
+}
+
+void	monitoring(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	while (i < info->input->philos)
+	while (ft_gettime() < info->time_to_start)
 	{
-		pthread_mutex_lock(&info->philos[i]->stoplock);
-		info->philos[i]->stop = true;
-		pthread_mutex_unlock(&info->philos[i]->stoplock);
-		i++;
-	}	
-}
-
-void	monitoring(t_info *info, int i)
-{
-	while (ft_gettime() < info->philos[0]->time_to_start)
+		usleep(100);
 		continue ;
+	}
 	while (info->stop == false)
 	{
-		while (i < info->input->philos)
+		while (i < info->philos)
 		{
-			if (info->input->max_eat != -1 && info->philos[i]->full == false && info->philos[i]->times_eaten >= info->input->max_eat)
-			{
-				info->philos[i]->full = true;
-				printf("Philo %d is full\n", i);
-				info->full++;
-			}
-			if (info->philos[i]->stop == true || info->full == info->input->max_eat)
-			{
-				if (info->philos[i]->stop == true)
-					printf("%lu %d died\n", ft_gettime(), i);
-				info->stop = true;
-				break ;
-			}
+			usleep (2000);
+			check_full(info, i);
+			check_death(info, i);
 			i++;
 		}
-		if (info->stop == true)
-			break ;
 		i = 0;
 	}
-	stopping_philos(info);
 }

@@ -5,13 +5,11 @@ HEADER		=	philosophers.h
 OBJ_DIR		=	objects/
 
 SRCS 		= 	main.c \
-				process_input.c \
-				tabling_philos.c \
+				simulation.c \
 				monitor.c \
 				kill_program.c \
 				philo_utils.c
 
-# OBJS		=	$(SRCS:.c=.o)
 OBJS		=	$(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
 
 
