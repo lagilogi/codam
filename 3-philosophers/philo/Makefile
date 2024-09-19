@@ -1,6 +1,6 @@
 NAME		=	philosophers
 CC			= 	cc
-CFLAGS		=	-g -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS		=	-g -Wall -Wextra -Werror #-fsanitize=thread
 HEADER		=	philosophers.h
 OBJ_DIR		=	objects/
 

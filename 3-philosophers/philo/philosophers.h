@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/06 13:59:48 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/17 18:12:59 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/19 19:25:05 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_philo
 	int				id;
 	int				left_fork;
 	int				right_fork;
-	unsigned long	time_of_death;
+	unsigned long	death_time;
 	unsigned long	last_meal;
 	long			times_eaten;
 	bool			full;
@@ -60,6 +60,7 @@ typedef struct s_info
 // 1. Running simulation
 void			starting_simulation(t_info *info, int i);
 void			monitoring(t_info *info);
+bool			check_end(t_info *info);
 
 // 2. Ending and error handling
 void			kill_program(t_info *info, char *msg, int exit_code);

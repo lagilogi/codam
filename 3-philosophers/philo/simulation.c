@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/06 13:16:20 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/17 19:47:34 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/19 20:26:37 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,34 @@ static bool	sleeping(t_philo *philo)
 	if (print_status(philo->info, "is sleeping", philo->id))
 		return (true);
 	while (ft_gettime() < wake_up_time)
-		usleep(500);
+		usleep(200);
+	// usleep((wake_up_time - ft_gettime()) * 1000);
 	return (false);
 }
+
+
+
 
 static bool	taking_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 1)
 	{
 		pthread_mutex_lock(&philo->info->forks[philo->left_fork]);
-		if (print_status(philo->info, "has taken a fork", philo->id))
+		if (print_status(philo->info, "has taken a fork", philo->id) || philo->info->philos == 1)
+		{
+			pthread_mutex_unlock(&philo->info->forks[philo->left_fork]);
+			while (philo->info->philos == 1 && ft_gettime() < philo->death_time)
+				usleep(1000);
 			return (true);
-	}
-	if (philo->info->philos == 1)
-	{
-		while (ft_gettime() < philo->time_of_death)
-			usleep(1000);
-		return (true);
+		}
 	}
 	pthread_mutex_lock(&philo->info->forks[philo->right_fork]);
 	if (philo->id % 2 == 0)
 		if (print_status(philo->info, "has taken a fork", philo->id))
+		{
+			pthread_mutex_unlock(&philo->info->forks[philo->right_fork]);
 			return (true);
+		}
 	if (philo->id % 2 == 0)
 		pthread_mutex_lock(&philo->info->forks[philo->left_fork]);
 	return (false);
@@ -55,22 +61,28 @@ static bool	eating(t_philo *philo)
 
 	if (taking_forks(philo))
 		return (true);
-
 	pthread_mutex_lock(&philo->eatlock);
 	philo->last_meal = ft_gettime();
 	philo->times_eaten++;
 	pthread_mutex_unlock(&philo->eatlock);
 	if (print_status(philo->info, "is eating", philo->id))
 	{
-		pthread_mutex_unlock(&philo->eatlock);
+		pthread_mutex_unlock(&philo->info->forks[philo->left_fork]);
+		pthread_mutex_unlock(&philo->info->forks[philo->right_fork]);
 		return (true);
 	}
 	done_eating_time = philo->last_meal + philo->info->tt_eat;
-	usleep((done_eating_time - ft_gettime()) * 1000);
+	while (ft_gettime() < done_eating_time)
+		usleep(200);
+	// usleep((done_eating_time - ft_gettime()) * 1000);
 	pthread_mutex_unlock(&philo->info->forks[philo->left_fork]);
 	pthread_mutex_unlock(&philo->info->forks[philo->right_fork]);
 	return (false);
 }
+
+
+
+
 
 static void	*simul(void *data)
 {
@@ -81,7 +93,7 @@ static void	*simul(void *data)
 		usleep(500);
 	if (philo->id % 2 == 0)
 	{
-		while (ft_gettime() < philo->info->time_to_start + 10)
+		while (ft_gettime() < philo->info->time_to_start + 30)
 			usleep(100);
 	}
 	while (1)
@@ -93,7 +105,6 @@ static void	*simul(void *data)
 		if (print_status(philo->info, "is thinking", philo->id))
 			break ;
 	}
-	pthread_mutex_destroy(&philo->eatlock);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/06 13:45:56 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/17 20:13:21 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/19 20:16:41 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,6 @@ unsigned long	atol_unsigned(char *num_str)
 	return (o);
 }
 
-// unsigned long	ft_passtime(unsigned long end_time)
-// {
-//
-// 	unsigned long	current_ms_time;
-//
-// 	while (ft_gettime() < end_time)
-// 		usleep(100);
-// 	return (current_ms_time);
-// }
 
 unsigned long	ft_gettime(void)
 {
@@ -74,49 +65,44 @@ unsigned long	ft_gettime(void)
 	return (current_ms_time);
 }
 
-// bool	print_status(t_info *info, char *msg, int id)
-// {
-// 	unsigned long	time;
+bool	check_end(t_info *info)
+{
+	pthread_mutex_lock(&info->stoplock);
+	if (info->stop == true)
+	{
+		pthread_mutex_unlock(&info->stoplock);
+		return (true);
+	}
+	pthread_mutex_unlock(&info->stoplock);
+	return (false);
+}
 
-// 	pthread_mutex_lock(&info->stoplock);
-// 	pthread_mutex_lock(&info->printlock);
-	
-// 	if (info->stop == true)
-// 	{
-// 		pthread_mutex_unlock(&info->stoplock);
-// 		return (true);
-// 	}
-// 	pthread_mutex_unlock(&info->stoplock);
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
 
-
-// 	time = ft_gettime() - info->time_to_start;
-// 	printf("%lu %d %s\n", time, id, msg);
-// 	pthread_mutex_unlock(&info->printlock);
-
-// 	return (false);
-// }
+	i = 0;
+	while (i != n)
+	{
+		if (s1[i] != s2[i] || s1[i] == '\0' || s2[i] == '\0')
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}
 
 bool	print_status(t_info *info, char *msg, int id)
 {
 	unsigned long	time;
 
 	pthread_mutex_lock(&info->printlock);
-	pthread_mutex_lock(&info->stoplock);
-	if (info->stop == true)
+	time = ft_gettime() - info->time_to_start;
+	if (check_end(info))
 	{
-		pthread_mutex_unlock(&info->stoplock);
 		pthread_mutex_unlock(&info->printlock);
 		return (true);
 	}
-	pthread_mutex_unlock(&info->stoplock);
-
-	time = ft_gettime() - info->time_to_start;
 	printf("%lu %d %s\n", time, id, msg);
 	pthread_mutex_unlock(&info->printlock);
-
-
-
-
-
 	return (false);
 }
