@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/06 13:59:48 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/19 19:25:05 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/20 09:20:47 by ubuntu        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_philo
 	int				id;
 	int				left_fork;
 	int				right_fork;
-	unsigned long	death_time;
-	unsigned long	last_meal;
+	long			death_time;
+	long			last_meal;
 	long			times_eaten;
 	bool			full;
 	pthread_mutex_t	eatlock;
@@ -46,32 +46,36 @@ typedef struct s_info
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	long			philos;
-	unsigned long	tt_die;
-	unsigned long	tt_eat;
-	unsigned long	tt_sleep;
+	long			tt_die;
+	long			tt_eat;
+	long			tt_sleep;
 	long			max_eat;
-	unsigned long	time_to_start;
 	long			full;
+	long			time_to_start;
 	bool			stop;
 	pthread_mutex_t	stoplock;
 	pthread_mutex_t	printlock;
+	bool			odd;
 }	t_info;
 
-// 1. Running simulation
-void			starting_simulation(t_info *info, int i);
-void			monitoring(t_info *info);
-bool			check_end(t_info *info);
+// 1. Initalization
+int		init_simulation(t_info *info, char **argv);
 
-// 2. Ending and error handling
-void			kill_program(t_info *info, char *msg, int exit_code);
-void			input_error(int i, char *arg);
-void			destroy_mutexes(t_info *info, int i, int x);
+// 2. Running simulation
+void	*solo_simul(void *data);
+void	*simul(void *data);
+void	monitoring(t_info *info);
+bool	check_end(t_info *info);
 
-// 3. Utils
-long			ft_atol(char *num_str);
-unsigned long	atol_unsigned(char *num_str);
-unsigned long	ft_gettime(void);
-bool			print_status(t_info *info, char *msg, int id);
-// unsigned long	ft_passtime(unsigned long end_time);
+// 3. Ending and error handling
+int		clean_up(t_info *info, char *msg, int exit_code);
+int		input_error(int i, char *arg);
+int		destroy_mutexes(t_info *info, int i, int x);
+
+// 4. Utils
+long	ft_atol(char *num_str);
+long	ft_gettime(void);
+void	precise_usleep(long duration);
+bool	print_status(t_info *info, char *msg, int id);
 
 #endif

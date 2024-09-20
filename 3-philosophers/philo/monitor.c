@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/10 18:33:41 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/19 19:53:43 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/20 11:23:14 by ubuntu        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	check_death(t_info *info, int id)
 {
-	unsigned long	time_of_death;
+	long	time_of_death;
 
 	pthread_mutex_lock(&info->philo[id].eatlock);
 	time_of_death = info->philo[id].last_meal + info->tt_die;
@@ -30,6 +30,26 @@ bool	check_death(t_info *info, int id)
 	}
 	return (false);
 }
+
+// bool	check_death(t_info *info, int id)
+// {
+// 	long	time_of_death;
+
+// 	pthread_mutex_lock(&info->philo[id].eatlock);
+// 	time_of_death = info->philo[id].last_meal + info->tt_die;
+// 	pthread_mutex_unlock(&info->philo[id].eatlock);
+// 	if (ft_gettime() > time_of_death)
+// 	{
+// 		pthread_mutex_lock(&info->stoplock);
+// 		pthread_mutex_lock(&info->printlock);
+// 		printf("%lu %d died\n", ft_gettime() - info->time_to_start, id + 1);
+// 		info->stop = true;
+// 		pthread_mutex_unlock(&info->printlock);
+// 		pthread_mutex_unlock(&info->stoplock);
+// 		return (true);
+// 	}
+// 	return (false);
+// }
 
 bool	check_full(t_info *info, int id)
 {
@@ -58,19 +78,13 @@ void	monitoring(t_info *info)
 	int	i;
 
 	i = 0;
-	while (ft_gettime() < info->time_to_start)
-	{
-		usleep(100);
-		continue ;
-	}
+	usleep(50000);
 	while (info->stop == false)
 	{
 		usleep (2000);
 		while (i < info->philos)
 		{
-			if (check_death(info, i))
-				break ;
-			if (check_full(info, i))
+			if (check_death(info, i) || check_full(info, i))
 				break ;
 			i++;
 		}

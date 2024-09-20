@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   kill_program.c                                     :+:    :+:            */
+/*   clean_up.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/06 17:49:28 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/17 20:22:07 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/09/20 09:16:22 by ubuntu        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	input_error(int i, char *arg)
+int	input_error(int i, char *arg)
 {
 	if (i == 1)
 	{
@@ -27,10 +27,10 @@ void	input_error(int i, char *arg)
 		printf("%s: Incorrect amount of philos (Min. 1 - Max. 200)\n", arg);
 	else if (i == 5)
 		printf("Number too big\n");
-	exit(EXIT_FAILURE);
+	return(1);
 }
 
-void	kill_program(t_info *info, char *msg, int exit_code)
+int	clean_up(t_info *info, char *msg, int exit_code)
 {
 	int	i;
 
@@ -46,10 +46,10 @@ void	kill_program(t_info *info, char *msg, int exit_code)
 		free(info->philo);
 	if (msg != NULL)
 		printf("%s\n", msg);
-	exit(exit_code);
+	return (exit_code);
 }
 
-void	destroy_mutexes(t_info *info, int i, int x)
+int	destroy_mutexes(t_info *info, int i, int x)
 {
 	if (x == 0)
 	{
@@ -65,5 +65,8 @@ void	destroy_mutexes(t_info *info, int i, int x)
 		free(info->philo);
 		info->philo = NULL;
 	}
-	kill_program(info, "Failed to initialize mutex", errno);
+	pthread_mutex_destroy(&info->stoplock);
+	pthread_mutex_destroy(&info->printlock);
+	return (clean_up(info, "Failed to initialize mutex", errno));
+	
 }
