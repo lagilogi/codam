@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/06 13:45:56 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/09/20 11:26:00 by ubuntu        ########   odam.nl         */
+/*   Updated: 2024/09/26 13:17:01 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ bool	check_end(t_info *info)
 	return (false);
 }
 
-
 void	precise_usleep(long end_time)
 {
 	while (ft_gettime() < end_time - 1)
@@ -63,23 +62,6 @@ void	precise_usleep(long end_time)
 	while (ft_gettime() < end_time)
 		;
 }
-
-// bool	print_status(t_info *info, char *msg, int id)
-// {
-// 	long	time;
-
-// 	pthread_mutex_lock(&info->printlock);
-// 	time = ft_gettime() - info->time_to_start;
-// 	if (check_end(info))
-// 	{
-// 		pthread_mutex_unlock(&info->printlock);
-// 		return (true);
-// 	}
-// 	printf("%lu %d %s\n", time, id, msg);
-// 	pthread_mutex_unlock(&info->printlock);
-// 	return (false);
-// }
-
 
 bool	print_status(t_info *info, char *msg, int id)
 {

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   init.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/09/26 11:57:44 by wsonepou      #+#    #+#                 */
+/*   Updated: 2024/09/26 15:11:24 by wsonepou      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 static int	parsing_input(t_info *info, char **argv)
@@ -68,7 +80,7 @@ static int	getting_philos(t_info *info, long tt_start)
 	return (0);
 }
 
-int init_simulation(t_info *info, char **argv)
+int	init_simulation(t_info *info, char **argv)
 {
 	if (parsing_input(info, argv))
 		return (1);
