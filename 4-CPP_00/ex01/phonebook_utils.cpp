@@ -22,3 +22,30 @@ void	startup_messages()
 	std::cout << "EXIT   - to exit the phonebook\n";
 	std::cout << "\nThe Phonebook is currently empty. We suggest adding a contact\n";
 }
+
+void	add_messages(int i)
+{
+	if (i == 0)
+		std::cout << "\nEnter first name: ";
+	else if (i == 1)
+		std::cout << "\nEnter last name: ";
+	else if (i == 2)
+		std::cout << "\nEnter nickname: ";
+	else if (i == 3)
+		std::cout << "\nEnter phone number: ";
+	else if (i == 4)
+		std::cout << "\nEnter your darkest secret: ";
+	else if (i == 5)
+		std::cout << "\nError: Field cannot be empty";
+	else if (i == 6)
+		std::cout << "\nError: Phone numbers can only consist of numbers";
+}
+
+int	check_phonenumber(std::string phoneNumber)
+{
+	for (int o = 0; phoneNumber[o] != '\0'; o++){
+		if (!isdigit(phoneNumber[o]))
+			add_messages(5);
+			return 1;
+	}
+}
