@@ -2,13 +2,13 @@ NAME			= phonebook
 
 # Compiler & flags
 CXX				= c++
-# CXXFLAGS		= -Wall -Wextra -Werror -std=c++98
+CXXFLAGS		= -Wall -Wextra -Werror #-std=c++98
 
 # Directories
 OBJ_DIR			= objects/
 
 # Files
-SRCS			= phonebook.cpp phonebook_utils.cpp
+SRCS			= main.cpp phonebook.cpp contacts.cpp
 OBJS			= $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 
 all:			$(NAME)
