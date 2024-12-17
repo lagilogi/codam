@@ -2,13 +2,13 @@ NAME			= Accounts
 
 # Compiler & flags
 CXX				= c++
-CXXFLAGS		= -Wall -Wextra -Werror #-std=c++98
+CXXFLAGS		= -Wall -Wextra -Werror -std=c++98
 
 # Directories
 OBJ_DIR			= objects/
 
 # Files
-SRCS			= test.cpp Account.cpp
+SRCS			= tests.cpp Account.cpp
 OBJS			= $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 
 all:			$(NAME)
