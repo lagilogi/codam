@@ -6,9 +6,12 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 13:45:53 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/16 17:24:20 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/12/17 14:17:57 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef PHONEBOOK_HPP
+# define PHONEBOOK_HPP
 
 #include <iostream>
 #include <string>
@@ -17,7 +20,7 @@
 class PhoneBook {
 	private:
 		Contacts	contact[8];
-		int			contact_amount;
+		int			_contact_amount;
 
 	public:
 		PhoneBook();
@@ -27,3 +30,5 @@ class PhoneBook {
 		int		getContact_amount() const;
 		void	setContact_amount();
 };
+
+#endif

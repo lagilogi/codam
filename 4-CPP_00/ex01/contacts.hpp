@@ -6,9 +6,12 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 13:45:53 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/16 15:44:10 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/12/17 14:18:29 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef CONTACTS_HPP
+# define CONTACTS_HPP
 
 #include <iostream>
 #include <string>
@@ -26,3 +29,5 @@ class Contacts {
 		void	add_messages(int i) const;
 		int		check_phonenumber(std::string phoneNumber) const;
 };
+
+#endif
