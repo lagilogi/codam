@@ -21,12 +21,10 @@ $(OBJ_DIR)%.o:	%.cpp
 				$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:			
-				@rm -rf $(OBJ_DIR)
-				@echo "Cleaned up object files"
+				@-rm -rf $(OBJ_DIR) && echo "Cleaned up object files"
 
 fclean:			clean
-				@rm $(NAME)
-				@echo "Cleaned up executable"
+				@-rm $(NAME) && echo "Cleaned up executable"
 
 re:				fclean all
 
