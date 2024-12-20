@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/17 17:32:42 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/17 18:06:00 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/12/20 13:53:33 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 class HumanA {
 	private:
 		std::string	_name;
-		std::string	_weapon;
+		Weapon		&_weapon;
 
 	public:
-		HumanA(std::string name, std::string weapon);
+		HumanA(std::string name, Weapon &weapon);
 		void	attack() const;
 };
 

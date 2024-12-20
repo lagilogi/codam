@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/17 17:31:49 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/17 17:59:05 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/12/20 17:42:19 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ class Weapon {
 		std::string _type;
 	
 	public:
-		Weapon(std::string type);
+		Weapon(const std::string type);
 		std::string getType() const;
-		void		setType(std::string weapon);
+		void		setType(const std::string weapon);
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/17 14:48:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/17 17:59:37 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/12/20 19:01:17 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ int main()
 	{
 		Weapon club = Weapon("crude spiked club");
 		HumanB jim("Jim");
+		jim.attack();
 		jim.setWeapon(club);
 		jim.attack();
 		club.setType("some other type of club");
 		jim.attack();
+		// jim.setWeapon(NULL); // Is this a valid test?
+		// jim.attack();
 	}
 
-return 0;
+	return 0;
 }

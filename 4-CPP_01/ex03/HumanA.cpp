@@ -6,18 +6,20 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/17 17:32:21 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/17 18:07:01 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/12/20 13:53:31 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "HumanA.hpp"
+#include "header.hpp"
 
 // Constructors & Destructors
-HumanA::HumanA(std::string name, std::string weapon) : _name(name), _weapon(weapon) {}
+HumanA::HumanA(std::string name, Weapon &weapon) : _name(name), _weapon(weapon) {}
 
 
 // Functions
 void	HumanA::attack() const
 {
-	std::cout << _name << " > attacks with their " << _weapon << std::endl;
+	std::cout 	<< _name
+				<< " attacks with their "
+				<< _weapon.getType() << std::endl;
 }

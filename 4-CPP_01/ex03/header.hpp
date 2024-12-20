@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/17 17:52:30 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/17 17:58:10 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/12/20 12:45:56 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,8 @@
 # define HEADER_HPP
 
 	#include <iostream>
+	#include "Weapon.hpp"
+	#include "HumanA.hpp"
+	#include "HumanB.hpp"
 
 #endif

@@ -6,18 +6,25 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/17 17:33:07 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/17 18:09:36 by wsonepou      ########   odam.nl         */
+/*   Updated: 2024/12/20 18:07:02 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "HumanB.hpp"
+#include "header.hpp"
 
 // Constructors & Destructors
-HumanB::HumanB(std::string name) : _name(name) {}
-HumanB::HumanB(std::string name, std::string weapon) : _name(name), _weapon(weapon) {}
+HumanB::HumanB(std::string name) : _name(name), _weapon(NULL) {}
 
 // Functions
 void	HumanB::attack() const
 {
-	std::cout << _name << " > attacks with their " << _weapon << std::endl;
+	if (_weapon != NULL)
+		std::cout << _name << " attacks with their " << _weapon->getType() << std::endl;
+	else
+		std::cout << _name << " attacks with their fists" << std::endl;
+}
+
+void	HumanB::setWeapon(Weapon &weapon)
+{
+	_weapon = &weapon;
 }
