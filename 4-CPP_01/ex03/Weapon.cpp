@@ -14,6 +14,7 @@
 
 // Constructors & Destructors
 Weapon::Weapon(const std::string type) : _type(type) {}
+Weapon::~Weapon() {}
 
 
 // Getters & Setters

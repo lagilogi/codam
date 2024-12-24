@@ -14,6 +14,7 @@
 
 // Constructors & Destructors
 HumanB::HumanB(std::string name) : _name(name), _weapon(NULL) {}
+HumanB::~HumanB() {}
 
 // Functions
 void	HumanB::attack() const
