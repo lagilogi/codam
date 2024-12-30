@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   Harl.cpp                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/30 15:17:39 by wsonepou      #+#    #+#                 */
+/*   Updated: 2024/12/30 15:23:22 by wsonepou      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Harl.hpp"
 
 // Constructors & destructors
@@ -41,4 +53,3 @@ void	Harl::complain(std::string level)
 	if (i < 4)
 		(this->*complaints[i])();
 }
-

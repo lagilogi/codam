@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   main.cpp                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/30 15:17:50 by wsonepou      #+#    #+#                 */
+/*   Updated: 2024/12/30 15:17:51 by wsonepou      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sed.hpp"
 
 void	find_and_replace(std::string &line, const std::string &str1, const std::string &str2)
@@ -31,14 +43,15 @@ int main(int argc, char **argv)
 	if (check_input(argc, argv) == 1)
 		return 1;
 
+	std::string file = argv[1];
 	std::string str1(argv[2]);
 	std::string str2(argv[3]);
-	std::ifstream oldfile(argv[1]);
+	std::ifstream oldfile(file);
 	if (!oldfile.is_open()) {
-		std::cout << "Error: File [" << argv[1] << "] not found" << std::endl;
+		std::cout << "Error: File [" << file << "] not found" << std::endl;
 		return 1;
 	}
-	std::ofstream newfile("newfile.txt");
+	std::ofstream newfile(file + ".replace");
 	if (!newfile.is_open()) {
 		std::cout << "Error: Couldn't create or open new file" << std::endl;
 		return 1;
