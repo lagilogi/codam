@@ -18,17 +18,16 @@
 class Fixed {
 	private:
 		int	fixed_point;
-		static const int frac_bits;
+		static const int frac_bits = 8;
 
 	public:
 		Fixed();									// Default constructor
 		Fixed(const Fixed &copy);					// Copy constructor
-		Fixed& Fixed::operator=(const Fixed &op);	// Copy assigntment operator overload
+		Fixed& operator=(const Fixed &op_copy);		// Copy assigntment operator overload
 		~Fixed();									// Destructor
 
 		int	getRawBits( void ) const;
-		int setRawBits( int const raw ); 
+		void setRawBits( int const raw );
 };
-
 
 #endif

@@ -1,4 +1,4 @@
-NAME			= Zombie
+NAME			= ex00
 
 # Compiler and Flags
 CXX				= c++
