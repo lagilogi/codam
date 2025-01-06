@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/30 15:31:44 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/30 19:42:06 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/06 17:43:35 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ Fixed::Fixed() : fixed_point(0)					// Default constructor
 	std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const Fixed &copy)					// Copy constructor
+Fixed::Fixed(const Fixed &other)					// Copy constructor
 {
 	std::cout << "Copy constructor called" << std::endl;
-	fixed_point = copy.getRawBits();
+	fixed_point = other.getRawBits();
 }
 
-Fixed& Fixed::operator=(const Fixed &o_copy)	// Copy assignment operator overload
+Fixed& Fixed::operator=(const Fixed &temp)		// Copy assignment operator overload
 {
 	std::cout << "Copy assignment operator called" << std::endl;
-	fixed_point = o_copy.getRawBits();
+	if (this != &temp)
+		fixed_point = temp.getRawBits();
 	return *this;
 }
 
@@ -35,9 +36,6 @@ Fixed::~Fixed()									// Destructor
 {
 	std::cout << "Destructor called" << std::endl;
 }
-
-
-
 
 
 /* Getters & Setters */

@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/30 15:32:36 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/30 19:42:00 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/06 17:43:41 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ class Fixed {
 
 	public:
 		Fixed();									// Default constructor
-		Fixed(const Fixed &copy);					// Copy constructor
-		Fixed& operator=(const Fixed &op_copy);		// Copy assigntment operator overload
+		Fixed(const Fixed &other);					// Copy constructor
+		Fixed& operator=(const Fixed &temp);		// Copy assigntment operator overload
 		~Fixed();									// Destructor
 
 		int	getRawBits( void ) const;
