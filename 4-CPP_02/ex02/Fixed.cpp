@@ -15,17 +15,17 @@
 /* CONSTRUCTORS */
 Fixed::Fixed() : fixed_point(0)
 {
-	std::cout << "Default constructor called" << std::endl;
+	// std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(const int num) : fixed_point(num << frac_bits)
 {
-	std::cout << "Int constructor called" << std::endl;
+	// std::cout << "Int constructor called" << std::endl;
 }
 
 Fixed::Fixed(const float num) : fixed_point(roundf(num * (1 << frac_bits)))
 {
-	std::cout << "Float constructor called" << std::endl;
+	// std::cout << "Float constructor called" << std::endl;
 }
 
 
@@ -34,7 +34,7 @@ Fixed::Fixed(const float num) : fixed_point(roundf(num * (1 << frac_bits)))
 /* COPY CONSTRUCTOR */
 Fixed::Fixed(const Fixed &other)
 {
-	std::cout << "Copy constructor called" << std::endl;
+	// std::cout << "Copy constructor called" << std::endl;
 	fixed_point = other.fixed_point;
 }
 
@@ -42,13 +42,104 @@ Fixed::Fixed(const Fixed &other)
 /* COPY ASSIGNMENT OPERATOR OVERLOAD */
 Fixed& Fixed::operator=(const Fixed &other)
 {
-	// if (this == &other)
-	// 	return *this;
-	std::cout << "Copy assignment operator called" << std::endl;
+	if (this == &other)
+   		return *this;
 	fixed_point = other.fixed_point;
 	return *this;
 }
 
+Fixed Fixed::operator+(const Fixed &other)
+{
+	Fixed NewObject;
+	NewObject.fixed_point = fixed_point + other.fixed_point;
+	return NewObject;
+}
+
+Fixed Fixed::operator-(const Fixed &other)
+{
+	Fixed NewObject;
+	NewObject.fixed_point = fixed_point - other.fixed_point;
+	return NewObject;
+}
+
+Fixed Fixed::operator*(const Fixed &other)
+{
+	Fixed NewObject;
+	NewObject.fixed_point = fixed_point * other.fixed_point;
+	return NewObject;
+}
+
+Fixed Fixed::operator/(const Fixed &other)
+{
+	Fixed NewObject;
+	NewObject.fixed_point = fixed_point / other.fixed_point;
+	return NewObject;
+}
+
+Fixed& Fixed::operator++()
+{
+	fixed_point++;
+	return *this;
+}
+
+Fixed Fixed::operator++(int)
+{
+	Fixed NewObject(*this);
+	NewObject.fixed_point++;
+	return NewObject;
+}
+
+Fixed& Fixed::operator--()
+{
+	fixed_point--;
+	return *this;
+}
+
+Fixed Fixed::operator--(int)
+{
+	Fixed NewObject(*this);
+	NewObject.fixed_point--;
+	return NewObject;
+}
+
+
+/* OPERATOR OVERLOAD */
+bool Fixed::operator>(const Fixed &other)
+{
+	if (fixed_point > other.fixed_point)
+		return true;
+	return false;
+}
+bool Fixed::operator>=(const Fixed &other)
+{
+	if (fixed_point >= other.fixed_point)
+		return true;
+	return false;
+}
+bool Fixed::operator<(const Fixed &other)
+{
+	if (fixed_point < other.fixed_point)
+		return true;
+	return false;
+}
+bool Fixed::operator<=(const Fixed &other)
+{
+	if (fixed_point <= other.fixed_point)
+		return true;
+	return false;
+}
+bool Fixed::operator==(const Fixed &other)
+{
+	if (fixed_point == other.fixed_point)
+		return true;
+	return false;
+}
+bool Fixed::operator!=(const Fixed &other)
+{
+	if (fixed_point != other.fixed_point)
+		return true;
+	return false;
+}
 
 /* OUTPUT OPERATOR OVERLOAD */
 std::ostream& operator<<(std::ostream &output, const Fixed &fixed)
@@ -63,7 +154,7 @@ std::ostream& operator<<(std::ostream &output, const Fixed &fixed)
 /* DESTRUCTOR */
 Fixed::~Fixed()
 {
-	std::cout << "Destructor called" << std::endl;
+	// std::cout << "Destructor called" << std::endl;
 }
 
 
@@ -88,12 +179,12 @@ float Fixed::toFloat(void) const
 /* GETTERS & SETTERS */
 int	Fixed::getRawBits( void ) const
 {
-	std::cout << "getRawBits member function called" << std::endl;
+	// std::cout << "getRawBits member function called" << std::endl;
 	return (fixed_point);
 }
 
 void Fixed::setRawBits( int const raw )
 {
-	std::cout << "setRawBits member function called" << std::endl;
+	// std::cout << "setRawBits member function called" << std::endl;
 	fixed_point = raw;
 }

@@ -1,4 +1,4 @@
-NAME			= ex01
+NAME			= ex02
 
 # Compiler and Flags
 CXX				= c++
@@ -20,7 +20,7 @@ $(OBJ_DIR)%.o:	%.cpp
 				mkdir -p $(@D)
 				$(CXX) $(CXXFLAGS) -c $< -o $@
 
-clean:			
+clean:
 				@-rm -rf $(OBJ_DIR) && echo "Cleaned up object files"
 
 fclean:			clean

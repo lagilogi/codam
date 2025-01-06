@@ -27,11 +27,23 @@ class Fixed {
 		Fixed(const float num);					// float parameter constructor
 		Fixed(const Fixed &other);				// Copy constructor
 
-		Fixed& operator=(const Fixed &other);	// = assigntment operator overload
-		Fixed& operator+(const Fixed &other);	// + assigntment operator overload
-		Fixed& operator-(const Fixed &other);	// - assigntment operator overload
-		Fixed& operator*(const Fixed &other);	// * assigntment operator overload
-		Fixed& operator/(const Fixed &other);	// / assigntment operator overload
+		Fixed& operator=(const Fixed &other);	// = assignment operator overload
+		Fixed operator+(const Fixed &other);	// + assignment operator overload
+		Fixed operator-(const Fixed &other);	// - assignment operator overload
+		Fixed operator*(const Fixed &other);	// * assignment operator overload
+		Fixed operator/(const Fixed &other);	// / assignment operator overload
+
+		Fixed& operator++();					// ++x assignment operator overload
+		Fixed operator++(int);					// x++ assignment operator overload
+		Fixed& operator--();					// --X assignment operator overload
+		Fixed operator--(int);					// x-- assignment operator overload
+
+		bool operator>(const Fixed &other);		// > assignment operator overload
+		bool operator>=(const Fixed &other);	// >= assignment operator overload
+		bool operator<(const Fixed &other);		// < assignment operator overload
+		bool operator<=(const Fixed &other);	// <= assignment operator overload
+		bool operator==(const Fixed &other);	// == assignment operator overload
+		bool operator!=(const Fixed &other);	// != assignment operator overload
 
 
 		~Fixed();								// Destructor
