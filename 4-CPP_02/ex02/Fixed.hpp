@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/30 15:32:36 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/30 19:42:00 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/06 13:32:17 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,23 @@ class Fixed {
 		Fixed& operator--();					// --X assignment operator overload
 		Fixed operator--(int);					// x-- assignment operator overload
 
-		bool operator>(const Fixed &other);		// > assignment operator overload
-		bool operator>=(const Fixed &other);	// >= assignment operator overload
-		bool operator<(const Fixed &other);		// < assignment operator overload
-		bool operator<=(const Fixed &other);	// <= assignment operator overload
-		bool operator==(const Fixed &other);	// == assignment operator overload
-		bool operator!=(const Fixed &other);	// != assignment operator overload
+		bool operator>(const Fixed &other) const;		// > assignment operator overload
+		bool operator>=(const Fixed &other) const;	// >= assignment operator overload
+		bool operator<(const Fixed &other) const;		// < assignment operator overload
+		bool operator<=(const Fixed &other) const;	// <= assignment operator overload
+		bool operator==(const Fixed &other) const;	// == assignment operator overload
+		bool operator!=(const Fixed &other) const;	// != assignment operator overload
 
 
 		~Fixed();								// Destructor
 
 		int		toInt( void ) const;			// Change fixed_point to Int
 		float	toFloat( void ) const;			// Change fixed_point to Float
+		static Fixed& max(Fixed &a, Fixed &b);
+		static const Fixed& max(const Fixed &a, const Fixed &b);
+		static Fixed& min(Fixed &a, Fixed &b);
+		static const Fixed& min(const Fixed &a, const Fixed &b);
+		
 		int		getRawBits( void ) const;		// Getter
 		void	setRawBits( int const raw );	// Setter
 };
