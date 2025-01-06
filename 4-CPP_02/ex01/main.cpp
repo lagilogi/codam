@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/30 15:31:37 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/30 19:02:44 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/06 18:02:10 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,23 @@ int main( void ) {
 
 	return 0;
 }
+
+
+// int main()
+// {
+// 	Fixed	a(-10);
+// 	Fixed	b(5);
+// 	Fixed	c(-2.345f);
+// 	Fixed	d(8.98f);
+// 	Fixed	e = b.getRawBits() + d.getRawBits();
+
+// 	std::cout << a << " " << b << " " << c << " " << d << std::endl;
+
+// 	std::cout << a.toFloat() << " " << c.toInt() << std::endl;
+
+// 	a.setRawBits(214342);
+	
+// 	std::cout << a.toFloat() << " " << a.toInt() << std::endl;
+// 	e.setRawBits(e.getRawBits() >> 8);
+// 	std::cout << e << std::endl;
+// }

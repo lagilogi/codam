@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/30 15:31:44 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/30 19:42:06 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/06 18:04:35 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ Fixed::Fixed(const Fixed &other)
 /* COPY ASSIGNMENT OPERATOR OVERLOAD */
 Fixed& Fixed::operator=(const Fixed &other)		// Not always called as shown in example, need to discuss
 {
-	// if (this == &other)
-	// 	return *this;
 	std::cout << "Copy assignment operator called" << std::endl;
-	fixed_point = other.fixed_point;
+	if (this != &other)
+		fixed_point = other.fixed_point;
 	return *this;
 }
 
@@ -78,7 +77,7 @@ int	Fixed::toInt(void) const
 
 float Fixed::toFloat(void) const
 {
-	float num = (float)fixed_point / (1 << frac_bits);
+	float num = static_cast<float>(fixed_point) / (1 << frac_bits);
 	return num;
 }
 
