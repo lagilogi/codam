@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/30 15:32:36 by wsonepou      #+#    #+#                 */
-/*   Updated: 2025/01/06 13:32:17 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/07 18:13:53 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ class Fixed {
 		Fixed(const Fixed &other);				// Copy constructor
 
 		Fixed& operator=(const Fixed &other);	// = assignment operator overload
-		Fixed operator+(const Fixed &other);	// + assignment operator overload
-		Fixed operator-(const Fixed &other);	// - assignment operator overload
-		Fixed operator*(const Fixed &other);	// * assignment operator overload
-		Fixed operator/(const Fixed &other);	// / assignment operator overload
+		Fixed operator+(const Fixed &other) const;	// + assignment operator overload
+		Fixed operator-(const Fixed &other) const;	// - assignment operator overload
+		Fixed operator*(const Fixed &other) const;	// * assignment operator overload
+		Fixed operator/(const Fixed &other) const;	// / assignment operator overload
 
 		Fixed& operator++();					// ++x assignment operator overload
 		Fixed operator++(int);					// x++ assignment operator overload

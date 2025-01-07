@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/30 15:31:44 by wsonepou      #+#    #+#                 */
-/*   Updated: 2025/01/06 18:49:56 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/07 18:14:12 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 /* CONSTRUCTORS */
 Fixed::Fixed() : fixed_point(0)
 {
-	std::cout << "Default constructor called" << std::endl;
+	// std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(const int num) : fixed_point(num << frac_bits)
 {
-	std::cout << "Int constructor called" << std::endl;
+	// std::cout << "Int constructor called" << std::endl;
 }
 
 Fixed::Fixed(const float num) : fixed_point(roundf(num * (1 << frac_bits)))
 {
-	std::cout << "Float constructor called" << std::endl;
+	// std::cout << "Float constructor called" << std::endl;
 }
 
 
@@ -46,28 +46,29 @@ Fixed& Fixed::operator=(const Fixed &other)
 	return *this;
 }
 
-Fixed Fixed::operator+(const Fixed &other)
+Fixed Fixed::operator+(const Fixed &other) const
 {
 	Fixed NewObject;
 	NewObject.fixed_point = fixed_point + other.fixed_point;
 	return NewObject;
 }
 
-Fixed Fixed::operator-(const Fixed &other)
+Fixed Fixed::operator-(const Fixed &other) const
 {
 	Fixed NewObject;
 	NewObject.fixed_point = fixed_point - other.fixed_point;
 	return NewObject;
 }
 
-Fixed Fixed::operator*(const Fixed &other)
+Fixed Fixed::operator*(const Fixed &other) const
 {
 	Fixed NewObject;
+	// /* Need to be removed */ std::cout << "::: " << fixed_point << " " << other.fixed_point << std::endl;
 	NewObject.fixed_point = (fixed_point * other.fixed_point) >> frac_bits;
 	return NewObject;
 }
 
-Fixed Fixed::operator/(const Fixed &other)
+Fixed Fixed::operator/(const Fixed &other) const
 {
 	Fixed NewObject;
 	NewObject.fixed_point = (fixed_point << frac_bits) / other.fixed_point;
@@ -145,7 +146,7 @@ std::ostream& operator<<(std::ostream &output, const Fixed &fixed)
 /* DESTRUCTOR */
 Fixed::~Fixed()
 {
-	std::cout << "Destructor called" << std::endl;
+	// std::cout << "Destructor called" << std::endl;
 }
 
 
