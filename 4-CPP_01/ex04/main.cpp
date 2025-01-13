@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/30 15:17:50 by wsonepou      #+#    #+#                 */
-/*   Updated: 2025/01/13 15:31:14 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/13 16:24:08 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	std::string line(&line[0], 1024);
+	std::string line(1024, '\0');
 	while (oldfile.good())
 	{
 		oldfile.read(&line[0], 1024);
