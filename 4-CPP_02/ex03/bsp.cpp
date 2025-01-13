@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/06 18:35:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2025/01/07 18:23:40 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/13 12:42:30 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static Fixed	getSurfaceSize(const Point &v1, const Point &v2, const Point &v3)
 						v2.getX() * v3.getY() +
 						v3.getX() * v1.getY())
 						-
-						v1.getY() * v2.getX() + 
+						(v1.getY() * v2.getX() + 
 						v2.getY() * v3.getX() +
-						v3.getY() * v1.getX());
+						v3.getY() * v1.getX()));
 
 
 	if (surfaceSize < 0)
 		surfaceSize = surfaceSize * -1;
-	std::cout << surfaceSize << std::endl;
+	// std::cout << surfaceSize << std::endl;
 	return (surfaceSize / 2);
 }
 
