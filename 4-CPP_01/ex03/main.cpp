@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/17 14:48:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/20 19:01:17 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/13 15:13:36 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int main()
 		jim.attack();
 		club.setType("some other type of club");
 		jim.attack();
-		// jim.setWeapon(NULL); // Is this a valid test?
-		// jim.attack();
 	}
 
 	return 0;

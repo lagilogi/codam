@@ -6,7 +6,7 @@
 /*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/30 15:17:50 by wsonepou      #+#    #+#                 */
-/*   Updated: 2024/12/30 15:17:51 by wsonepou      ########   odam.nl         */
+/*   Updated: 2025/01/13 15:31:14 by wsonepou      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 void	find_and_replace(std::string &line, const std::string &str1, const std::string &str2)
 {
 	int str1_len = str1.length();
-	int pos;
+	int pos = 0;
 	do {
-		pos = line.find(str1);
+		pos = line.find(str1, pos);
 		if (pos > -1) {
 			line.erase(pos, str1_len);
 			line.insert(pos, str2);
+			pos += str2.length();
 		}
 	} while (pos != -1);
 }
@@ -31,7 +32,7 @@ int	check_input(int argc, char **argv)
 		std::cout << "Error: Invalid amount of arguments" << std::endl;
 		return 1;
 	}
-	if (argv[1][0] == '\0' || argv[2][0] == '\0' || argv[3][0] == '\0') {
+	if (argv[1][0] == '\0' || argv[2][0] == '\0') {
 		std::cout << "Error: Input strings cannot be empty" << std::endl;
 		return 1;
 	}
@@ -57,13 +58,15 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	std::string line;
-	while (std::getline(oldfile, line)) {
+	std::string line(&line[0], 1024);
+	while (oldfile.good())
+	{
+		oldfile.read(&line[0], 1024);
 		find_and_replace(line, str1, str2);
-		newfile << line << std::endl;
+		line.resize(oldfile.gcount());
+		newfile << line;
 	}
 	newfile.close();
 	oldfile.close();
 	return 0;
 }
-
