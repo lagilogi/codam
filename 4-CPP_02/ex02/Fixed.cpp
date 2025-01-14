@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   Fixed.cpp                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/30 15:31:44 by wsonepou      #+#    #+#                 */
-/*   Updated: 2025/01/06 18:31:40 by wsonepou      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Fixed.hpp"
 
 /* CONSTRUCTORS */
@@ -145,7 +133,7 @@ std::ostream& operator<<(std::ostream &output, const Fixed &fixed)
 /* DESTRUCTOR */
 Fixed::~Fixed()
 {
-	std::cout << "Destructor called" << std::endl;
+	// std::cout << "Destructor called" << std::endl;
 }
 
 

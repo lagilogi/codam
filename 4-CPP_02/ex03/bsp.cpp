@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   bsp.cpp                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: wsonepou <wsonepou@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/01/06 18:35:19 by wsonepou      #+#    #+#                 */
-/*   Updated: 2025/01/13 12:42:30 by wsonepou      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "header.hpp"
 
 static Fixed	getSurfaceSize(const Point &v1, const Point &v2, const Point &v3)
