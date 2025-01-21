@@ -3,7 +3,7 @@
 int main()
 {
 	ClapTrap a;
-	ClapTrap b("Ben");
+	ClapTrap b("Benny");
 	ClapTrap c = b;
 
 	std::cout << std::endl;

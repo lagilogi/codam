@@ -1,7 +1,7 @@
 #include "ClapTrap.hpp"
 
 /* Constructors & destructor */
-ClapTrap::ClapTrap()
+ClapTrap::ClapTrap() : _name("default_name"), _hp(10), _ep(10), _attack(0)
 {
 	std::cout << "Default ClapTrap constructor called" << std::endl;
 }
