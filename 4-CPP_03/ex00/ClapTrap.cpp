@@ -10,10 +10,12 @@ ClapTrap::ClapTrap(std::string name) : _name(name), _hp(10), _ep(10), _attack(0)
 {
 	std::cout << _name << " ClapTrap constructor called" << std::endl;
 }
+
 ClapTrap::~ClapTrap()
 {
 	std::cout << _name << " ClapTrap destructor called" << std::endl;
 }
+
 
 /* Copy constructors */
 ClapTrap::ClapTrap(const ClapTrap &other)
@@ -37,6 +39,8 @@ ClapTrap& ClapTrap::operator=(const ClapTrap &temp)
 	return (*this);
 }
 
+
+/* Member functions */
 void	ClapTrap::attack(const std::string& target)
 {
 	if (_hp == 0) {
