@@ -47,7 +47,7 @@ FragTrap& FragTrap::operator=(const FragTrap &temp)
 
 
 /* Functions */
-void	FragTrap::highFivesGuys(void)
+void	FragTrap::highFivesGuys(void) const
 {
 	if (_hp == 0) {
 		std::cout << "FragTrap " << _name << " is dead and cannot highfive!" << std::endl;
