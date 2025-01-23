@@ -12,10 +12,10 @@ class ScavTrap : virtual public ClapTrap
 		ScavTrap(const ScavTrap &other);
 		ScavTrap& operator=(const ScavTrap &temp);
 
-		void	guardGate();
+		void	guardGate() const;
 		void	attack(const std::string& target);
 
-		int		getEnergyPoints();
+		void	setEnergyPoints(int ep);
 };
 
 #endif
