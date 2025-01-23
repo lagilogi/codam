@@ -47,7 +47,7 @@ ScavTrap& ScavTrap::operator=(const ScavTrap &temp)
 
 
 /* Functions */
-void	ScavTrap::guardGate()
+void	ScavTrap::guardGate() const
 {	
 	if (_hp == 0) {
 		std::cout << "ScavTrap " << _name << " is dead and cannot go into Gatekeeper mode!" << std::endl;
