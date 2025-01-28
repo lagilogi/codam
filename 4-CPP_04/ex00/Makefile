@@ -1,14 +1,14 @@
-NAME			= diamondtrap
+NAME			= ex00
 
 # Compiler and Flags
 CXX				= c++
-CXXFLAGS		= -Wall -Wextra -Werror -Wshadow -std=c++98
+CXXFLAGS		= -Wall -Wextra -Werror -Wshadow #-std=c++98
 
 # Directories
 OBJ_DIR			= objects/
 
 # Files
-SRCS			= main.cpp Animal.cpp Dog.cpp Cat.cpp
+SRCS			= main.cpp Animal.cpp Dog.cpp Cat.cpp WrongAnimal.cpp WrongCat.cpp
 OBJS			= $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 
 all:			$(NAME)

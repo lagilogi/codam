@@ -1,7 +1,7 @@
 #include "header.hpp"
 
 /* Constructors & Destructors */
-Animal::Animal() : _type("_empty")
+Animal::Animal() : _type("Empty animal type")
 {
 	std::cout << "Animal default constructor called" << std::endl;
 }
@@ -30,3 +30,16 @@ Animal& Animal::operator=(const Animal& temp)
 	return (*this);
 }
 
+
+/* Function */
+void	Animal::makeSound() const
+{
+	std::cout << "Bleh!" << std::endl;
+}
+
+
+/* Getter */
+const std::string& Animal::getType() const
+{
+	return (_type);
+}

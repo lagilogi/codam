@@ -3,16 +3,15 @@
 
 #include "header.hpp"
 
-class Cat
+class Cat : public Animal
 {
 	public:
 		Cat();
-		Cat(const std::string& type);
 		~Cat();
 		Cat(const Cat& other);
 		Cat& operator=(const Cat& temp);
 
-		void	makeSound();
+		void	makeSound() const override;
 };
 
 #endif
