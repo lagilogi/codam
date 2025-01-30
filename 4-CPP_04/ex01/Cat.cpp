@@ -16,14 +16,16 @@ Cat::~Cat()
 /* Copy constructs */
 Cat::Cat(const Cat& other)
 {
-	this->_type = other._type;
 	std::cout << "Cat copy constructor called" << std::endl;
+	this->_type = other._type;
 }
 
 Cat& Cat::operator=(const Cat& temp)
 {
-	this->_type = temp._type;
 	std::cout << "Cat copy assignment operator overload called" << std::endl;
+	if (this == &temp)
+		return (*this);
+	this->_type = temp._type;
 	return (*this);
 }
 

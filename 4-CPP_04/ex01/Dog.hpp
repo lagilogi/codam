@@ -10,13 +10,13 @@ class Dog : public Animal
 
 	public:
 		Dog();
-		~Dog();
+		~Dog() override;
 		Dog(const Dog& other);
 		Dog& operator=(const Dog& temp);
 
 		void				makeSound() const override;
 		void				setIdeas(int i, std::string idea);
-		const std::string&	getIdeas(int i) const override;
+		const std::string&	getIdeas(int i) const;
 };
 
 #endif

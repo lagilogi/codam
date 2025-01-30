@@ -2,6 +2,7 @@
 # define HEADER_HPP
 
 #include <iostream>
+#include <cstring>
 #include "Animal.hpp"
 #include "Brain.hpp"
 #include "Cat.hpp"

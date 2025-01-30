@@ -14,14 +14,16 @@ WrongCat::~WrongCat()
 /* Copy constructs */
 WrongCat::WrongCat(const WrongCat& other)
 {
-	this->_type = other._type;
 	std::cout << "WrongCat copy constructor called" << std::endl;
+	this->_type = other._type;
 }
 
 WrongCat& WrongCat::operator=(const WrongCat& temp)
 {
-	this->_type = temp._type;
 	std::cout << "WrongCat copy assignment operator overload called" << std::endl;
+	if (this == &temp)
+		return (*this);
+	this->_type = temp._type;
 	return (*this);
 }
 

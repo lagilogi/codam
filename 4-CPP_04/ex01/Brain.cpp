@@ -14,13 +14,19 @@ Brain::~Brain()
 /* Copy constructs */
 Brain::Brain(const Brain& other)
 {
-	*this->_ideas = *other._ideas;
 	std::cout << "Brain copy constructor called" << std::endl;
+	for (int i = 0; i < 100; ++i) {
+		this->_ideas[i] = other._ideas[i];
+	}
 }
 
 Brain& Brain::operator=(const Brain& temp)
 {
-	*this->_ideas = *temp._ideas;
 	std::cout << "Brain copy assignment operator overload called" << std::endl;
+	if (this == &temp)
+		return (*this);
+	for (int i = 0; i < 100; ++i) {
+		this->_ideas[i] = temp._ideas[i];
+	}
 	return (*this);
 }
