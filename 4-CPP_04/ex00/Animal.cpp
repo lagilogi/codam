@@ -19,16 +19,16 @@ Animal::~Animal()
 /* Copy constructs */
 Animal::Animal(const Animal& other)
 {
-	this->_type = other._type;
 	std::cout << "Animal copy constructor called" << std::endl;
+	this->_type = other._type;
 }
 
 Animal& Animal::operator=(const Animal& temp)
 {
+	std::cout << "Animal copy assignment operator overload called" << std::endl;
 	if (this == &temp)
 		return (*this);
 	this->_type = temp._type;
-	std::cout << "Animal copy assignment operator overload called" << std::endl;
 	return (*this);
 }
 
