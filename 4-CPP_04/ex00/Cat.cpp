@@ -20,6 +20,8 @@ Cat::Cat(const Cat& other)
 
 Cat& Cat::operator=(const Cat& temp)
 {
+	if (this == &temp)
+		return (*this);
 	this->_type = temp._type;
 	std::cout << "Cat copy assignment operator overload called" << std::endl;
 	return (*this);

@@ -20,6 +20,8 @@ Dog::Dog(const Dog& other)
 
 Dog& Dog::operator=(const Dog& temp)
 {
+	if (this == &temp)
+		return (*this);
 	this->_type = temp._type;
 	std::cout << "Dog copy assignment operator overload called" << std::endl;
 	return (*this);

@@ -20,6 +20,8 @@ WrongCat::WrongCat(const WrongCat& other)
 
 WrongCat& WrongCat::operator=(const WrongCat& temp)
 {
+	if (this == &temp)
+		return (*this);
 	this->_type = temp._type;
 	std::cout << "WrongCat copy assignment operator overload called" << std::endl;
 	return (*this);

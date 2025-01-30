@@ -25,6 +25,8 @@ WrongAnimal::WrongAnimal(const WrongAnimal& other)
 
 WrongAnimal& WrongAnimal::operator=(const WrongAnimal& temp)
 {
+	if (this == &temp)
+		return (*this);
 	this->_type = temp._type;
 	std::cout << "WrongAnimal copy assignment operator overload called" << std::endl;
 	return (*this);
