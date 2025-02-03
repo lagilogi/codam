@@ -32,13 +32,6 @@ Animal& Animal::operator=(const Animal& temp)
 	return (*this);
 }
 
-
-/* Function */
-void	Animal::makeSound() const
-{
-	std::cout << "Bleh!" << std::endl;
-}
-
 /* Getter */
 const std::string& Animal::getType() const
 {
