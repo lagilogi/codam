@@ -44,14 +44,12 @@ int main()
 	for (int i = 0; i < 10; ++i) {
 		delete array[i];
 	}
-	std::cout << "\n--- Deep copy check ---\n" << std::endl;
+
 
 	/* Deep copy check */
-	Dog d1;
-	std::cout << std::endl;
-
-	Dog d2(d1);
-	std::cout << std::endl;
+	std::cout << "\n--- Deep copy check ---\n" << std::endl;
+	Dog d1;	std::cout << std::endl;
+	Dog d2(d1);	std::cout << std::endl;
 
 	for (int i = 0; i < 12; ++i) {
 		if (i % 3 == 0)
@@ -65,8 +63,7 @@ int main()
 	}
 	std::cout << std::endl;
 
-	Dog d3 = d1;
-	std::cout << std::endl;
+	Dog d3 = d1; std::cout << std::endl;
 
 	for (int i = 0; i < 12; ++i) {
 		std::cout << "3 " << d3.getIdeas(i) << std::endl;

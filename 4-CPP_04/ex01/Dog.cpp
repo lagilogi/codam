@@ -20,10 +20,9 @@ Dog::~Dog()
 
 
 /* Copy constructs */
-Dog::Dog(const Dog& other)
+Dog::Dog(const Dog& other) : Animal(other)
 {
 	std::cout << "Dog copy constructor called" << std::endl;
-	this->_type = other._type;
 	this->_DogBrain = new Brain(*other._DogBrain);
 }
 
@@ -33,6 +32,8 @@ Dog&	Dog::operator=(const Dog& temp)
 	if (this == &temp)
 		return (*this);
 	this->_type = temp._type;
+	delete _DogBrain;
+	this->_DogBrain = new Brain(*temp._DogBrain);
 	return (*this);
 }
 
@@ -48,10 +49,10 @@ void	Dog::makeSound() const
 void	Dog::setIdeas(int i, std::string idea)
 {
 	if (i < 100)
-		_DogBrain->_ideas[i] = idea;
+		_DogBrain->setIdea(idea, i);
 }
 
 const std::string&	Dog::getIdeas(int i) const
 {
-	return (_DogBrain->_ideas[i]);
+	return (_DogBrain->getIdea(i));
 }

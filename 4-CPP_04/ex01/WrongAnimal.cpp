@@ -1,11 +1,6 @@
 #include "header.hpp"
 
 /* Constructors & Destructors */
-WrongAnimal::WrongAnimal() : _type("Empty animal type")
-{
-	std::cout << "WrongAnimal default constructor called" << std::endl;
-}
-
 WrongAnimal::WrongAnimal(const std::string& type) : _type(type)
 {
 	std::cout << "WrongAnimal constructor called" << std::endl;

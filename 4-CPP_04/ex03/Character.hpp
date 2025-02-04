@@ -3,15 +3,20 @@
 
 #include "headers.hpp"
 
-class Character //: public ICharacter
+typedef struct s_floor
+{
+	AMateria*		materia;
+	struct s_floor*	next;
+} t_floor;
+
+class Character : public ICharacter
 {
 	private:
 		std::string _name;
-
-	public:
 		AMateria*	inventory[4];
 		t_floor*	floor;
-		
+
+	public:
 		Character(std::string name = "NoName");
 		~Character();
 		Character(const Character& other);
@@ -20,8 +25,7 @@ class Character //: public ICharacter
 		std::string const& getName() const;
 		void equip(AMateria* m);
 		void unequip(int idx);
-		// void use(int idx, ICharacter& target);
-
+		void use(int idx, ICharacter& target);
 };
 
 #endif

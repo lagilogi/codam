@@ -61,7 +61,16 @@ int main()
 	delete i;
 	delete z;
 	delete x;
-	delete y;
+	delete y; std::cout << std::endl;
+
+	const WrongAnimal q;
+	const Animal w; std::cout << std::endl;
+	std::cout << q.getType() << std::endl;
+	std::cout << w.getType() << std::endl;
+
+	const Animal* g = new Animal(); std::cout << std::endl;
+	std::cout << g->getType() << std::endl;
+	delete g;
 
 	return 0;
 }

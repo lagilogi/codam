@@ -5,12 +5,17 @@
 
 class Brain
 {
-	public:
+	private:
 		std::string _ideas[100];
+
+	public:
 		Brain();
 		~Brain();
 		Brain(const Brain& other);
 		Brain& operator=(const Brain& temp);
+
+		const std::string& getIdea(int index) const;
+		void setIdea(std::string& idea, int index);
 };
 
 #endif

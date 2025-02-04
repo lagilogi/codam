@@ -8,8 +8,7 @@ class Animal {
 		std::string _type;
 
 	public:
-		Animal();
-		Animal(const std::string& type);
+		Animal(const std::string& type = "Empty Animal type");
 		virtual ~Animal();
 		Animal(const Animal& other);
 		Animal& operator=(const Animal& temp);

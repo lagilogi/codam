@@ -8,7 +8,7 @@ CXXFLAGS		= -Wall -Wextra -Werror -Wshadow -g #-std=c++98
 OBJ_DIR			= objects/
 
 # Files
-SRCS			= main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp
+SRCS			= main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp MateriaSource.cpp
 OBJS			= $(patsubst %.cpp,$(OBJ_DIR)%.o,$(SRCS))
 
 all:			$(NAME)

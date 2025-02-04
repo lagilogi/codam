@@ -11,14 +11,12 @@ Character::Character(std::string name) : _name(name)
 
 Character::~Character()
 {
-	std::cout << "Character destructor" << std::endl;
-	std::cout << this->inventory[0]->getType() << " found in inventory" << std::endl;
+	std::cout << "Character destructor for " << this->_name << std::endl;
 	for (int i = 0; i < 4; ++i)
 	{
-		std::cout << "...deletion testing..." << std::endl;
 		if (this->inventory[i] != nullptr)
 		{
-			std::cout << "Slot " << i << ": " << this->inventory[i]->getType() << " found in inventory" << std::endl;
+			std::cout << "Slot " << i << ": " << this->inventory[i]->getType() << " found in inventory and deleting" << std::endl;
 			delete this->inventory[i];
 		}
 	}
@@ -40,18 +38,25 @@ Character::~Character()
 /* Copy constructors */
 Character::Character(const Character& other) : _name(other._name)
 {
+	std::cout << "Character copy constructor called" << std::endl;
 	for (int i = 0; i < 4; ++i)
-		if (this->inventory[i] != nullptr)
+	{
+		if (other.inventory[i] != nullptr)
 			this->inventory[i] = other.inventory[i]->clone();
+		else
+			this->inventory[i] = nullptr;
+	}
+	this->floor = nullptr;
 }
 
 Character& Character::operator=(const Character& temp)
 {
+	std::cout << "Character assignment operator called" << std::endl;
 	if (this == &temp)
 		return (*this);
 	this->_name = temp._name;
 	for (int i = 0; i < 4; ++i)
-		if (this->inventory[i] != nullptr)
+		if (temp.inventory[i] != nullptr)
 			this->inventory[i] = temp.inventory[i]->clone();
 	return (*this);
 }
@@ -60,27 +65,45 @@ Character& Character::operator=(const Character& temp)
 /* Functions */
 void Character::equip(AMateria* m)
 {
+	if (m->getEquiped() == true)
+	{
+		std::cout << "This materia has already been equiped!" << std::endl;
+		return ;
+	}
 	int i = 0;
 	while (i < 4 && this->inventory[i] != nullptr)
 		i++;
+	std::cout << i << std::endl;
 	if (i < 4)
+	{
 		this->inventory[i] = m;
-	std::cout << _name << " just equiped " << this->inventory[i]->getType() << std::endl;
+		m->setEquiped(true);
+		std::cout << _name << " just equiped " << this->inventory[i]->getType() << std::endl;
+	}
 }
 
 void Character::unequip(int idx)
 {
-	if (idx < 0 || idx > 3 || this->inventory[idx] == nullptr)
+	if (idx < 0 || idx > 3)
+	{
+		std::cout << "Can't unequip invalid slot number" << std::endl;
 		return ;
+	}
+	if (this->inventory[idx] == nullptr)
+	{
+		std::cout << "Can't unequip empty slot" << std::endl;
+		return ;
+	}
 	if (this->floor == nullptr)
 	{
-		std::cout << "adding first thing to the floor: " << idx << ". " << this->inventory[idx]->getType() << std::endl;
+		std::cout << "Dropping first thing on the floor: " << idx << ". " << this->inventory[idx]->getType() << std::endl;
 		this->floor = new t_floor;
 		this->floor->materia = this->inventory[idx];
 		this->floor->next = nullptr;
 		this->inventory[idx] = nullptr;
 		return ;
 	}
+	std::cout << "Dropping another thing on the floor: " << idx << ". " << this->inventory[idx]->getType() << std::endl;
 	t_floor* temp = this->floor;
 	while (temp != nullptr && temp->next != nullptr)
 		temp = temp->next;
@@ -89,6 +112,22 @@ void Character::unequip(int idx)
 	temp->materia = this->inventory[idx];
 	temp->next = nullptr;	
 	this->inventory[idx] = nullptr;
+
+}
+
+void Character::use(int idx, ICharacter& target)
+{
+	if (idx < 0 || idx > 3)
+	{
+		std::cout << "Can't use invalid slot number" << std::endl;
+		return ;
+	}
+	if (this->inventory[idx] == nullptr)
+	{
+		std::cout << "Can't use empty slot" << std::endl;
+		return ;
+	}
+	this->inventory[idx]->use(target);
 }
 
 

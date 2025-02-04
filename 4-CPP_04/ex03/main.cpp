@@ -2,26 +2,37 @@
 
 int main(void)
 {
-	AMateria* i1 = new Ice;
-	std::cout << i1->getType() << "\n" << std::endl;
-	AMateria* i2 = i1->clone();
-	std::cout << i2->getType() << "\n" << std::endl;
-	AMateria* i3 = i1;
-	std::cout << i3->getType() << "\n" << std::endl;
-	i1 = new Cure();
-	std::cout << i1->getType() << "\n" << std::endl;
+	AMateria* i1 = new Ice;		std::cout << i1->getType() << "\n" << std::endl;
+	AMateria* i2 = i1->clone();	std::cout << i2->getType() << "\n" << std::endl;
+	AMateria* i3 = i1; 			std::cout << i3->getType() << "\n" << std::endl;
+	i1 = new Cure(); 			std::cout << i1->getType() << "\n" << std::endl;
+	AMateria* i4 = i1->clone(); std::cout << i4->getType() << "\n" << std::endl;
+	AMateria* i5 = new Ice;		std::cout << i1->getType() << "\n" << std::endl;
 
-	Character c1("Billy");
-	c1.equip(i1);
-	c1.equip(i2);
-	// c1.equip(i3);
-	// c1.unequip(1);
+	Character c1("Billy"); std::cout << std::endl;
+	c1.equip(i1); std::cout << std::endl;
+	c1.equip(i1); std::cout << std::endl;
+	c1.equip(i2); std::cout << std::endl;
+	c1.equip(i3); std::cout << std::endl;
+	c1.equip(i4); std::cout << std::endl;
+	c1.unequip(1); std::cout << std::endl;
+	c1.unequip(2); std::cout << std::endl;
+	c1.unequip(3); std::cout << std::endl;
+	
+	Character c2("Molly"); std::cout << std::endl;
+	c1.use(0, c2); std::cout << std::endl;
+	c2.use(1, c1); std::cout << std::endl;
+	c2.equip(i5);
 
+	Character c3(c1); std::cout << std::endl;
+	c3.use(0, c1); std::cout << std::endl;
+	c3.unequip(0); std::cout << std::endl;
 
-	delete i1;
-	delete i2;
-	delete i3;
+	Character c4;
+	c4 = c2;	std::cout << std::endl;
 
+	c4.equip(i1); std::cout << std::endl;
+	c4.use(0, c3); std::cout << std::endl;
 }
 
 
@@ -30,6 +41,9 @@ int main(void)
 // {
 // 	IMateriaSource* src = new MateriaSource();
 // 	src->learnMateria(new Ice());
+// 	src->learnMateria(new Cure());
+// 	src->learnMateria(new Cure());
+// 	src->learnMateria(new Cure());
 // 	src->learnMateria(new Cure());
 
 // 	ICharacter* me = new Character("me");
@@ -73,7 +87,6 @@ int main(void)
 	
 // 	delete player02;
 // 	delete player01;
-// 	delete potion;
 
 // 	return (0);
 // }

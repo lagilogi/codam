@@ -12,10 +12,9 @@ Dog::~Dog()
 }
 
 /* Copy constructs */
-Dog::Dog(const Dog& other)
+Dog::Dog(const Dog& other) : Animal(other)
 {
 	std::cout << "Dog copy constructor called" << std::endl;
-	this->_type = other._type;
 }
 
 Dog& Dog::operator=(const Dog& temp)

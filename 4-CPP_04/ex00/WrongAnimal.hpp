@@ -8,8 +8,7 @@ class WrongAnimal {
 		std::string _type;
 
 	public:
-		WrongAnimal();
-		WrongAnimal(const std::string& type);
+		WrongAnimal(const std::string& type = "Empty WrongAnimal type");
 		~WrongAnimal();
 		WrongAnimal(const WrongAnimal& other);
 		WrongAnimal& operator=(const WrongAnimal& temp);
