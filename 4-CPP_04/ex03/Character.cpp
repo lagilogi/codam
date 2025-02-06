@@ -65,6 +65,8 @@ Character& Character::operator=(const Character& temp)
 /* Functions */
 void Character::equip(AMateria* m)
 {
+	if (m == nullptr)
+		return ;
 	if (m->getEquiped() == true)
 	{
 		std::cout << "This materia has already been equiped!" << std::endl;
@@ -79,6 +81,11 @@ void Character::equip(AMateria* m)
 		this->inventory[i] = m;
 		m->setEquiped(true);
 		std::cout << _name << " just equiped " << this->inventory[i]->getType() << std::endl;
+	}
+	else
+	{
+		std::cout << m->getType() << " could not be equiped - Inventory is full" << std::endl;
+		delete m;
 	}
 }
 
@@ -112,7 +119,6 @@ void Character::unequip(int idx)
 	temp->materia = this->inventory[idx];
 	temp->next = nullptr;	
 	this->inventory[idx] = nullptr;
-
 }
 
 void Character::use(int idx, ICharacter& target)

@@ -8,8 +8,10 @@ int main(void)
 	i1 = new Cure(); 			std::cout << i1->getType() << "\n" << std::endl;
 	AMateria* i4 = i1->clone(); std::cout << i4->getType() << "\n" << std::endl;
 	AMateria* i5 = new Ice;		std::cout << i1->getType() << "\n" << std::endl;
+	AMateria* x = nullptr;
 
 	Character c1("Billy"); std::cout << std::endl;
+	c1.equip(x);
 	c1.equip(i1); std::cout << std::endl;
 	c1.equip(i1); std::cout << std::endl;
 	c1.equip(i2); std::cout << std::endl;
