@@ -1,5 +1,4 @@
-#include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "headers.hpp"
 
 /* Constructor & destructor */
 Bureaucrat::Bureaucrat(const std::string name, int grade) : _name(name), _grade(grade)
@@ -82,7 +81,7 @@ int Bureaucrat::getGrade() const
 
 
 /* Functions */
-void Bureaucrat::signForm(Form& form)
+void Bureaucrat::signForm(AForm& form)
 {
 	try
 	{
@@ -90,7 +89,20 @@ void Bureaucrat::signForm(Form& form)
 	}
 	catch(const std::exception& exception)
 	{
-		std::cout << getName() << " couldn't sign " << form.getName() << " because the " << exception.what() << std::endl;
+		std::cout << getName() << " couldn't sign " << form.getName() << " Form because the " << exception.what() << std::endl;
+	}
+}
+
+void Bureaucrat::executeForm(AForm const& form)
+{
+	try
+	{
+		form.execute(*this);
+		std::cout << this->getName() << " executed " << form.getName() << std::endl;
+	}
+	catch(const std::exception& exception)
+	{
+		std::cout << getName() << " couldn't execute " << form.getName() << " Form because " << exception.what() << std::endl;
 	}
 }
 

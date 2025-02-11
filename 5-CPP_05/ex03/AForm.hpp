@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Bureaucrat.hpp"
+#include "headers.hpp"
 
-class Form
+class AForm
 {
 	private:
 		const std::string	_name;
@@ -11,17 +11,18 @@ class Form
 		bool				_signed;
 
 	public:
-		Form(std::string name = "B-2718", int rSign = 10, int rExec = 10);
-		~Form();
-		Form(const Form& other);
-		Form& operator=(const Form& other);
+		AForm(std::string name = "B-2718", int rSign = 10, int rExec = 10);
+		~AForm();
+		AForm(const AForm& other);
+		AForm& operator=(const AForm& other);
 
 		const std::string&	getName() const;
 		int					getRequiredSign() const;
 		int					getRequiredExec() const;
 		bool				getSigned() const;
 
-		void				beSigned(const Bureaucrat& bc);
+		virtual void		beSigned(const Bureaucrat& bc);
+		virtual void		execute(Bureaucrat const& executor) const = 0;
 
 		class GradeTooLowException : public std::exception
 		{
@@ -38,6 +39,16 @@ class Form
 			public:
 				const char* what() const throw() override;
 		};
+		class FormNotSignedException : public std::exception
+		{
+			public:
+				const char* what() const throw() override;
+		};
+		class FileErrorException : public std::exception
+		{
+			public:
+				const char* what() const throw() override;
+		};
 };
 
-std::ostream& operator<<(std::ostream& output, const Form& form);
+std::ostream& operator<<(std::ostream& output, const AForm& form);
