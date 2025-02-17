@@ -1,8 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <cmath>
 #include <climits>
+#include <cfloat>
 
 enum type_e : char
 {
