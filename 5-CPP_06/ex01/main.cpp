@@ -9,9 +9,9 @@ int main()
 	uintptr_t intRepresantion = Serializer::serialize(ptr);
 	Data* ptr2 = Serializer::deserialize(intRepresantion);
 	
-	std::cout << "ptr: " << ptr
-			<< "\nintRep: " << intRepresantion
-			<< "\nptr2: " << ptr2 << std::endl;
+	std::cout << "ptr:  " << ptr
+			<< "\nptr2: " << ptr2
+			<< "\nintRep: " << intRepresantion << std::endl;
 	std::cout << "\n-- Checking ptr data --"
 			<< "\nptr age: " << ptr->age
 			<< "\nptr name: " << ptr->name << std::endl;
