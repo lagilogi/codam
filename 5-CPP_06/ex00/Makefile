@@ -1,4 +1,4 @@
-NAME			= ex00
+NAME			= converter
 
 # Compiler and Flags
 CXX				= c++
