@@ -1,4 +1,4 @@
-NAME			= ex00
+NAME			= serializer
 
 # Compiler and Flags
 CXX				= c++
