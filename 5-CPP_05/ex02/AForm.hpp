@@ -12,7 +12,7 @@ class AForm
 
 	public:
 		AForm(std::string name = "B-2718", int rSign = 10, int rExec = 10);
-		~AForm();
+		virtual ~AForm();
 		AForm(const AForm& other);
 		AForm& operator=(const AForm& other);
 

@@ -14,13 +14,13 @@ class Bureaucrat
 		Bureaucrat(const Bureaucrat& other);
 		Bureaucrat& operator=(const Bureaucrat& temp);
 
-		Bureaucrat&	operator++();	// ++x assignment operator overload
+		Bureaucrat&	operator++();		// ++x assignment operator overload
 		Bureaucrat	operator++(int);	// x++ assignment operator overload
-		Bureaucrat&	operator--();	// --x assignment operator overload
+		Bureaucrat&	operator--();		// --x assignment operator overload
 		Bureaucrat	operator--(int);	// x-- assignment operator overload
 
 		const std::string&	getName() const;
-		const int			getGrade() const;
+		int					getGrade() const;
 
 		class GradeTooLowException : public std::exception
 		{

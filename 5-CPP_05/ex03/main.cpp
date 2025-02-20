@@ -26,4 +26,8 @@ int main()
 	a.executeForm(*x);
 	a.executeForm(*y);
 	a.executeForm(*z); 												std::cout << std::endl;	
+
+	delete x;
+	delete y;
+	delete z;
 }
