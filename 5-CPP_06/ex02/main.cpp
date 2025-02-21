@@ -2,6 +2,7 @@
 #include "A.hpp"
 #include "B.hpp"
 #include "C.hpp"
+#include <sys/time.h>
 
 void identify(Base& p)
 {
@@ -38,14 +39,13 @@ void identify(Base* p)
 		std::cout << "Base* Type: C" << std::endl;
 }
 
-#include <sys/time.h>
-
 Base* generate(void)
 {
 	struct timeval	time;
+	gettimeofday(&time, NULL);
 	std::srand(time.tv_usec);
-	int randomNum = std::rand() % 3;
-	Base* obj;
+	int randomNum = rand() % 3;
+	Base* obj = nullptr;
 	if (randomNum == 0)
 		obj = new A();
 	else if (randomNum == 1)
@@ -72,4 +72,8 @@ int main()
 	Base* z = generate();
 	identify(z);
 	identify(*z);
+
+	delete x;
+	delete y;
+	delete z;
 }

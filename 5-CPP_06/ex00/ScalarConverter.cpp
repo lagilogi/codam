@@ -134,11 +134,6 @@ void	intConverter(const std::string& input)
 	}
 }
 
-
-
-
-
-
 void	floatConverter(const std::string& input)
 {
 	try
@@ -175,7 +170,6 @@ void	floatConverter(const std::string& input)
 				<< "Double: Impossible" << std::endl;
 	}
 }
-
 
 void	doubleConverter(const std::string& input)
 {
