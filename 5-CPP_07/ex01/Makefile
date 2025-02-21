@@ -1,4 +1,4 @@
-NAME			= ex01
+NAME			= iter
 
 # Compiler and Flags
 CXX				= c++

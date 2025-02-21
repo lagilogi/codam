@@ -1,8 +1,8 @@
-NAME			= ex00
+NAME			= array
 
 # Compiler and Flags
 CXX				= c++
-CXXFLAGS		= -Wall -Wextra -Werror -Wshadow -std=c++98
+CXXFLAGS		= -Wall -Wextra -Werror -Wshadow #-std=c++98
 
 # Directories
 OBJ_DIR			= objects/

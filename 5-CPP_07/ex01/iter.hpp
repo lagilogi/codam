@@ -2,14 +2,14 @@
 
 #include <iostream>
 
-template<typename T> ///////////// Dit is een generic template
-void	printer(T value) ///////// Mag dit??????
+template<typename T>
+void	printer(T value)
 {
 	std::cout << "Value: " << value << std::endl;
 }
 
-template<typename T>
-void	iter(T* array, int arrSize, void(*function)(T))
+template<typename T, typename F>
+void	iter(T* array, int arrSize, F function)
 {
 	for (int i = 0; i < arrSize; ++i)
 	{
