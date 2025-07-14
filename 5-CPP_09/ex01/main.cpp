@@ -1,8 +1,5 @@
 #include "RPN.hpp"
 
-
-// STL CONTAINER TO USE: STACK ??
-
 int main(int argc, char** argv)
 {
 	if (argc == 2)
