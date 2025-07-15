@@ -62,16 +62,11 @@ int	Span::shortestSpan()
 	std::vector<int> sorted = _vector;
 	std::sort(sorted.begin(), sorted.end());
 	std::vector<int> diffVector;
-	int size = _vector.size();
 
-	for (int i = 0; i < size; ++i)
-	{
-		if (i == 0)
-			continue ;
-		diffVector.push_back(sorted[i] - sorted[i - 1]);
-	}
+	diffVector.resize(sorted.size());
+	std::adjacent_difference(sorted.begin(), sorted.end(), diffVector.begin());
 
-	return *std::min_element(diffVector.begin(), diffVector.end());
+	return (*std::min_element(diffVector.begin() + 1, diffVector.end()));
 }
 
 int Span::longestSpan()
