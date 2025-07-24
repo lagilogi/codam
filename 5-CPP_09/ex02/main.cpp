@@ -9,8 +9,8 @@ int main(int argc, char** argv)
 			PmergeMe pMerge(argv[1]);
 
 			pMerge.checkInput();
-			pMerge.vectorSort();
-			pMerge.dequeSort();
+			pMerge.vectorSorting();
+			// pMerge.dequeSort();
 			// pMerge.printResult();
 		}
 		catch(const std::exception& e)
