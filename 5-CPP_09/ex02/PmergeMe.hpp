@@ -22,6 +22,9 @@ enum containerTimer
 	END
 };
 
+typedef std::vector<indexedPair> pairVector;
+
+
 class PmergeMe
 {
 	private:
@@ -50,9 +53,11 @@ class PmergeMe
 		void				vectorParse();
 		void				vectorSorting();
 		std::vector<int>	vectorSortElements(std::vector<int>& numbers);
-		std::vector<int>	vectorSortElements(std::vector<int>& numbers, std::vector<indexedPair>& pairs);
-		void				vectorInsert(std::vector<int>& big_numbers, std::vector<indexedPair>& number_pair, std::vector<indexedPair>& previous_pairs, int index);
-		void				vectorIncrementOriginalIndex(std::vector<indexedPair>& number_pairs, size_t index);
+		std::vector<int>	vectorSortElements(std::vector<int>& numbers, pairVector& pairs);
+		void				vectorInsert(std::vector<int>& big_numbers, pairVector& number_pair, pairVector& previous_pairs, pairVector& updated_pairs, int index);
+
+
+		void				vectorIncrementOriginalIndex(pairVector& number_pairs, size_t index);
 
 		void				dequeSort();
 

@@ -46,17 +46,6 @@ std::vector<int>	PmergeMe::getJacobsthalSequence(int vector_size)
 		jacobsthal_sequence.push_back(last_passed_result);
 		last_passed_result++;
 	}
-
-	{	// TESTING ---
-		std::cout << "Jacobsthal: ";
-		if (!jacobsthal_sequence.empty())
-		{
-			for (int element : jacobsthal_sequence)
-				std::cout << element << " ";
-			std::cout << "\n" << std::endl;
-
-		}
-	}
 	
 	return (jacobsthal_sequence);
 }
@@ -103,7 +92,7 @@ void	PmergeMe::vectorParse()
 
 
 
-void	PmergeMe::vectorIncrementOriginalIndex(std::vector<indexedPair>& number_pairs, size_t index)
+void	PmergeMe::vectorIncrementOriginalIndex(pairVector& number_pairs, size_t index)
 {
 	if (index >= number_pairs.size())
 		return ;
@@ -116,35 +105,274 @@ void	PmergeMe::vectorIncrementOriginalIndex(std::vector<indexedPair>& number_pai
 }
 
 
-
-
-
-
-
-std::vector<int>	PmergeMe::vectorSortElements(std::vector<int>& numbers, std::vector<indexedPair>& previous_pairs)
+// FOR TESTING PURPOSES
+void	printPairs(pairVector& pairs, std::vector<int>& numbers)
 {
-	std::vector<indexedPair>	number_pairs;
-	std::vector<int>			big_numbers;
-
-	if (numbers.size() == 2)
-	{
-		if (numbers[0] > numbers[1])
-			previous_pairs[0].original_index = 1;
-		big_numbers.push_back(std::min(numbers[0], numbers[1]));
-		big_numbers.push_back(std::max(numbers[0], numbers[1]));
-
-		{	// TESTING ---
-			std::cout << "Vector bignum: ";
-			for (int element : big_numbers)
-				std::cout << element << " ";
-			std::cout << std::endl;
-		}
-
-		std::cout << "Pairs passed along: " << previous_pairs.size() << "\n--\n" << std::endl;
-		return (big_numbers);
-	}
+	std::cout << "\nPairs list ---" << std::endl;
+	std::cout << "Big:\n";
+	for (int element : numbers)
+		std::cout << " " << element << " ";
+	std::cout << std::endl;
+	for (indexedPair element : pairs)
+		std::cout << " " << element.big << " ";
+	std::cout << std::endl;
+	for (indexedPair element : pairs)
+		std::cout << " " << element.small << " ";
+	std::cout << std::endl;
+	for (indexedPair element : pairs)
+		std::cout << " " << element.original_index << " ";
+	std::cout << "\nEnd of pairs list ---\n" << std::endl;
+}
 
 
+
+// std::vector<int>	PmergeMe::vectorSortElements(std::vector<int>& numbers, pairVector& previous_pairs)
+// {
+// 	pairVector	number_pairs;
+// 	std::vector<int>			big_numbers;
+
+// 	{	// TESTING ---
+// 		std::cout << "Check pairs at start of recursion function";
+// 		printPairs(previous_pairs, big_numbers);
+// 	}
+
+// 	if (numbers.size() == 2)
+// 	{
+// 		std::cout << "Swapping" << std::endl;
+// 		if (numbers[0] > numbers[1])
+// 			previous_pairs[0].original_index = 1;
+// 		big_numbers.push_back(std::min(numbers[0], numbers[1]));
+// 		big_numbers.push_back(std::max(numbers[0], numbers[1]));
+
+// 		{	// TESTING ---
+// 			std::cout << "Vector bignum: ";
+// 			for (int element : big_numbers)
+// 				std::cout << element << " ";
+// 			std::cout << std::endl;
+// 		}
+
+// 		return (big_numbers);
+// 	}
+
+
+// 	size_t	i = 0;
+// 	int		pair_index = 0;
+// 	while (i + 1 < numbers.size())
+// 	{
+// 		if (numbers[i] >= numbers[i + 1])
+// 			big_numbers.push_back(numbers[i]);
+// 		else
+// 			big_numbers.push_back(numbers[i + 1]);
+// 		number_pairs.push_back(createIndexedPair(numbers[i], numbers[i + 1], pair_index));
+// 		i += 2;
+// 		pair_index++;
+// 	}
+// 	if (numbers.size() % 2 != 0)
+// 		big_numbers.push_back(numbers.back());
+
+
+// 	{	// TESTING ---
+// 		std::cout << "Vector bignum: ";
+// 		for (int element : big_numbers)
+// 			std::cout << element << " ";
+// 		std::cout << std::endl;
+// 		std::cout << "Vector big:    ";
+// 		for (indexedPair element : number_pairs)
+// 			std::cout << element.big << " ";
+// 		std::cout << std::endl;
+// 		std::cout << "Vector small:  ";
+// 		for (indexedPair element : number_pairs)
+// 			std::cout << element.small << " "; 
+// 		std::cout << std::endl;
+// 		std::cout << "Pairs passed along: " << previous_pairs.size() << "\n--\n" << std::endl;
+// 		// END OF TESTING ---
+// 	}
+
+
+
+
+// 	if (big_numbers.size() >= 2)
+// 		big_numbers = vectorSortElements(big_numbers, number_pairs);
+
+// 	{	// TESTING ---
+// 		std::cout << "Check pairs after insertion";
+// 		printPairs(number_pairs, big_numbers);
+// 	}
+
+// 	if (number_pairs.size() == 1 && big_numbers.size() == 2)
+// 	{
+// 		if (number_pairs[0].big > previous_pairs[2].big)
+// 		{
+// 			number_pairs.insert(number_pairs.begin(), previous_pairs[2]);
+// 			number_pairs[0].original_index = 0;
+// 		}
+// 	}
+
+
+// 	// Checking if vector of 2 elements and 1 pair special case
+// 	if (number_pairs.size() == 1 && big_numbers.size() == 2)
+// 	{
+// 		vectorInsert(big_numbers, number_pairs, previous_pairs, -1);
+// 		return (big_numbers);
+// 	}
+
+// 	{	// TESTING ---
+// 		std::cout << "Check number_pairs before setting it over to previous pairs" << std::endl;
+// 		printPairs(number_pairs, big_numbers);
+// 	}
+
+// 	previous_pairs = number_pairs;
+
+
+// 	// Always adding first small number to front of big_numbers
+// 	vectorInsert(big_numbers, number_pairs, previous_pairs, 0);
+// 	if (number_pairs.size() == 1)
+// 		return (big_numbers);
+// 	if (number_pairs.size() == 2)
+// 	{
+// 		vectorInsert(big_numbers, number_pairs, previous_pairs, 1);
+// 		return (big_numbers);
+// 	}
+
+
+// 	std::cout << "Small numbers for jacobsthal:";
+// 	for (indexedPair element : number_pairs)
+// 		std::cout << element.small << " ";
+// 	std::cout << std::endl;
+// 	std::vector<int>	jacobsthal_sequence = getJacobsthalSequence(number_pairs.size());
+// 	if (!jacobsthal_sequence.empty())
+// 	{
+// 		for (i = 0; i < jacobsthal_sequence.size(); ++i)
+// 			vectorInsert(big_numbers, number_pairs, previous_pairs, jacobsthal_sequence[i]);
+// 	}
+
+// 	{	// TESTING ---
+// 		std::cout << "Vector bignum after: ";
+// 		for (int element : big_numbers)
+// 			std::cout << element << " ";
+// 		std::cout << std::endl;
+// 	}
+
+// 	return (big_numbers);
+// }
+
+
+// void	PmergeMe::vectorInsert(std::vector<int>& big_numbers, pairVector& number_pairs, pairVector& previous_pairs, int index)
+// {
+// 	{	// TESTING ---
+// 		std::cout << "Big number size: " << big_numbers.size() << std::endl;
+// 		std::cout << "Vector bignum: ";
+// 		for (int element : big_numbers)
+// 			std::cout << element << " ";
+// 		std::cout << std::endl;
+// 		std::cout << "Pair to insert: " << number_pairs[index].small << " / " << number_pairs[index].big << " - Index: " << number_pairs[index].original_index << " - Passed index: " << index << std::endl;
+// 	}
+
+// 	// In case of a single pair, of which the small needs to be added to the big_numbers list
+// 	// that contains 2 numbers, thus dealing with an uneven amount of numbers at this stage.
+// 	// We compare the smaller value of the pair with the first number in the big_numbers list,
+// 	// so we know to insert before or after that number.
+// 	indexedPair to_insert = number_pairs[index];
+
+// 	if (big_numbers.size() == 2 && number_pairs.size() == 1)
+// 	{
+// 		if (number_pairs[0].small <= big_numbers[0])
+// 			big_numbers.insert(big_numbers.begin(), number_pairs[0].small);
+// 		else
+// 			big_numbers.insert(big_numbers.begin() + 1, number_pairs[0].small);
+// 		{	// TESTING ----
+// 			std::cout << "Inserting struct from previous pairs:\n"
+// 						<< "Big: " << previous_pairs[0].big << "\n"
+// 						<< "Sma: " << previous_pairs[0].small << "\n"
+// 						<< "ind: " << previous_pairs[0].original_index << std::endl;
+// 		}
+// 		number_pairs.insert(number_pairs.begin(), previous_pairs[0]);
+// 		{	// TESTING ---
+// 			std::cout << "directly after inserting" << std::endl;
+// 			printPairs(number_pairs, big_numbers);
+// 		}
+		
+// 		return ;
+// 	}
+
+// 	// In case of the first small value to be added, it can always be dropped at the front 
+// 	// of the big_numbers list.
+// 	if (index == 0)
+// 	{
+// 		big_numbers.insert(big_numbers.begin(), number_pairs[0].small);
+
+// 		// {	// TESTING ----
+// 		// 	std::cout << "Inserting struct from previous pairs:\n"
+// 		// 				<< "Big: " << previous_pairs[0].big << "\n"
+// 		// 				<< "Sma: " << previous_pairs[0].small << "\n"
+// 		// 				<< "ind: " << previous_pairs[0].original_index << std::endl;
+// 		// }
+
+// 		number_pairs.insert(number_pairs.begin(), previous_pairs[0]);
+// 		vectorIncrementOriginalIndex(number_pairs, 1);
+		
+		
+// 		{	// TESTING ---
+// 			std::cout << "directly after inserting" << std::endl;
+// 			printPairs(number_pairs, big_numbers);
+// 		}
+		
+		
+// 		return ;
+// 	}
+	
+
+// 	// We start comparing the small value with the value in front of the value in front of
+// 	// its pair.
+// 	int i = number_pairs[index].original_index - 1;
+// 	while (i >= 0)
+// 	{
+// 		if (number_pairs[index].small >= big_numbers[i])
+// 		{
+// 			number_pairs[index].original_index = i + 1;
+// 			big_numbers.insert(big_numbers.begin() + i + 1, number_pairs[index].small);
+// 			number_pairs.insert(number_pairs.begin() + i + 1, previous_pairs[index]);
+			
+// 			{	// TESTING ---
+// 				std::cout << "directly after inserting" << std::endl;
+// 				printPairs(number_pairs, big_numbers);
+// 			}
+			
+// 			break ;
+// 		}
+// 		--i;
+// 	}
+
+// 	i++;
+// 	while (i < (int)number_pairs.size())
+// 	{
+// 		if (number_pairs[i].original_index != -1)
+// 			number_pairs[i].original_index++;
+// 		i++;
+// 	}
+// }
+
+
+
+std::vector<int>	PmergeMe::vectorSortElements(std::vector<int>& numbers, pairVector& previous_pairs)
+{
+	pairVector			number_pairs;
+	pairVector			updated_pairs;
+	std::vector<int>	big_numbers;
+
+	// // step 1 - Check if int vector only contains 2 numbers
+	// if (numbers.size() == 2)
+	// {
+	// 	std::cout << "Swapping" << std::endl;
+	// 	if (numbers[0] > numbers[1])
+	// 		previous_pairs[0].original_index = 1;
+	// 	big_numbers.push_back(std::min(numbers[0], numbers[1]));
+	// 	big_numbers.push_back(std::max(numbers[0], numbers[1]));
+
+	// 	return (big_numbers);
+	// }
+
+	// Step 1 - Make pairs
 	size_t	i = 0;
 	int		pair_index = 0;
 	while (i + 1 < numbers.size())
@@ -161,126 +389,77 @@ std::vector<int>	PmergeMe::vectorSortElements(std::vector<int>& numbers, std::ve
 		big_numbers.push_back(numbers.back());
 
 
-	{	// TESTING ---
-		std::cout << "Vector bignum: ";
-		for (int element : big_numbers)
-			std::cout << element << " ";
-		std::cout << std::endl;
-		std::cout << "Vector big:    ";
-		for (indexedPair element : number_pairs)
-			std::cout << element.big << " ";
-		std::cout << std::endl;
-		std::cout << "Vector small:  ";
-		for (indexedPair element : number_pairs)
-			std::cout << element.small << " "; 
-		std::cout << std::endl;
-		std::cout << "Pairs passed along: " << previous_pairs.size() << "\n--\n" << std::endl;
-		// END OF TESTING ---
-	}
-
-
-
-
+	// Step 2 - if our list of big numbers is bigger than 1, we need to go a level deeper
 	if (big_numbers.size() >= 2)
 		big_numbers = vectorSortElements(big_numbers, number_pairs);
 
 
-	// Checking if vector of 2 elements and 1 pair special case
-	if (number_pairs.size() == 1 && big_numbers.size() == 2)
-	{
-		vectorInsert(big_numbers, number_pairs, previous_pairs, -1);
-		return (big_numbers);
-	}
-
-	previous_pairs = number_pairs;
-	// Always adding first small number to front of big_numbers
-	vectorInsert(big_numbers, number_pairs, previous_pairs, 0);
-	if (number_pairs.size() == 1)
-		return (big_numbers);
+	// step 3 - Save previo
+	updated_pairs = number_pairs;
 
 
+	// step 4 - Add first small number to list
+	vectorInsert(big_numbers, number_pairs, previous_pairs, updated_pairs, 0);
 
 
-
-
-
+	// step 5 - generate jacobsthal sequence to add smaller numbers in jacobsthal order
 	std::vector<int>	jacobsthal_sequence = getJacobsthalSequence(number_pairs.size());
-	if (!jacobsthal_sequence.empty())
-	{
-		for (i = 0; i < jacobsthal_sequence.size(); ++i)
-			vectorInsert(big_numbers, number_pairs, previous_pairs, jacobsthal_sequence[i]);
-	}
+	for (i = 0; i < jacobsthal_sequence.size(); ++i)
+		vectorInsert(big_numbers, number_pairs, previous_pairs, updated_pairs, jacobsthal_sequence[i]);
 
-	{	// TESTING ---
-		std::cout << "Vector bignum after: ";
-		for (int element : big_numbers)
-			std::cout << element << " ";
-		std::cout << std::endl;
-	}
+
+	// step 6 - Set updated_pairs to previous pairs for parent recursion level
+	previous_pairs = updated_pairs;
 
 	return (big_numbers);
 }
 
 
-void	PmergeMe::vectorInsert(std::vector<int>& big_numbers, std::vector<indexedPair>& number_pairs, std::vector<indexedPair>& previous_pairs, int index)
+void	PmergeMe::vectorInsert(std::vector<int>& big_numbers, pairVector& number_pairs, pairVector& previous_pairs, pairVector& updated_pairs, int index)
 {
-	std::cout << "Big number size: " << big_numbers.size() << std::endl;
-
-	// In case of a single pair, of which the small needs to be added to the big_numbers list
-	// that contains 2 numbers, thus dealing with an uneven amount of numbers at this stage.
-	// We compare the smaller value of the pair with the first number in the big_numbers list,
-	// so we know to insert before or after that number.
-	if (big_numbers.size() == 2 && number_pairs.size() == 1)
-	{
-		if (number_pairs[0].small <= big_numbers[0])
-			big_numbers.insert(big_numbers.begin(), number_pairs[0].small);
-		else
-			big_numbers.insert(big_numbers.begin() + 1, number_pairs[0].small);
-		return ;
+	{	// TESTING ---
+		std::cout << "Big number size: " << big_numbers.size() << std::endl;
+		std::cout << "Vector bignum: ";
+		for (int element : big_numbers)
+			std::cout << element << " ";
+		std::cout << std::endl;
+		std::cout << "Pair to insert: " << number_pairs[index].small << " / " << number_pairs[index].big << " - Index: " << number_pairs[index].original_index << " - Passed index: " << index << std::endl;
+		std::cout << "Number pairs:" << std::endl;
+		printPairs(number_pairs, big_numbers);
+		std::cout << "Updated pairs:" << std::endl;
+		printPairs(updated_pairs, big_numbers);
 	}
 
-	// In case of the first small value to be added, it can always be dropped at the front 
-	// of the big_numbers list.
-	if (index == 0)
-	{
-		big_numbers.insert(big_numbers.begin(), number_pairs[0].small);
-		previous_pairs.insert(previous_pairs.begin(), number_pairs[0]);
-		vectorIncrementOriginalIndex(number_pairs, 1);
+	if (index < 0 || index >= (int)number_pairs.size())
 		return ;
-	}
-	
 
-	// We start comparing the small value with the value in front of the value in front of
-	// its pair.
-	int i = number_pairs[index].original_index - 1;
+	int i  = number_pairs[index].original_index - 1;
 	while (i >= 0)
 	{
 		if (number_pairs[index].small >= big_numbers[i])
-		{
-			number_pairs[index].original_index = i + 1;
-			big_numbers.insert(big_numbers.begin() + i + 1, number_pairs[index].small);
-			previous_pairs.insert(previous_pairs.begin() + i + 1, number_pairs[index]);
-			number_pairs[index].original_index = -1;
 			break ;
-		}
 		--i;
 	}
+	big_numbers.insert(big_numbers.begin() + i + 1, number_pairs[index].small);
+	updated_pairs.insert(updated_pairs.begin() + i + 1, previous_pairs[index]);
+	// for (size_t o = i + 2; i < updated_pairs.size(); ++i)
+	// {
 
-	i++;
-	while (i < (int)number_pairs.size())
-	{
-		if (number_pairs[i].original_index != -1)
-			number_pairs[i].original_index++;
-		i++;
-	}
+	// }
 }
+
+
+
+
+
+
 
 
 
 
 std::vector<int>	PmergeMe::vectorSortElements(std::vector<int>& numbers)
 {
-	std::vector<indexedPair> dummy;
+	pairVector dummy;
 	return (vectorSortElements(numbers, dummy));
 }
 
