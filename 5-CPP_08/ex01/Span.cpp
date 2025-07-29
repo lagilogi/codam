@@ -1,10 +1,5 @@
 #include "Span.hpp"
 
-Span::Span() : _maxN()
-{
-	std::cout << "Span object created" << std::endl;
-}
-
 Span::Span(unsigned int size) : _maxN(size)
 {
 	std::cout << "Span object created with size " << size << std::endl;

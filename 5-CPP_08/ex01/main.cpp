@@ -18,5 +18,10 @@ int main()
 	std::cout << "Shortest: " << sp.shortestSpan() << std::endl;
 	std::cout << "Longest: " << sp.longestSpan() << std::endl;
 
+	Span sp2 = Span(10000);
+	std::srand(time(0));
+	for (int i = 0; i < 10000; ++i)
+		sp2.addNumber(rand());
+
 	return 0;
 }

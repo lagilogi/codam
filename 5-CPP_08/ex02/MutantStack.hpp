@@ -40,4 +40,3 @@ class MutantStack : public std::stack<T, Container>
 };
 
 #include "MutantStack.tpp"
-

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iterator>
 #include <numeric>
+#include <ctime>
 
 
 class Span
@@ -12,9 +13,9 @@ class Span
 	private:
 		unsigned int		_maxN;
 		std::vector<int>	_vector;
+		Span();
 
 	public:
-		Span();
 		Span(unsigned int size);
 		~Span();
 		Span(const Span& other);
@@ -25,6 +26,3 @@ class Span
 		int		shortestSpan();
 		int		longestSpan();
 };
-
-
-

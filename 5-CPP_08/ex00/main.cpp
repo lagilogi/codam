@@ -15,7 +15,7 @@ int main()
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << "vector: " << e.what() << '\n';
 	}
 
 	// Deque
@@ -26,7 +26,7 @@ int main()
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << "deque: " << e.what() << '\n';
 	}
 
 	// Array
@@ -37,7 +37,7 @@ int main()
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << "array: " << e.what() << '\n';
 	}
 
 	// List
@@ -48,10 +48,7 @@ int main()
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << "list: " << e.what() << '\n';
 	}
 	return (0);
 }
-
-// The result printed is the value, because not all containers have 
-// index-like values
