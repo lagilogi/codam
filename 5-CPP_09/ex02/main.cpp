@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 			pMerge.checkInput();
 			pMerge.vectorSorting();
 			// pMerge.dequeSort();
-			// pMerge.printResult();
+			pMerge.printResult();
 		}
 		catch(const std::exception& e)
 		{

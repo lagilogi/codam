@@ -29,10 +29,16 @@ class PmergeMe
 {
 	private:
 		std::string			_input;
+
 		std::vector<int>	_vector;
-		std::deque<int>		_deque;
+		std::vector<int>	_vector_sorted;
 		double				_vector_time;
+
+		std::deque<int>		_deque;
+		std::deque<int>		_deque_sorted;
 		double				_deque_time;
+
+
 		int					_elements_amount;
 
 		PmergeMe();
@@ -52,9 +58,13 @@ class PmergeMe
 		
 		void				vectorParse();
 		void				vectorSorting();
-		std::vector<int>	vectorSortElements(std::vector<int>& numbers);
-		std::vector<int>	vectorSortElements(std::vector<int>& numbers, pairVector& pairs);
-		void				vectorInsert(std::vector<int>& big_numbers, pairVector& number_pair, pairVector& previous_pairs, pairVector& updated_pairs, int index);
+		// std::vector<int>	vectorSortElements(std::vector<int>& numbers);
+		// std::vector<int>	vectorSortElements(std::vector<int>& numbers, pairVector& pairs);
+		// void				vectorInsert(std::vector<int>& big_numbers, pairVector& number_pair, pairVector& previous_pairs, pairVector& updated_pairs, int index);
+
+		std::vector<int> vectorSortElements(std::vector<int>& numbers);
+		void vectorInsert(std::vector<int>& result, const std::vector<indexedPair>& mirrored_pairs, const std::vector<int>& jacobsthal_sequence);
+
 
 
 		void				vectorIncrementOriginalIndex(pairVector& number_pairs, size_t index);
