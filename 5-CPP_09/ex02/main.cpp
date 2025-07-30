@@ -9,6 +9,7 @@ int main(int argc, char** argv)
 			PmergeMe pMerge(argv[1]);
 
 			pMerge.checkInput();
+			pMerge.checkNumbers();
 			pMerge.vectorSorting();
 			// pMerge.dequeSort();
 			pMerge.printResult();
