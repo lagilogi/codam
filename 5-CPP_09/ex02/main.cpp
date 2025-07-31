@@ -2,24 +2,24 @@
 
 int main(int argc, char** argv)
 {
-	if (argc == 2)
+	try
 	{
-		try
-		{
-			PmergeMe pMerge(argv[1]);
+		PmergeMe pMerge(argc, argv);
 
-			pMerge.checkInput();
-			pMerge.checkNumbers();
-			pMerge.vectorSorting();
-			// pMerge.dequeSort();
-			pMerge.printResult();
-		}
-		catch(const std::exception& e)
-		{
-			std::cerr << e.what() << std::endl;
-		}
+		pMerge.checkInput();
+		if (DEBUG)
+			std::cout << "----------------------VECTOR---------------------" << std::endl;
+		pMerge.vectorSorting();
+		
+		if (DEBUG)
+			std::cout << "\n\n----------------------DEQUE----------------------" << std::endl;
+		pMerge.dequeSorting();
+		pMerge.printResult();
 	}
-	else
-		std::cerr << "Error: invalid amount of arguments - should be 2" << std::endl;
-	return (1);
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+
+	return (0);
 }
