@@ -35,8 +35,10 @@ clean:
 	rm  ${LOG_FILE} || true
 	sudo rm -rf ${WORDPRESS_DATA} ${MARIADB_DATA}
 
-re: down up
+restart: stop start
+
+rebuild: down up
 
 reclean: clean up
 
-.PHONY: all build up down start stop logs re clean reclean prune
+.PHONY: all build up down start stop logs restart rebuild clean reclean prune

@@ -5,12 +5,13 @@ services:
     build: ./requirements/mariadb
     container_name: mariadb
     restart: always
+    secrets:
+      - db_password
+      - db_root_password
     environment:
       - DB_NAME=${DB_NAME}
       - DB_HOST=${DB_HOST}
-      - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
       - DB_USER=${DB_USER}
-      - DB_USER_PASSWORD=${DB_USER_PASSWORD}
     volumes:
       - mariadb:/var/lib/mysql
     networks:
@@ -73,3 +74,13 @@ volumes:
       device: ${HOME}/data/mariadb
       type: none
       o: bind
+
+secrets:
+    db_password:
+        file: ../secrets/db_password.txt
+    db_root_password:
+        file: ../secrets/db_root_password.txt
+    wp_password:
+        file: ../secrets/wp_password.txt
+    wp_admin_password:
+        file: ../secrets/wp_admin_password
