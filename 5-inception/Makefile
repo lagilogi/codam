@@ -32,6 +32,7 @@ logs:
 
 clean:
 	docker compose -p $(NAME) -f $(COMPOSE_FILE) down --volumes --rmi all
+	docker image prune -a
 	rm  ${LOG_FILE} || true
 	sudo rm -rf ${WORDPRESS_DATA} ${MARIADB_DATA}
 

@@ -1,8 +1,15 @@
 FROM debian:bookworm
 
-RUN apt update -y && \
-    apt upgrade -y && \
-    apt install nginx -y
+COPY ./tools/nginx-script.sh /
+COPY ./config/nginx.conf /
 
-EXPOSE 5555:80
+RUN apt update -y && apt upgrade -y && \
+    apt install -y nginx openssl tini curl && \
+	chmod +x /nginx-script.sh && \
+	rm -rf /var/lib/apt/lists/*
 
+EXPOSE 443
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+CMD ["/nginx-script.sh"]

@@ -1,12 +1,12 @@
-
 # Services (aka containers)
 services:
   mariadb:
     build: ./requirements/mariadb
+    image: mariadb
     container_name: mariadb
-    restart: always
+    restart: on-failure
     secrets:
-      - db_password
+      - db_user_password
       - db_root_password
     environment:
       - DB_NAME=${DB_NAME}
@@ -16,38 +16,61 @@ services:
       - mariadb:/var/lib/mysql
     networks:
       - inception
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$(cat /run/secrets/db_root_password)"]
+      interval: 2s
+      timeout: 3s
+      retries: 5
+      start_period: 4s
 
-  # wordpress:
-  #   build: ./requirements/wordpress
-  #   container_name: wordpress
-  #   depends_on: mariadb
-  #   restart: always
-  #   env_file:
-  #     - WP_ADMIN=${WP_ADMIN}
-  #     - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
-  #     - WP_ADMIN_EMAIL={WP_ADMIN_EMAIL}
-  #     - WP_USER=${WP_USER}
-  #     - WP_USER_PASSWORD=${WP_USER_PASSWORD}
-  #     - WP_USER_EMAIL=${WP_USER_EMAIL}
-  #   volumes:
-  #     - wordpress:/var/www/html
-  #   networks:
-  #     - inception
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress
+    container_name: wordpress
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    restart: on-failure
+    secrets:
+      - wp_user_password
+      - wp_admin_password
+      - db_user_password
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - WP_ADMIN=${WP_ADMIN}
+      - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
+      - WP_USER=${WP_USER}
+      - WP_USER_EMAIL=${WP_USER_EMAIL}
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    healthcheck:
+      test: ["CMD-SHELL", "pidof php-fpm8.2"]
+      interval: 2s
+      timeout: 3s
+      retries: 5
+      start_period: 8s
 
-  # nginx:
-  #   build: ./requirements/nginx
-  #   container_name: nginx
-  #   depends_on:
-  #     - wordpress
-  #   restart: always
-  #   env_file:
-  #     - ./env
-  #   ports:
-  #     - "443:443"
-  #   volumes:
-  #     - wordpress:/var/www/html
-  #   networks:
-  #     - inception
+  nginx:
+    build: ./requirements/nginx
+    image: nginx
+    container_name: nginx
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    restart: on-failure
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
   
 
 # Networks (for communication between services / containers)
@@ -59,13 +82,13 @@ networks:
 
 # Volumes (for persistant data)
 volumes:
-  # wordpress:
-  #   name: wordpress_volume
-  #   driver: local
-  #   driver_opts:
-  #     device: ${HOME}/data/wordpress
-  #     type: none
-  #     o: bind
+  wordpress:
+    name: wordpress_volume
+    driver: local
+    driver_opts:
+      device: ${HOME}/data/wordpress
+      type: none
+      o: bind
 
   mariadb:
     name: mariadb_volume
@@ -76,11 +99,11 @@ volumes:
       o: bind
 
 secrets:
-    db_password:
-        file: ../secrets/db_password.txt
-    db_root_password:
-        file: ../secrets/db_root_password.txt
-    wp_password:
-        file: ../secrets/wp_password.txt
-    wp_admin_password:
-        file: ../secrets/wp_admin_password
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  db_user_password:
+    file: ../secrets/db_user_password.txt
+  wp_admin_password:
+    file: ../secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ../secrets/wp_user_password.txt

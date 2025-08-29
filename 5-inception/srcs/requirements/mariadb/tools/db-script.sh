@@ -1,6 +1,12 @@
 #!/bin/bash
 
-if [ ! -f "/var/lib/mysql/.mariadb_is_setup" ]; then
+set -e
+
+mkdir -p /var/lib/mysql
+
+if [ ! -f "/.mariadb_setup_done" ]; then
+	echo "Setting up mariadb"
+
 	mkdir -p /run/mysqld /var/lib/mysql /var/log/mysql
 	chown -R mysql:mysql /run/mysqld /var/lib/mysql /var/log/mysql
 
@@ -11,9 +17,9 @@ if [ ! -f "/var/lib/mysql/.mariadb_is_setup" ]; then
 	sleep 5;
 
 	DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
-	DB_USER_PASSWORD=$(cat /run/secrets/db_password)
+	DB_USER_PASSWORD=$(cat /run/secrets/db_user_password)
 
-	mysql -u root << EOF
+	mysql -u root -p$DB_ROOT_PASSWORD << EOF
 	ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD';
 	CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;
 	CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_USER_PASSWORD';
@@ -23,8 +29,8 @@ EOF
 
 	mysqladmin -u root -p"${DB_ROOT_PASSWORD}" shutdown;
 
-	touch /var/lib/mysql/.mariadb_is_setup
-	rm -rf /run/secrets/
+	touch /.mariadb_setup_done
 fi
 
+echo "Starting mysqld_safe"
 exec mysqld_safe;
