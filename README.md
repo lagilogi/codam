@@ -11,6 +11,8 @@ Some projects are group projects, which means that their original repo is sepera
 I've added the finished group projects directly. To find the original repo with all commits & branches, etc, you can find them here:
 
 - Minishell: https://github.com/mlubber/minishell_42
+- Cub3d: https://github.com/lagilogi/codam_cub3d
+- Ft_transcendence: https://github.com/michmos/42_transcendence (Might be private)
 
 Best regards,
 Wouter
