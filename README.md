@@ -1,14 +1,12 @@
-Hello and welcome to my Codam Project repo.
+Hello and welcome to my Codam Project portfolio. All of the projects have been tested and evaluated by succesfully during many evaluations with my peers.
 
-This repo is used for both a backup of the Codam projects, as well as my portfolio for potential employers.
+During my time as a Codam student I've worked on many projects in C and C++, and the final project, Ft_transcendence, in mostly Typescript (and prisma).
 
-Even though some of the projects may have been finished long ago, I might occassionally add changes as I learn more about coding.
+All C projects have been written with Norminette's rules, which limits us to use only a select set of functions/system calls and needing to write our own functions for everything else. We were also prohibited from using control-flow statements like for-loops and writing more than 25 lines per function.
 
-Do note that all projects have been written with Norminette's rules, which allows us to use only a very select few of functions, 
-and also prohibits us from using things like 'for-loops', writing more than 25 lines per function & more.
+These limitations were dropped for all C++ projects. We were free to use any C++ function from any library unless told otherwise.
 
-Some projects are group projects, which means that their original repo is seperate from this one. For the sake of overview,
-I've added the finished group projects directly. To find the original repo with all commits & branches, etc, you can find them here:
+Some projects are group projects, which means that their original repo is seperate from this one. These can be found through these links:
 
 - Minishell: https://github.com/mlubber/minishell_42
 - Cub3d: https://github.com/lagilogi/codam_cub3d
